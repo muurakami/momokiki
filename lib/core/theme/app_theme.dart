@@ -1,6 +1,6 @@
+import 'app_spacing.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'app_spacing.dart';
 import 'app_colors.dart';
 
 abstract class AppTheme {
