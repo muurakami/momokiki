@@ -7,6 +7,8 @@ import '../../../../core/theme/app_typography.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../notifiers/auth_notifier.dart';
 import '../../../../core/theme/app_spacing.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter/foundation.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
@@ -42,7 +44,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
   @override
   Widget build(BuildContext context) {
     ref.listen(authNotifierProvider, (_, next) {
-      next?.whenData((user) { 
+      next?.whenData((user) {
         if (user == null) return;
         if (user.xpTotal == 0) {
           context.go('/onboarding/language');
@@ -195,6 +197,15 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                           color: AppColors.primary,
                           decoration: TextDecoration.underline)),
                 ),
+                if (kDebugMode)
+                  TextButton(
+                    onPressed: () async {
+                      await Supabase.instance.client.auth.signOut();
+                      if (context.mounted) context.go('/auth');
+                    },
+                    child: const Text('Debug: Clear Session',
+                        style: TextStyle(color: Colors.red)),
+                  ),
 
                 if (auth.hasError)
                   Padding(

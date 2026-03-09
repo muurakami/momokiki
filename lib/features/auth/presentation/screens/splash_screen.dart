@@ -2,6 +2,7 @@ import '../notifiers/auth_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import '../../../../core/theme/app_colors.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
@@ -30,7 +31,8 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
       } else {
         context.go('/app/learn');
       }
-    } catch (_) {
+    } catch (e) {
+      print('DEBUG error: $e');
       if (mounted) context.go('/auth');
     }
   }
