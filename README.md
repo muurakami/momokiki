@@ -1,16 +1,4 @@
-# momokiki
-
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+MomoKiki is a free, open source mobile app for learning languages (English ↔ Japanese to start). 
+Built as a Duolingo alternative with no paywalls: lesson engine with 4 block types, 
+spaced repetition flashcards (SM-2), offline pronunciation assessment via Vosk, 
+and rule-based weak spot analysis. Self-hostable. Plugin system for community languages coming in v2.
