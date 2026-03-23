@@ -7,17 +7,92 @@ import '../../../../../core/theme/app_typography.dart';
 import '../../../../../core/theme/app_spacing.dart';
 import '../../../../../core/theme/app_animations.dart';
 
-const _levels = [
-  {'code': 'A1', 'label': 'Beginner', 'desc': 'I know almost nothing'},
-  {'code': 'A2', 'label': 'Elementary', 'desc': 'I know some basics'},
-  {
-    'code': 'B1',
-    'label': 'Intermediate',
-    'desc': 'I can hold simple conversations'
-  },
-  {'code': 'B2', 'label': 'Upper-Inter', 'desc': 'I\'m fairly comfortable'},
-  {'code': 'C1', 'label': 'Advanced', 'desc': 'I speak with confidence'},
-  {'code': 'C2', 'label': 'Mastery', 'desc': 'Near-native level'},
+class _LevelOption {
+  final String code;
+  final String badge;
+  final String label;
+  final String description;
+  final String? helper;
+
+  const _LevelOption({
+    required this.code,
+    required this.badge,
+    required this.label,
+    required this.description,
+    this.helper,
+  });
+}
+
+const _englishLevels = [
+  _LevelOption(
+    code: 'A1',
+    badge: 'A1',
+    label: 'Beginner',
+    description: 'I know almost nothing',
+  ),
+  _LevelOption(
+    code: 'A2',
+    badge: 'A2',
+    label: 'Elementary',
+    description: 'I know some basics',
+  ),
+  _LevelOption(
+    code: 'B1',
+    badge: 'B1',
+    label: 'Intermediate',
+    description: 'I can hold simple conversations',
+  ),
+  _LevelOption(
+    code: 'B2',
+    badge: 'B2',
+    label: 'Upper-Inter',
+    description: 'I\'m fairly comfortable',
+  ),
+  _LevelOption(
+    code: 'C1',
+    badge: 'C1',
+    label: 'Advanced',
+    description: 'I speak with confidence',
+  ),
+  _LevelOption(
+    code: 'C2',
+    badge: 'C2',
+    label: 'Mastery',
+    description: 'Near-native level',
+  ),
+];
+
+const _japaneseLevels = [
+  _LevelOption(
+    code: 'jp_beginner',
+    badge: 'N5',
+    label: 'Beginner',
+    description: 'Just starting',
+  ),
+  _LevelOption(
+    code: 'jp_kana',
+    badge: 'N5',
+    label: 'Kana',
+    description: 'Hiragana and katakana',
+  ),
+  _LevelOption(
+    code: 'jp_basic_grammar',
+    badge: 'N4',
+    label: 'Basic Grammar',
+    description: 'Simple grammar and sentences',
+  ),
+  _LevelOption(
+    code: 'jp_conversational',
+    badge: 'N3',
+    label: 'Conversational',
+    description: 'Daily conversations',
+  ),
+  _LevelOption(
+    code: 'jp_advanced',
+    badge: 'N2+',
+    label: 'Advanced',
+    description: 'Complex Japanese',
+  ),
 ];
 
 class LevelSelectionScreen extends ConsumerWidget {
@@ -27,6 +102,16 @@ class LevelSelectionScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selected =
         ref.watch(onboardingNotifierProvider.select((s) => s.cefrLevel));
+    final targetLanguage = ref.watch(
+      onboardingNotifierProvider.select((s) => s.targetLanguage),
+    );
+    final levels = targetLanguage == 'ja' ? _japaneseLevels : _englishLevels;
+    final title = targetLanguage == 'ja'
+        ? 'What\'s your Japanese level?'
+        : 'What\'s your level?';
+    final subtitle = targetLanguage == 'ja'
+        ? 'We\'ll adapt the path to your Japanese background'
+        : 'We\'ll personalise your path';
 
     return Scaffold(
       backgroundColor: AppColors.background,
@@ -42,25 +127,25 @@ class LevelSelectionScreen extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('What\'s your level?',
+              Text(title,
                   style: AppTypography.displayLarge,
                   textAlign: TextAlign.center),
               const SizedBox(height: AppSpacing.sm),
-              Text('We\'ll personalise your path',
+              Text(subtitle,
                   style: AppTypography.bodyMedium, textAlign: TextAlign.center),
               const SizedBox(height: AppSpacing.lg),
               Expanded(
                 child: ListView.separated(
-                  itemCount: _levels.length,
+                  itemCount: levels.length,
                   separatorBuilder: (_, __) =>
                       const SizedBox(height: AppSpacing.sm),
                   itemBuilder: (_, i) {
-                    final lvl = _levels[i];
-                    final isSelected = selected == lvl['code'];
+                    final level = levels[i];
+                    final isSelected = selected == level.code;
                     return GestureDetector(
                       onTap: () => ref
                           .read(onboardingNotifierProvider.notifier)
-                          .setCefrLevel(lvl['code']!),
+                          .setCefrLevel(level.code),
                       child: AnimatedContainer(
                         duration: AppAnimations.fast,
                         padding: const EdgeInsets.symmetric(
@@ -90,7 +175,7 @@ class LevelSelectionScreen extends ConsumerWidget {
                               borderRadius: BorderRadius.circular(10),
                             ),
                             child: Center(
-                              child: Text(lvl['code']!,
+                              child: Text(level.badge,
                                   style: AppTypography.labelLarge.copyWith(
                                     color: isSelected
                                         ? AppColors.textOnPrimary
@@ -99,14 +184,35 @@ class LevelSelectionScreen extends ConsumerWidget {
                             ),
                           ),
                           const SizedBox(width: AppSpacing.md),
-                          Column(
+                          Expanded(
+                            child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Text(lvl['label']!,
-                                    style: AppTypography.headlineMedium),
-                                Text(lvl['desc']!,
-                                    style: AppTypography.bodyMedium),
-                              ]),
+                                Text(
+                                  level.label,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.headlineMedium,
+                                ),
+                                Text(
+                                  level.description,
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: AppTypography.bodyMedium,
+                                ),
+                                if (level.helper != null)
+                                  Text(
+                                    level.helper!,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: AppTypography.bodyMedium.copyWith(
+                                      color: AppColors.textSecondary,
+                                    ),
+                                  ),
+                              ],
+                            ),
+                          ),
                           const Spacer(),
                           if (isSelected)
                             const Icon(Icons.check_circle,
