@@ -130,9 +130,17 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                                 : null),
                       _buildField(_emailCtrl, 'Email', Icons.email_outlined,
                           keyboardType: TextInputType.emailAddress,
-                          validator: (v) => (v?.contains('@') ?? false)
-                              ? null
-                              : 'Invalid email'),
+                          validator: (v) {
+                            if (v == null || v.trim().isEmpty) {
+                              return 'Required';
+                            }
+                            final emailRegex = RegExp(
+                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                            );
+                            return emailRegex.hasMatch(v.trim())
+                                ? null
+                                : 'Invalid email';
+                          }),
                       _buildField(_passCtrl, 'Password', Icons.lock_outline,
                           obscure: _obscure,
                           suffix: IconButton(
@@ -211,7 +219,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                   Padding(
                     padding: const EdgeInsets.only(top: AppSpacing.md),
                     child: Text(
-                      auth.error.toString(),
+                      _friendlyError(auth.error),
                       style: AppTypography.bodyMedium
                           .copyWith(color: AppColors.error),
                       textAlign: TextAlign.center,
@@ -268,6 +276,31 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
         ),
       ),
     );
+  }
+
+  String _friendlyError(Object? error) {
+    final message = error.toString().toLowerCase();
+    print('AUTH ERROR RAW: $message');
+
+    if (message.contains('invalid format') ||
+        message.contains('validation_failed')) {
+      return 'Please enter a valid email address';
+    }
+
+    if (message.contains('email not confirmed') ||
+        message.contains('email_not_confirmed')) {
+      return 'Please confirm your email before signing in';
+    }
+
+    if (message.contains('invalid login credentials')) {
+      return 'Wrong email or password';
+    }
+
+    if (message.contains('user already registered')) {
+      return 'This email is already registered';
+    }
+
+    return 'Something went wrong. Please try again';
   }
 
   void _handleEmailAuth() {
