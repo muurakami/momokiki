@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
+import '../../features/auth/presentation/notifiers/auth_notifier.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/auth_screen.dart';
 import '../../features/auth/presentation/screens/onboarding/language_selection_screen.dart';
@@ -46,11 +48,56 @@ class AppRouter {
               builder: (_, __) => const _PlaceholderScreen('Stats')),
           GoRoute(
               path: '/app/profile',
-              builder: (_, __) => const _PlaceholderScreen('Profile')),
+              builder: (_, __) => const _ProfileScreen()),
         ],
       ),
     ],
   );
+}
+
+class _ProfileScreen extends ConsumerWidget {
+  const _ProfileScreen();
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Profile')),
+      body: Center(
+        child: FilledButton.icon(
+          onPressed: () async {
+            final shouldSignOut = await showDialog<bool>(
+              context: context,
+              builder: (dialogContext) => AlertDialog(
+                title: const Text('Sign out?'),
+                content: const Text(
+                  'You will return to the sign in screen.',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(dialogContext).pop(false),
+                    child: const Text('Cancel'),
+                  ),
+                  FilledButton(
+                    onPressed: () => Navigator.of(dialogContext).pop(true),
+                    child: const Text('Sign Out'),
+                  ),
+                ],
+              ),
+            );
+
+            if (shouldSignOut != true) return;
+
+            await ref.read(authNotifierProvider.notifier).signOut();
+
+            if (!context.mounted) return;
+            context.go('/auth');
+          },
+          icon: const Icon(Icons.logout),
+          label: const Text('Sign Out'),
+        ),
+      ),
+    );
+  }
 }
 
 class _ScaffoldWithNav extends StatelessWidget {

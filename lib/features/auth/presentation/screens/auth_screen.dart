@@ -46,7 +46,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
     ref.listen(authNotifierProvider, (_, next) {
       next?.whenData((user) {
         if (user == null) return;
-        if (user.xpTotal == 0) {
+        if (!user.onboardingCompleted) {
           context.go('/onboarding/language');
         } else {
           context.go('/app/learn');
@@ -205,17 +205,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                           color: AppColors.primary,
                           decoration: TextDecoration.underline)),
                 ),
-                if (kDebugMode)
-                  TextButton(
-                    onPressed: () async {
-                      await Supabase.instance.client.auth.signOut();
-                      if (context.mounted) context.go('/auth');
-                    },
-                    child: const Text('Debug: Clear Session',
-                        style: TextStyle(color: Colors.red)),
-                  ),
-
-                if (auth.hasError)
+if (auth.hasError)
                   Padding(
                     padding: const EdgeInsets.only(top: AppSpacing.md),
                     child: Text(
