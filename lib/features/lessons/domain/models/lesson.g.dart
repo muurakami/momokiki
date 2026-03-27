@@ -15,6 +15,9 @@ _$LessonImpl _$$LessonImplFromJson(Map<String, dynamic> json) => _$LessonImpl(
               ?.map((e) => LessonBlock.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const <LessonBlock>[],
+      language:
+          $enumDecodeNullable(_$SupportedLanguageEnumMap, json['language']) ??
+              SupportedLanguage.english,
       nextLessonId: json['nextLessonId'] as String?,
     );
 
@@ -25,8 +28,14 @@ Map<String, dynamic> _$$LessonImplToJson(_$LessonImpl instance) =>
       'title': instance.title,
       'meta': instance.meta,
       'blocks': instance.blocks,
+      'language': _$SupportedLanguageEnumMap[instance.language]!,
       'nextLessonId': instance.nextLessonId,
     };
+
+const _$SupportedLanguageEnumMap = {
+  SupportedLanguage.english: 'english',
+  SupportedLanguage.japanese: 'japanese',
+};
 
 _$LessonMetaImpl _$$LessonMetaImplFromJson(Map<String, dynamic> json) =>
     _$LessonMetaImpl(

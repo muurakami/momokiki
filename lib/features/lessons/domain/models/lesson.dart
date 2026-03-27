@@ -1,3 +1,5 @@
+import 'learning_content.dart';
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'lesson.freezed.dart';
@@ -11,6 +13,7 @@ class Lesson with _$Lesson {
     required String title,
     required LessonMeta meta,
     @Default(<LessonBlock>[]) List<LessonBlock> blocks,
+    @Default(SupportedLanguage.english) SupportedLanguage language,
     String? nextLessonId,
   }) = _Lesson;
 
@@ -20,11 +23,28 @@ class Lesson with _$Lesson {
 
     if (metaJson is Map<String, Object?>) {
       normalized['title'] ??= metaJson['title'];
+      normalized['language'] ??= _parseLanguage(metaJson['language']?.toString()).name;
     } else if (metaJson is Map) {
       normalized['title'] ??= metaJson['title'];
+      normalized['language'] ??= _parseLanguage(metaJson['language']?.toString()).name;
     }
 
+    normalized['language'] ??= _parseLanguage(normalized['language']?.toString()).name;
+
     return _$LessonFromJson(normalized);
+  }
+}
+
+SupportedLanguage _parseLanguage(String? raw) {
+  switch ((raw ?? '').trim().toLowerCase()) {
+    case 'ja':
+    case 'jp':
+    case 'japanese':
+      return SupportedLanguage.japanese;
+    case 'en':
+    case 'english':
+    default:
+      return SupportedLanguage.english;
   }
 }
 

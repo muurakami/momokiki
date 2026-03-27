@@ -25,6 +25,7 @@ mixin _$Lesson {
   String get title => throw _privateConstructorUsedError;
   LessonMeta get meta => throw _privateConstructorUsedError;
   List<LessonBlock> get blocks => throw _privateConstructorUsedError;
+  SupportedLanguage get language => throw _privateConstructorUsedError;
   String? get nextLessonId => throw _privateConstructorUsedError;
 
   /// Serializes this Lesson to a JSON map.
@@ -47,6 +48,7 @@ abstract class $LessonCopyWith<$Res> {
       String title,
       LessonMeta meta,
       List<LessonBlock> blocks,
+      SupportedLanguage language,
       String? nextLessonId});
 
   $LessonMetaCopyWith<$Res> get meta;
@@ -72,6 +74,7 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
     Object? title = null,
     Object? meta = null,
     Object? blocks = null,
+    Object? language = null,
     Object? nextLessonId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -95,6 +98,10 @@ class _$LessonCopyWithImpl<$Res, $Val extends Lesson>
           ? _value.blocks
           : blocks // ignore: cast_nullable_to_non_nullable
               as List<LessonBlock>,
+      language: null == language
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as SupportedLanguage,
       nextLessonId: freezed == nextLessonId
           ? _value.nextLessonId
           : nextLessonId // ignore: cast_nullable_to_non_nullable
@@ -126,6 +133,7 @@ abstract class _$$LessonImplCopyWith<$Res> implements $LessonCopyWith<$Res> {
       String title,
       LessonMeta meta,
       List<LessonBlock> blocks,
+      SupportedLanguage language,
       String? nextLessonId});
 
   @override
@@ -150,6 +158,7 @@ class __$$LessonImplCopyWithImpl<$Res>
     Object? title = null,
     Object? meta = null,
     Object? blocks = null,
+    Object? language = null,
     Object? nextLessonId = freezed,
   }) {
     return _then(_$LessonImpl(
@@ -173,6 +182,10 @@ class __$$LessonImplCopyWithImpl<$Res>
           ? _value._blocks
           : blocks // ignore: cast_nullable_to_non_nullable
               as List<LessonBlock>,
+      language: null == language
+          ? _value.language
+          : language // ignore: cast_nullable_to_non_nullable
+              as SupportedLanguage,
       nextLessonId: freezed == nextLessonId
           ? _value.nextLessonId
           : nextLessonId // ignore: cast_nullable_to_non_nullable
@@ -190,6 +203,7 @@ class _$LessonImpl implements _Lesson {
       required this.title,
       required this.meta,
       final List<LessonBlock> blocks = const <LessonBlock>[],
+      this.language = SupportedLanguage.english,
       this.nextLessonId})
       : _blocks = blocks;
 
@@ -215,11 +229,14 @@ class _$LessonImpl implements _Lesson {
   }
 
   @override
+  @JsonKey()
+  final SupportedLanguage language;
+  @override
   final String? nextLessonId;
 
   @override
   String toString() {
-    return 'Lesson(id: $id, version: $version, title: $title, meta: $meta, blocks: $blocks, nextLessonId: $nextLessonId)';
+    return 'Lesson(id: $id, version: $version, title: $title, meta: $meta, blocks: $blocks, language: $language, nextLessonId: $nextLessonId)';
   }
 
   @override
@@ -232,6 +249,8 @@ class _$LessonImpl implements _Lesson {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.meta, meta) || other.meta == meta) &&
             const DeepCollectionEquality().equals(other._blocks, _blocks) &&
+            (identical(other.language, language) ||
+                other.language == language) &&
             (identical(other.nextLessonId, nextLessonId) ||
                 other.nextLessonId == nextLessonId));
   }
@@ -239,7 +258,7 @@ class _$LessonImpl implements _Lesson {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, version, title, meta,
-      const DeepCollectionEquality().hash(_blocks), nextLessonId);
+      const DeepCollectionEquality().hash(_blocks), language, nextLessonId);
 
   /// Create a copy of Lesson
   /// with the given fields replaced by the non-null parameter values.
@@ -264,6 +283,7 @@ abstract class _Lesson implements Lesson {
       required final String title,
       required final LessonMeta meta,
       final List<LessonBlock> blocks,
+      final SupportedLanguage language,
       final String? nextLessonId}) = _$LessonImpl;
 
   factory _Lesson.fromJson(Map<String, dynamic> json) = _$LessonImpl.fromJson;
@@ -278,6 +298,8 @@ abstract class _Lesson implements Lesson {
   LessonMeta get meta;
   @override
   List<LessonBlock> get blocks;
+  @override
+  SupportedLanguage get language;
   @override
   String? get nextLessonId;
 
