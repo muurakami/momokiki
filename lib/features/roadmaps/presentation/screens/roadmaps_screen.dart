@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:url_launcher/url_launcher.dart';
 
+import '../../../../core/di/injection.dart';
 import '../../../lessons/domain/models/learning_content.dart';
 import '../../../lessons/presentation/notifiers/learning_catalog_notifier.dart';
+import '../../domain/services/roadmap_local_file_service.dart';
+import 'local_html_roadmap_screen.dart';
+import 'local_markdown_roadmap_screen.dart';
 import '../../../settings/presentation/notifiers/app_preferences_notifier.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
@@ -19,6 +22,8 @@ class RoadmapsScreen extends ConsumerStatefulWidget {
 class _RoadmapsScreenState extends ConsumerState<RoadmapsScreen> {
   final TextEditingController _uploadNameController = TextEditingController();
   final TextEditingController _uploadContentController = TextEditingController();
+
+  RoadmapLocalFileService get _fileService => getIt<RoadmapLocalFileService>();
 
   @override
   void dispose() {
@@ -71,10 +76,24 @@ class _RoadmapsScreenState extends ConsumerState<RoadmapsScreen> {
                           Text(roadmap.title, style: AppTypography.headlineMedium),
                           const SizedBox(height: AppSpacing.xs),
                           Text(roadmap.sourcePath ?? '', style: AppTypography.bodyMedium),
+                          if (!roadmap.isInteractiveSite && roadmap.sourcePath != null) ...[
+                            const SizedBox(height: AppSpacing.md),
+                            FilledButton.tonalIcon(
+                              onPressed: () => _openRoadmap(
+                                title: roadmap.title,
+                                path: roadmap.sourcePath!,
+                              ),
+                              icon: const Icon(Icons.article_outlined),
+                              label: const Text('Open roadmap'),
+                            ),
+                          ],
                           if (roadmap.isInteractiveSite && roadmap.externalUrl != null) ...[
                             const SizedBox(height: AppSpacing.md),
                             FilledButton.icon(
-                              onPressed: () => _openInteractiveRoadmap(roadmap.externalUrl!),
+                              onPressed: () => _openRoadmap(
+                                title: roadmap.title,
+                                path: roadmap.externalUrl!,
+                              ),
                               icon: const Icon(Icons.open_in_new),
                               label: const Text('Open interactive roadmap'),
                             ),
@@ -156,14 +175,48 @@ class _RoadmapsScreenState extends ConsumerState<RoadmapsScreen> {
     );
   }
 
-  Future<void> _openInteractiveRoadmap(String path) async {
-    final uri = Uri.file(path.replaceAll('/', '\\'));
-    if (!await launchUrl(uri)) {
+  Future<void> _openRoadmap({
+    required String title,
+    required String path,
+  }) async {
+    try {
+      final file = await _fileService.ensureLocalCopy(sourcePath: path);
+      final viewerType = _fileService.selectViewer(file.path);
+
+      if (!mounted) {
+        return;
+      }
+
+      switch (viewerType) {
+        case RoadmapViewerType.markdown:
+          await Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => LocalMarkdownRoadmapScreen(
+                filePath: file.path,
+                title: title,
+              ),
+            ),
+          );
+        case RoadmapViewerType.html:
+          await Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (_) => LocalHtmlRoadmapScreen(
+                filePath: file.path,
+                title: title,
+              ),
+            ),
+          );
+        case RoadmapViewerType.unsupported:
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(content: Text('Unsupported roadmap format.')),
+          );
+      }
+    } catch (error) {
       if (!mounted) {
         return;
       }
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Could not open roadmap file.')),
+        SnackBar(content: Text('Failed to open roadmap: $error')),
       );
     }
   }

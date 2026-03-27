@@ -32,6 +32,8 @@ import '../../features/lessons/data/repositories/lesson_repository_impl.dart'
 import '../../features/lessons/domain/repositories/lesson_repository.dart'
     as _i408;
 import '../../features/lessons/domain/services/roadmap_parser.dart' as _i937;
+import '../../features/roadmaps/domain/services/roadmap_local_file_service.dart'
+    as _i856;
 import '../config/app_config.dart' as _i650;
 import '../database/app_database.dart' as _i982;
 import '../router/app_router.dart' as _i81;
@@ -52,11 +54,13 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i81.AppRouter>(() => _i81.AppRouter());
     gh.singleton<_i76.SupabaseAuthDatasource>(
         () => _i76.SupabaseAuthDatasource());
-    gh.lazySingleton<_i963.SupabaseLessonDataSource>(
-        () => _i963.SupabaseLessonDataSource());
     gh.lazySingleton<_i328.AssetLessonDataSource>(
         () => _i328.AssetLessonDataSource());
+    gh.lazySingleton<_i963.SupabaseLessonDataSource>(
+        () => _i963.SupabaseLessonDataSource());
     gh.lazySingleton<_i937.RoadmapParser>(() => const _i937.RoadmapParser());
+    gh.lazySingleton<_i856.RoadmapLocalFileService>(
+        () => _i856.RoadmapLocalFileService());
     gh.lazySingleton<_i565.DriftLessonCache>(
         () => _i565.DriftLessonCache(gh<_i982.AppDatabase>()));
     gh.lazySingleton<_i858.DriftLessonProgressDataSource>(

@@ -47,6 +47,8 @@ dependencies:
   cached_network_image: ^3.3.1
   iconsax_flutter: ^1.0.0
   ruby_text: ^3.0.0
+  flutter_markdown: ^0.7.7+1
+  webview_flutter: ^4.13.0
 
   # Audio
   just_audio: ^0.9.40
@@ -80,6 +82,7 @@ flutter:
     - .env
     - assets/lessons/
     - assets/roadmaps/
+    - roadmapcontent/
     - assets/images/
     - assets/animations/
     - assets/fonts/
