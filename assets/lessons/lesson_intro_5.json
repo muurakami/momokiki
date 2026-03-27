@@ -1,0 +1,42 @@
+{
+  "id": "lesson_intro_5",
+  "version": 1,
+  "title": "Mini Review",
+  "meta": {
+    "title": "Mini Review",
+    "description": "Finish the first review lesson.",
+    "estimated_xp": 72,
+    "difficulty": 3,
+    "rating": 5.0,
+    "language": "ja",
+    "tags": ["review"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "video",
+      "title": "Review Clip",
+      "video_url": "https://example.com/video/review",
+      "caption": "Review all greetings once more.",
+      "durationSeconds": 20
+    },
+    {
+      "id": "b2",
+      "type": "choice",
+      "prompt": "Choose the goodbye phrase.",
+      "correct_option_id": "o3",
+      "options": [
+        {"id": "o1", "label": "Ohayo"},
+        {"id": "o2", "label": "Arigato"},
+        {"id": "o3", "label": "Sayonara"}
+      ]
+    },
+    {
+      "id": "b3",
+      "type": "quiz",
+      "question": "What means good morning?",
+      "options": ["Ohayo", "Sayonara", "Arigato"],
+      "correct_answer": "Ohayo"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:momokiki/features/lessons/domain/models/lesson.dart';
+
+void main() {
+  test('Lesson.fromJson parses supported block types', () {
+    final lesson = Lesson.fromJson(
+      jsonDecode('''
+      {
+        "id": "lesson_test",
+        "title": "Parser Test",
+        "meta": {"title": "Parser Test", "difficulty": 2},
+        "blocks": [
+          {"id": "1", "type": "text", "title": "T", "content": "C"},
+          {"id": "2", "type": "quiz", "question": "Q", "options": ["A"], "correct_answer": "A"},
+          {"id": "3", "type": "video", "title": "V", "video_url": "https://example.com"},
+          {"id": "4", "type": "code", "prompt": "P", "code_snippet": "print()", "expected_answer": "ok"},
+          {"id": "5", "type": "choice", "prompt": "Pick", "correct_option_id": "o1", "options": [{"id": "o1", "label": "One"}]}
+        ]
+      }
+      ''') as Map<String, Object?>,
+    );
+
+    expect(lesson.blocks.length, 5);
+    expect(lesson.blocks.first.blockType, 'text');
+    expect(lesson.blocks[1].blockType, 'quiz');
+    expect(lesson.blocks[2].blockType, 'video');
+    expect(lesson.blocks[3].blockType, 'code');
+    expect(lesson.blocks[4].blockType, 'choice');
+  });
+
+  test('Lesson.fromJson falls back to unknown block', () {
+    final lesson = Lesson.fromJson(
+      {
+        'id': 'unknown_lesson',
+        'title': 'Unknown',
+        'meta': {'title': 'Unknown'},
+        'blocks': [
+          {'id': '1', 'type': 'alien'}
+        ],
+      },
+    );
+
+    expect(lesson.blocks.single.blockType, 'alien');
+  });
+}

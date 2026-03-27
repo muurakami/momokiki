@@ -1,0 +1,39 @@
+{
+  "id": "lesson_intro_2",
+  "version": 1,
+  "title": "Farewells",
+  "nextLessonId": "lesson_intro_3",
+  "meta": {
+    "title": "Farewells",
+    "description": "Say goodbye correctly.",
+    "estimated_xp": 52,
+    "difficulty": 1,
+    "rating": 4.7,
+    "language": "ja",
+    "tags": ["farewell"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "title": "Goodbye",
+      "content": "Sayonara means goodbye.",
+      "bullets": ["Formal tone", "Not used for short separations"]
+    },
+    {
+      "id": "b2",
+      "type": "video",
+      "title": "Listen to Sayonara",
+      "video_url": "https://example.com/video/sayonara",
+      "caption": "Observe pronunciation and intonation.",
+      "durationSeconds": 12
+    },
+    {
+      "id": "b3",
+      "type": "quiz",
+      "question": "Which word means goodbye?",
+      "options": ["Arigato", "Sayonara", "Ohayo"],
+      "correct_answer": "Sayonara"
+    }
+  ]
+}

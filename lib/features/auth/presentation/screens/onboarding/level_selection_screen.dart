@@ -12,14 +12,12 @@ class _LevelOption {
   final String badge;
   final String label;
   final String description;
-  final String? helper;
 
   const _LevelOption({
     required this.code,
     required this.badge,
     required this.label,
     required this.description,
-    this.helper,
   });
 }
 
@@ -201,15 +199,6 @@ class LevelSelectionScreen extends ConsumerWidget {
                                   overflow: TextOverflow.ellipsis,
                                   style: AppTypography.bodyMedium,
                                 ),
-                                if (level.helper != null)
-                                  Text(
-                                    level.helper!,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: AppTypography.bodyMedium.copyWith(
-                                      color: AppColors.textSecondary,
-                                    ),
-                                  ),
                               ],
                             ),
                           ),

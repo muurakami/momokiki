@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import '../notifiers/auth_notifier.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
-import '../../../../core/theme/app_spacing.dart';
 import '../notifiers/auth_notifier.dart';
-import '../../../../core/theme/app_spacing.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter/foundation.dart';
 
 class AuthScreen extends ConsumerStatefulWidget {
   const AuthScreen({super.key});
@@ -44,7 +40,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
   @override
   Widget build(BuildContext context) {
     ref.listen(authNotifierProvider, (_, next) {
-      next?.whenData((user) {
+      next.whenData((user) {
         if (user == null) return;
         if (!user.onboardingCompleted) {
           context.go('/onboarding/language');
@@ -270,8 +266,6 @@ if (auth.hasError)
 
   String _friendlyError(Object? error) {
     final message = error.toString().toLowerCase();
-    print('AUTH ERROR RAW: $message');
-
     if (message.contains('invalid format') ||
         message.contains('validation_failed')) {
       return 'Please enter a valid email address';

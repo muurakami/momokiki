@@ -1,0 +1,41 @@
+{
+  "id": "lesson_intro_1",
+  "version": 1,
+  "title": "Greetings Basics",
+  "nextLessonId": "lesson_intro_2",
+  "meta": {
+    "title": "Greetings Basics",
+    "description": "Learn the first greeting words.",
+    "estimated_xp": 45,
+    "difficulty": 1,
+    "rating": 4.8,
+    "language": "ja",
+    "tags": ["greetings", "starter"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "title": "Hello",
+      "content": "Konnichiwa is a common daytime greeting.",
+      "bullets": ["Use it politely", "Often written as こんにちは"]
+    },
+    {
+      "id": "b2",
+      "type": "quiz",
+      "question": "What does Konnichiwa mean?",
+      "options": ["Hello", "Good night", "Thank you"],
+      "correct_answer": "Hello"
+    },
+    {
+      "id": "b3",
+      "type": "choice",
+      "prompt": "Choose the polite greeting.",
+      "correct_option_id": "o1",
+      "options": [
+        {"id": "o1", "label": "Konnichiwa"},
+        {"id": "o2", "label": "Sayonara"}
+      ]
+    }
+  ]
+}

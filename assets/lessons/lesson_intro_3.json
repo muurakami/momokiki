@@ -1,0 +1,43 @@
+{
+  "id": "lesson_intro_3",
+  "version": 1,
+  "title": "Morning Phrases",
+  "nextLessonId": "lesson_intro_4",
+  "meta": {
+    "title": "Morning Phrases",
+    "description": "Practice early day phrases.",
+    "estimated_xp": 60,
+    "difficulty": 2,
+    "rating": 4.9,
+    "language": "ja",
+    "tags": ["morning", "phrases"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "title": "Morning",
+      "content": "Ohayo means good morning.",
+      "bullets": ["Casual form", "Full polite form is ohayo gozaimasu"]
+    },
+    {
+      "id": "b2",
+      "type": "choice",
+      "prompt": "Pick the morning greeting.",
+      "correct_option_id": "o2",
+      "options": [
+        {"id": "o1", "label": "Konbanwa"},
+        {"id": "o2", "label": "Ohayo"},
+        {"id": "o3", "label": "Sayonara"}
+      ]
+    },
+    {
+      "id": "b3",
+      "type": "code",
+      "prompt": "Type the romaji for the morning greeting.",
+      "code_snippet": "// Write the romaji here",
+      "expected_answer": "ohayo",
+      "language": "text"
+    }
+  ]
+}

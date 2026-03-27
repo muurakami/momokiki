@@ -1,0 +1,39 @@
+{
+  "id": "lesson_intro_4",
+  "version": 1,
+  "title": "Thanks and Responses",
+  "nextLessonId": "lesson_intro_5",
+  "meta": {
+    "title": "Thanks and Responses",
+    "description": "Use basic gratitude phrases.",
+    "estimated_xp": 66,
+    "difficulty": 2,
+    "rating": 4.6,
+    "language": "ja",
+    "tags": ["thanks", "responses"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "title": "Thank you",
+      "content": "Arigato means thank you.",
+      "bullets": ["Polite: arigato gozaimasu"]
+    },
+    {
+      "id": "b2",
+      "type": "quiz",
+      "question": "Which phrase means thank you?",
+      "options": ["Arigato", "Konnichiwa", "Ohayo"],
+      "correct_answer": "Arigato"
+    },
+    {
+      "id": "b3",
+      "type": "code",
+      "prompt": "Type the polite full form.",
+      "code_snippet": "// polite gratitude phrase",
+      "expected_answer": "arigato gozaimasu",
+      "language": "text"
+    }
+  ]
+}

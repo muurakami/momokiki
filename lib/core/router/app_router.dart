@@ -8,6 +8,10 @@ import '../../features/auth/presentation/screens/auth_screen.dart';
 import '../../features/auth/presentation/screens/onboarding/language_selection_screen.dart';
 import '../../features/auth/presentation/screens/onboarding/level_selection_screen.dart';
 import '../../features/auth/presentation/screens/onboarding/goals_screen.dart';
+import '../../features/lessons/presentation/screens/lesson_result_screen.dart';
+import '../../features/lessons/presentation/screens/lesson_screen.dart';
+import '../../features/lessons/presentation/screens/lessons_overview_screen.dart';
+import '../../features/lessons/domain/models/lesson_progress.dart';
 
 class _PlaceholderScreen extends StatelessWidget {
   final String title;
@@ -39,7 +43,7 @@ class AppRouter {
         routes: [
           GoRoute(
               path: '/app/learn',
-              builder: (_, __) => const _PlaceholderScreen('Learn')),
+              builder: (_, __) => const LessonsOverviewScreen()),
           GoRoute(
               path: '/app/practice',
               builder: (_, __) => const _PlaceholderScreen('Practice')),
@@ -49,6 +53,18 @@ class AppRouter {
           GoRoute(
               path: '/app/profile',
               builder: (_, __) => const _ProfileScreen()),
+          GoRoute(
+            path: '/app/lesson/:lessonId',
+            builder: (_, state) => LessonScreen(
+              lessonId: state.pathParameters['lessonId']!,
+            ),
+          ),
+          GoRoute(
+            path: '/app/lesson/:lessonId/result',
+            builder: (_, state) => LessonResultScreen(
+              summary: state.extra! as LessonSummary,
+            ),
+          ),
         ],
       ),
     ],

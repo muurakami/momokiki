@@ -22,13 +22,11 @@ class SupabaseAuthDatasource {
 
   Future<UserProfile> signUpWithEmail(
       String email, String password, String displayName) async {
-    print('AUTH DEBUG signUpWithEmail: start email=$email displayName=$displayName');
     final res = await _client.auth.signUp(
       email: email,
       password: password,
       data: {'display_name': displayName},
     );
-    print('AUTH DEBUG signUpWithEmail: auth.signUp success userId=${res.user?.id} email=${res.user?.email}');
     return _upsertProfile(res.user!, displayName: displayName);
   }
 
@@ -72,12 +70,9 @@ class SupabaseAuthDatasource {
 
   Future<UserProfile?> _fetchOrCreateProfile(User? user) async {
     if (user == null) return null;
-    print('AUTH DEBUG _fetchOrCreateProfile: start userId=${user.id} email=${user.email}');
     final existing =
         await _client.from('users').select().eq('id', user.id).maybeSingle();
-    print('AUTH DEBUG _fetchOrCreateProfile: existingProfileFound=${existing != null} userId=${user.id}');
     if (existing != null) return UserProfile.fromJson(existing);
-    print('AUTH DEBUG _fetchOrCreateProfile: profile missing, creating userId=${user.id}');
     return _upsertProfile(user);
   }
 
@@ -104,15 +99,11 @@ class SupabaseAuthDatasource {
       payload['email'] = user.email;
     }
 
-    print('AUTH DEBUG _upsertProfile: writing users row userId=${user.id} payload=$payload');
-
     final data = await _client
         .from('users')
         .upsert(payload, onConflict: 'id')
         .select()
         .single();
-
-    print('AUTH DEBUG _upsertProfile: success userId=${user.id}');
 
     return UserProfile.fromJson(data);
   }
