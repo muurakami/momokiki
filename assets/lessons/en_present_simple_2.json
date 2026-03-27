@@ -1,0 +1,35 @@
++{
+  "id": "en_present_simple_2",
+  "version": 1,
+  "title": "Daily Routines",
+  "language": "english",
+  "nextLessonId": "en_present_simple_3",
+  "meta": {
+    "title": "Daily Routines",
+    "description": "Use present simple with common verbs.",
+    "estimated_xp": 55,
+    "difficulty": 1,
+    "rating": 4.7,
+    "language": "en",
+    "tags": ["routines", "present-simple"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "title": "Routine verbs",
+      "content": "Common routine verbs include wake up, work, eat, and study.",
+      "bullets": ["I wake up at 7.", "We study after work."]
+    },
+    {
+      "id": "b2",
+      "type": "choice",
+      "prompt": "Choose a correct daily routine sentence.",
+      "correct_option_id": "o2",
+      "options": [
+        {"id": "o1", "label": "She is wake up at 7."},
+        {"id": "o2", "label": "She wakes up at 7."}
+      ]
+    }
+  ]
+}

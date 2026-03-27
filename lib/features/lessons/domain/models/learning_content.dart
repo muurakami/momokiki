@@ -15,6 +15,7 @@ class LessonIsland with _$LessonIsland {
     @Default(1) int order,
     @Default(false) bool isLocked,
     @Default(0) double progress,
+    @Default(false) bool isStarter,
     String? emoji,
   }) = _LessonIsland;
 
@@ -31,6 +32,8 @@ class RoadmapDocument with _$RoadmapDocument {
     @Default(<RoadmapSection>[]) List<RoadmapSection> sections,
     String? sourcePath,
     @Default(false) bool isImported,
+    String? externalUrl,
+    @Default(false) bool isInteractiveSite,
   }) = _RoadmapDocument;
 
   factory RoadmapDocument.fromJson(Map<String, Object?> json) =>

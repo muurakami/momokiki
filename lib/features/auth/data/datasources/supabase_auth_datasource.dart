@@ -108,5 +108,21 @@ class SupabaseAuthDatasource {
     return UserProfile.fromJson(data);
   }
 
+  Future<UserProfile> updatePreferredLanguage({
+    required String userId,
+    required String targetLanguage,
+  }) async {
+    final data = await _client
+        .from('users')
+        .update({
+          'target_language': targetLanguage,
+          'updated_at': DateTime.now().toIso8601String(),
+        })
+        .eq('id', userId)
+        .select()
+        .single();
+    return UserProfile.fromJson(data);
+  }
+
   String get currentUserId => _client.auth.currentUser!.id;
 }

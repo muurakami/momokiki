@@ -34,12 +34,18 @@ class RoadmapAssetDataSource {
         sourcePath: '@roadmaps/English_B1_C1_Roadmap.md',
         content: english,
         language: SupportedLanguage.english,
+      ).copyWith(
+        externalUrl: 'momokiki/roadmapcontent/english_quest.html',
+        isInteractiveSite: true,
       ),
       _parser.parse(
         id: 'roadmap_japan',
         sourcePath: '@roadmaps/JAPAN_Roadmap.md',
         content: japanese,
         language: SupportedLanguage.japanese,
+      ).copyWith(
+        externalUrl: 'momokiki/roadmapcontent/japan_master.html',
+        isInteractiveSite: true,
       ),
     ];
   }

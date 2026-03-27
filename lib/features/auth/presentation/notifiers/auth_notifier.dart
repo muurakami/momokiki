@@ -56,4 +56,15 @@ class AuthNotifier extends _$AuthNotifier {
       ),
     );
   }
+
+  Future<void> updatePreferredLanguage(String languageCode) async {
+    final currentUser = state.valueOrNull;
+    if (currentUser == null) {
+      return;
+    }
+
+    state = await AsyncValue.guard(
+      () => _repo.updatePreferredLanguage(languageCode),
+    );
+  }
 }

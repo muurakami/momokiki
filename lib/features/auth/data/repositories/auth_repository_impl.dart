@@ -47,4 +47,12 @@ class AuthRepositoryImpl implements AuthRepository {
       onboardingCompleted: onboardingCompleted,
     );
   }
+
+  @override
+  Future<UserProfile> updatePreferredLanguage(String targetLanguage) {
+    return _datasource.updatePreferredLanguage(
+      userId: _datasource.currentUserId,
+      targetLanguage: targetLanguage,
+    );
+  }
 }

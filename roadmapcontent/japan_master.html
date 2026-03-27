@@ -1,0 +1,1440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>道 НИХОНГО МАСТЕР — Путь самурая к японскому</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Noto+Serif+JP:wght@300;400;700;900&family=Sawarabi+Mincho&family=Raleway:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #c0392b;
+    --deep-red: #7b1d1d;
+    --gold: #d4af37;
+    --light-gold: #f5e17a;
+    --ink: #0a0a0a;
+    --paper: #f5f0e8;
+    --paper2: #ede8d8;
+    --mist: rgba(255,255,255,0.05);
+    --naruto-orange: #e67e22;
+    --sakura: #ffb7c5;
+    --sakura2: #ff8fab;
+    --blue: #1a3a5c;
+    --teal: #1abc9c;
+    --shadow: 0 8px 40px rgba(0,0,0,0.7);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0608;
+    color: var(--paper);
+    font-family: 'Raleway', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ─── SAKURA PARTICLES ─── */
+  #sakura-canvas {
+    position: fixed; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+
+  /* ─── HERO ─── */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    background: radial-gradient(ellipse at 50% 30%, #3d0b0b 0%, #1a0505 40%, #0a0608 100%);
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .hero::before {
+    content: '桜';
+    position: absolute;
+    font-size: 40vw;
+    color: rgba(192,57,43,0.04);
+    font-family: 'Noto Serif JP', serif;
+    top: 50%; left: 50%;
+    transform: translate(-50%,-50%);
+    pointer-events: none;
+  }
+
+  .torii {
+    position: absolute;
+    bottom: 0; left: 50%;
+    transform: translateX(-50%);
+    width: 600px; height: 300px;
+    opacity: 0.08;
+  }
+
+  .hero-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(3rem, 10vw, 8rem);
+    font-weight: 900;
+    color: var(--red);
+    text-shadow: 0 0 60px rgba(192,57,43,0.8), 0 0 120px rgba(192,57,43,0.4);
+    letter-spacing: 0.2em;
+    animation: glow 3s ease-in-out infinite alternate;
+    line-height: 1;
+  }
+  @keyframes glow {
+    from { text-shadow: 0 0 40px rgba(192,57,43,0.6), 0 0 80px rgba(192,57,43,0.3); }
+    to   { text-shadow: 0 0 80px rgba(192,57,43,1),   0 0 160px rgba(192,57,43,0.6); }
+  }
+
+  .hero-sub {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1rem, 3vw, 1.8rem);
+    color: var(--gold);
+    letter-spacing: 0.3em;
+    margin-top: 1rem;
+    text-transform: uppercase;
+  }
+
+  .hero-desc {
+    max-width: 700px;
+    margin: 2rem auto 0;
+    font-size: 1.1rem;
+    color: rgba(245,240,232,0.7);
+    line-height: 1.8;
+    padding: 0 2rem;
+  }
+
+  .scroll-hint {
+    margin-top: 3rem;
+    font-size: 0.85rem;
+    color: var(--gold);
+    letter-spacing: 0.2em;
+    animation: bounce 2s infinite;
+  }
+  @keyframes bounce {
+    0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)}
+  }
+
+  /* ─── LAYOUT ─── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 2rem; }
+
+  section { position: relative; z-index: 1; padding: 6rem 0; }
+
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--gold);
+    text-align: center;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.15em;
+  }
+  .section-jp {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    color: var(--red);
+    text-align: center;
+    margin-bottom: 3rem;
+    opacity: 0.8;
+  }
+  .divider {
+    width: 120px; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    margin: 1rem auto 3rem;
+  }
+
+  /* ─── METRICS DASHBOARD ─── */
+  .metrics-bg {
+    background: linear-gradient(180deg, #0a0608 0%, #120a10 50%, #0a0608 100%);
+    border-top: 1px solid rgba(212,175,55,0.2);
+    border-bottom: 1px solid rgba(212,175,55,0.2);
+  }
+
+  .metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+  }
+
+  .metric-card {
+    background: linear-gradient(135deg, rgba(192,57,43,0.1), rgba(0,0,0,0.3));
+    border: 1px solid rgba(212,175,55,0.3);
+    border-radius: 4px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, border-color 0.3s;
+  }
+  .metric-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .metric-card:hover { transform: translateY(-4px); border-color: var(--gold); }
+
+  .metric-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.5rem;
+    color: var(--gold);
+    line-height: 1;
+  }
+  .metric-label { font-size: 0.85rem; color: rgba(245,240,232,0.6); margin-top: 0.5rem; letter-spacing: 0.1em; text-transform: uppercase; }
+  .metric-jp { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; color: var(--red); margin-top: 0.3rem; }
+
+  /* ─── ROADMAP ─── */
+  .roadmap-bg { background: #0d0810; }
+
+  .roadmap {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+  }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 50%; top: 0; bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, var(--red), var(--gold), var(--teal));
+    transform: translateX(-50%);
+  }
+
+  .road-step {
+    display: flex;
+    align-items: flex-start;
+    gap: 2rem;
+    margin-bottom: 3rem;
+    position: relative;
+  }
+  .road-step:nth-child(even) { flex-direction: row-reverse; }
+  .road-step:nth-child(even) .step-content { text-align: right; }
+
+  .step-node {
+    min-width: 60px; height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 1.2rem; font-weight: 900;
+    flex-shrink: 0;
+    position: relative; z-index: 2;
+    background: #0d0810;
+  }
+  .step-node.red { border-color: var(--red); color: var(--red); box-shadow: 0 0 20px rgba(192,57,43,0.5); }
+  .step-node.gold { border-color: var(--gold); color: var(--gold); box-shadow: 0 0 20px rgba(212,175,55,0.5); }
+  .step-node.teal { border-color: var(--teal); color: var(--teal); box-shadow: 0 0 20px rgba(26,188,156,0.5); }
+  .step-node.orange { border-color: var(--naruto-orange); color: var(--naruto-orange); box-shadow: 0 0 20px rgba(230,126,34,0.5); }
+
+  .step-content { flex: 1; max-width: 45%; }
+
+  .step-level {
+    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 0.3rem;
+  }
+  .step-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem; color: white; margin-bottom: 0.5rem;
+  }
+  .step-jp { font-family: 'Noto Serif JP', serif; color: var(--red); font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .step-time {
+    display: inline-block;
+    background: rgba(212,175,55,0.15);
+    border: 1px solid rgba(212,175,55,0.4);
+    padding: 0.2rem 0.8rem;
+    border-radius: 20px;
+    font-size: 0.8rem; color: var(--gold);
+    margin-bottom: 0.8rem;
+  }
+  .step-desc { font-size: 0.9rem; color: rgba(245,240,232,0.7); line-height: 1.7; }
+  .step-tags { display: flex; gap: 0.4rem; flex-wrap: wrap; margin-top: 0.8rem; }
+  .road-step:nth-child(even) .step-tags { justify-content: flex-end; }
+  .tag {
+    background: rgba(192,57,43,0.2); border: 1px solid rgba(192,57,43,0.4);
+    padding: 0.15rem 0.6rem; border-radius: 3px;
+    font-size: 0.75rem; color: var(--sakura);
+  }
+
+  /* ─── CHECKLIST ─── */
+  .checklist-bg { background: linear-gradient(180deg, #0d0810, #120a10, #0d0810); }
+
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+  }
+
+  .checklist-card {
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .checklist-header {
+    padding: 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+  }
+  .checklist-header.p1 { background: linear-gradient(135deg, rgba(192,57,43,0.4), rgba(192,57,43,0.1)); border-bottom: 1px solid rgba(192,57,43,0.4); }
+  .checklist-header.p2 { background: linear-gradient(135deg, rgba(212,175,55,0.3), rgba(212,175,55,0.05)); border-bottom: 1px solid rgba(212,175,55,0.3); }
+  .checklist-header.p3 { background: linear-gradient(135deg, rgba(26,188,156,0.2), rgba(26,188,156,0.05)); border-bottom: 1px solid rgba(26,188,156,0.2); }
+
+  .priority-badge {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 0.85rem; flex-shrink: 0;
+  }
+  .p1 .priority-badge { background: var(--red); color: white; }
+  .p2 .priority-badge { background: var(--gold); color: #0a0608; }
+  .p3 .priority-badge { background: var(--teal); color: #0a0608; }
+
+  .checklist-title-block h3 { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: white; }
+  .checklist-title-block p { font-size: 0.8rem; color: rgba(245,240,232,0.6); margin-top: 0.2rem; }
+
+  .checklist-body { padding: 1.5rem; background: rgba(0,0,0,0.3); }
+  .check-item {
+    display: flex; align-items: flex-start; gap: 0.8rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    cursor: pointer;
+  }
+  .check-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 18px; height: 18px; border-radius: 3px;
+    border: 1.5px solid rgba(212,175,55,0.5);
+    flex-shrink: 0; margin-top: 2px;
+    transition: all 0.2s;
+    position: relative;
+  }
+  .check-item:hover .check-box { border-color: var(--gold); background: rgba(212,175,55,0.2); }
+  .check-item.done .check-box {
+    background: var(--gold); border-color: var(--gold);
+  }
+  .check-item.done .check-box::after {
+    content: '✓'; position: absolute;
+    top: 50%; left: 50%; transform: translate(-50%,-50%);
+    color: #0a0608; font-size: 0.7rem; font-weight: 700;
+  }
+  .check-item.done .check-text { text-decoration: line-through; opacity: 0.5; }
+  .check-text { font-size: 0.9rem; line-height: 1.5; }
+  .check-time { font-size: 0.75rem; color: var(--gold); margin-top: 0.1rem; }
+
+  /* ─── TIME PLAN ─── */
+  .time-bg { background: #0d0810; }
+
+  .time-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+
+  .time-card {
+    background: linear-gradient(135deg, rgba(26,26,46,0.8), rgba(0,0,0,0.5));
+    border: 1px solid rgba(212,175,55,0.2);
+    border-radius: 4px;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+  }
+  .time-card::after {
+    content: attr(data-jp);
+    position: absolute; bottom: -10px; right: 10px;
+    font-family: 'Noto Serif JP', serif;
+    font-size: 4rem; font-weight: 900;
+    color: rgba(192,57,43,0.08);
+    pointer-events: none;
+  }
+
+  .time-schedule { font-family: 'Cinzel Decorative', serif; font-size: 0.9rem; color: var(--gold); letter-spacing: 0.1em; margin-bottom: 0.5rem; }
+  .time-hours { font-size: 2rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+  .time-activities { font-size: 0.85rem; color: rgba(245,240,232,0.7); line-height: 1.8; }
+
+  /* ─── PROGRESS BAR CHART ─── */
+  .chart-section { background: linear-gradient(180deg, #120a10, #0a0608); }
+
+  .skill-bars { max-width: 800px; margin: 0 auto; }
+  .skill-bar-row { margin-bottom: 1.5rem; }
+  .skill-bar-label {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 0.5rem;
+  }
+  .skill-name { font-size: 0.9rem; font-weight: 600; }
+  .skill-pct { font-size: 0.8rem; color: var(--gold); font-family: 'Cinzel Decorative', serif; }
+  .bar-bg {
+    height: 10px; background: rgba(255,255,255,0.08);
+    border-radius: 5px; overflow: hidden;
+  }
+  .bar-fill {
+    height: 100%; border-radius: 5px;
+    transition: width 2s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+  }
+  .bar-fill::after {
+    content: '';
+    position: absolute; right: 0; top: -3px;
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    background: inherit;
+    box-shadow: 0 0 10px currentColor;
+  }
+  .bar-red { background: linear-gradient(90deg, var(--deep-red), var(--red)); }
+  .bar-gold { background: linear-gradient(90deg, #8b6914, var(--gold)); }
+  .bar-teal { background: linear-gradient(90deg, #0d6e5d, var(--teal)); }
+  .bar-orange { background: linear-gradient(90deg, #a04010, var(--naruto-orange)); }
+  .bar-sakura { background: linear-gradient(90deg, #8b3a52, var(--sakura2)); }
+
+  /* ─── MODULE SECTIONS ─── */
+  .modules-bg { background: #0d0810; }
+  .modules-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+
+  .module-card {
+    background: linear-gradient(135deg, rgba(20,10,20,0.9), rgba(5,5,10,0.95));
+    border: 1px solid rgba(212,175,55,0.15);
+    border-radius: 4px;
+    padding: 2rem;
+    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .module-card:hover {
+    transform: translateY(-6px);
+    border-color: rgba(212,175,55,0.5);
+    box-shadow: 0 20px 60px rgba(192,57,43,0.2);
+  }
+  .module-card::before {
+    content: attr(data-icon);
+    position: absolute; top: -20px; right: -10px;
+    font-size: 6rem; opacity: 0.06;
+    font-family: 'Noto Serif JP', serif;
+    pointer-events: none;
+  }
+
+  .module-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.75rem; color: var(--red);
+    letter-spacing: 0.2em; margin-bottom: 0.5rem;
+  }
+  .module-title { font-family: 'Cinzel Decorative', serif; font-size: 1.1rem; color: white; margin-bottom: 0.3rem; }
+  .module-jp { font-family: 'Noto Serif JP', serif; font-size: 1.4rem; color: var(--red); margin-bottom: 1rem; }
+  .module-desc { font-size: 0.88rem; color: rgba(245,240,232,0.65); line-height: 1.7; margin-bottom: 1.2rem; }
+  .module-items { list-style: none; }
+  .module-items li {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.85rem; color: rgba(245,240,232,0.8);
+    padding-left: 1.2rem; position: relative;
+  }
+  .module-items li::before {
+    content: '⬩'; position: absolute; left: 0;
+    color: var(--gold); font-size: 0.6rem; top: 0.6rem;
+  }
+  .module-items li:last-child { border-bottom: none; }
+  .module-badge {
+    display: inline-block; margin-top: 1rem;
+    padding: 0.3rem 1rem;
+    border-radius: 2px; font-size: 0.75rem; letter-spacing: 0.1em;
+  }
+  .badge-beginner { background: rgba(192,57,43,0.2); border: 1px solid rgba(192,57,43,0.5); color: var(--sakura); }
+  .badge-intermediate { background: rgba(212,175,55,0.15); border: 1px solid rgba(212,175,55,0.4); color: var(--gold); }
+  .badge-advanced { background: rgba(26,188,156,0.15); border: 1px solid rgba(26,188,156,0.4); color: var(--teal); }
+
+  /* ─── NARUTO / POP CULTURE ─── */
+  .pop-bg {
+    background: linear-gradient(180deg, #0d0810 0%, #1a0a05 50%, #0d0810 100%);
+  }
+
+  .pop-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .pop-card {
+    background: rgba(0,0,0,0.4);
+    border-radius: 4px;
+    padding: 1.5rem;
+    border: 1px solid rgba(230,126,34,0.2);
+    transition: border-color 0.3s, transform 0.3s;
+  }
+  .pop-card:hover { border-color: var(--naruto-orange); transform: translateY(-4px); }
+  .pop-icon { font-size: 2.5rem; margin-bottom: 0.8rem; }
+  .pop-title { font-family: 'Cinzel Decorative', serif; font-size: 1rem; color: var(--naruto-orange); margin-bottom: 0.5rem; }
+  .pop-text { font-size: 0.85rem; color: rgba(245,240,232,0.7); line-height: 1.7; }
+  .pop-example {
+    margin-top: 0.8rem;
+    background: rgba(230,126,34,0.1);
+    border-left: 2px solid var(--naruto-orange);
+    padding: 0.5rem 0.8rem;
+    font-size: 0.82rem;
+  }
+  .pop-example .jp { font-family: 'Noto Serif JP', serif; font-size: 1rem; color: var(--naruto-orange); }
+  .pop-example .tr { font-size: 0.78rem; color: rgba(245,240,232,0.6); margin-top: 0.2rem; }
+
+  /* ─── TIPS ─── */
+  .tips-bg { background: #0a0608; }
+  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+  .tip-card {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(212,175,55,0.2);
+    padding: 1.5rem; border-radius: 4px;
+  }
+  .tip-icon { font-size: 2rem; margin-bottom: 0.7rem; }
+  .tip-title { font-weight: 700; font-size: 0.95rem; color: var(--gold); margin-bottom: 0.5rem; }
+  .tip-text { font-size: 0.85rem; color: rgba(245,240,232,0.7); line-height: 1.7; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #050305;
+    padding: 3rem 0;
+    text-align: center;
+    border-top: 1px solid rgba(212,175,55,0.1);
+    position: relative; z-index: 1;
+  }
+  .footer-jp { font-family: 'Noto Serif JP', serif; font-size: 3rem; color: var(--red); opacity: 0.4; margin-bottom: 1rem; }
+  .footer-text { font-size: 0.85rem; color: rgba(245,240,232,0.4); letter-spacing: 0.1em; }
+
+  /* ─── ANIMS ─── */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #0a0608; }
+  ::-webkit-scrollbar-thumb { background: var(--red); border-radius: 3px; }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 1rem 2rem;
+    display: flex; justify-content: space-between; align-items: center;
+    background: rgba(5,3,5,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(212,175,55,0.1);
+    transition: all 0.3s;
+  }
+  .nav-logo { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; color: var(--red); font-weight: 900; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.8rem; color: rgba(245,240,232,0.6); text-decoration: none; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.3s; }
+  .nav-links a:hover { color: var(--gold); }
+
+  @media (max-width: 768px) {
+    .roadmap::before { left: 30px; }
+    .road-step, .road-step:nth-child(even) { flex-direction: column; padding-left: 80px; }
+    .road-step:nth-child(even) .step-content { text-align: left; }
+    .road-step:nth-child(even) .step-tags { justify-content: flex-start; }
+    .step-content { max-width: 100%; }
+    .step-node { position: absolute; left: 0; }
+    .nav-links { display: none; }
+  }
+
+  /* ─── WHEEL DIAGRAM ─── */
+  .wheel-container { display: flex; justify-content: center; margin: 2rem 0; }
+
+  /* ─── TABLE ─── */
+  .study-table { width: 100%; border-collapse: collapse; margin: 2rem 0; }
+  .study-table th {
+    background: rgba(192,57,43,0.3);
+    border: 1px solid rgba(212,175,55,0.2);
+    padding: 0.8rem 1rem;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.8rem; color: var(--gold);
+    letter-spacing: 0.1em;
+  }
+  .study-table td {
+    border: 1px solid rgba(212,175,55,0.1);
+    padding: 0.8rem 1rem;
+    font-size: 0.88rem;
+    color: rgba(245,240,232,0.8);
+    vertical-align: top;
+  }
+  .study-table tr:nth-child(even) td { background: rgba(255,255,255,0.02); }
+  .study-table tr:hover td { background: rgba(212,175,55,0.05); }
+  .td-jp { font-family: 'Noto Serif JP', serif; color: var(--red); font-size: 1.1rem; }
+
+  .badge-pill {
+    display: inline-block; padding: 0.15rem 0.6rem;
+    border-radius: 20px; font-size: 0.72rem;
+    font-weight: 600; margin-right: 0.3rem;
+  }
+  .pill-red { background: rgba(192,57,43,0.3); color: #ffb7b7; }
+  .pill-gold { background: rgba(212,175,55,0.25); color: var(--gold); }
+  .pill-teal { background: rgba(26,188,156,0.2); color: var(--teal); }
+
+  .intro-block {
+    max-width: 800px; margin: 0 auto 4rem;
+    background: rgba(0,0,0,0.3);
+    border-left: 3px solid var(--red);
+    padding: 2rem;
+    font-size: 1rem; line-height: 1.8;
+    color: rgba(245,240,232,0.8);
+  }
+  .intro-block strong { color: var(--gold); }
+
+  .big-number {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 4rem; color: var(--red);
+    text-align: center; opacity: 0.9;
+    line-height: 1; margin-bottom: 0.3rem;
+  }
+
+  .wheel-legend { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center; margin-top: 1.5rem; }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.82rem; }
+  .legend-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<canvas id="sakura-canvas"></canvas>
+
+<nav>
+  <div class="nav-logo">日本語</div>
+  <ul class="nav-links">
+    <li><a href="#metrics">Метрики</a></li>
+    <li><a href="#roadmap">Путь</a></li>
+    <li><a href="#checklist">Чеклист</a></li>
+    <li><a href="#modules">Модули</a></li>
+    <li><a href="#time">Расписание</a></li>
+    <li><a href="#popculture">Аниме/Игры</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-jp">日本語</div>
+  <div class="hero-sub">Нихонго Мастер · Путь Самурая</div>
+  <p class="hero-desc">
+    Полный учебный модуль для покорения японского языка — от нуля до разговорного уровня.
+    Специально для тех, кто любит аниме, игры и книги. 剣を取るように言葉を取れ。
+    <em>«Бери слова, как берёшь меч.»</em>
+  </p>
+  <div class="scroll-hint">↓ НАЧАТЬ ПУТЬ ↓</div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics-bg" id="metrics">
+  <div class="container">
+    <h2 class="section-title fade-in">КАРТА ЯПОНСКОГО ЯЗЫКА</h2>
+    <div class="section-jp fade-in">日本語の地図</div>
+    <div class="divider"></div>
+
+    <div class="metrics-grid fade-in">
+      <div class="metric-card">
+        <div class="metric-jp">ひらがな</div>
+        <div class="metric-num">46</div>
+        <div class="metric-label">Символов хирагана</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-jp">カタカナ</div>
+        <div class="metric-num">46</div>
+        <div class="metric-label">Символов катакана</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-jp">漢字</div>
+        <div class="metric-num">2136</div>
+        <div class="metric-label">Кандзи (школьный стандарт)</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-jp">言葉</div>
+        <div class="metric-num">10 000</div>
+        <div class="metric-label">Слов для свободного общения</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-jp">時間</div>
+        <div class="metric-num">2 200</div>
+        <div class="metric-label">Часов до уровня N2</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-jp">月</div>
+        <div class="metric-num">18–36</div>
+        <div class="metric-label">Месяцев при 2–3 ч/день</div>
+      </div>
+    </div>
+
+    <!-- SKILL BARS -->
+    <div class="skill-bars fade-in">
+      <h3 style="font-family:'Cinzel Decorative',serif; color:var(--gold); text-align:center; margin-bottom:2rem; font-size:1.1rem; letter-spacing:0.15em;">СЛОЖНОСТЬ КОМПОНЕНТОВ</h3>
+      <div class="skill-bar-row">
+        <div class="skill-bar-label">
+          <span class="skill-name">Хирагана / Катакана</span>
+          <span class="skill-pct">★★☆☆☆ — Легко</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill bar-teal" style="width:25%"></div></div>
+      </div>
+      <div class="skill-bar-row">
+        <div class="skill-bar-label">
+          <span class="skill-name">Произношение</span>
+          <span class="skill-pct">★★★☆☆ — Средне</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill bar-teal" style="width:40%"></div></div>
+      </div>
+      <div class="skill-bar-row">
+        <div class="skill-bar-label">
+          <span class="skill-name">Базовая грамматика</span>
+          <span class="skill-pct">★★★☆☆ — Средне</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill bar-gold" style="width:50%"></div></div>
+      </div>
+      <div class="skill-bar-row">
+        <div class="skill-bar-label">
+          <span class="skill-name">Словарный запас</span>
+          <span class="skill-pct">★★★★☆ — Сложно</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill bar-orange" style="width:70%"></div></div>
+      </div>
+      <div class="skill-bar-row">
+        <div class="skill-bar-label">
+          <span class="skill-name">Кандзи</span>
+          <span class="skill-pct">★★★★★ — Очень сложно</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill bar-red" style="width:90%"></div></div>
+      </div>
+      <div class="skill-bar-row">
+        <div class="skill-bar-label">
+          <span class="skill-name">Аудирование / Разговор</span>
+          <span class="skill-pct">★★★★☆ — Сложно</span>
+        </div>
+        <div class="bar-bg"><div class="bar-fill bar-sakura" style="width:75%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section class="roadmap-bg" id="roadmap">
+  <div class="container">
+    <h2 class="section-title fade-in">ПУТЬ САМУРАЯ</h2>
+    <div class="section-jp fade-in">武士の道 — Дорожная карта</div>
+    <div class="divider"></div>
+
+    <div class="roadmap fade-in">
+
+      <div class="road-step" style="justify-content:flex-end;">
+        <div class="step-node red">一</div>
+        <div class="step-content">
+          <div class="step-level">ЭТАП 1 · ПРОБУЖДЕНИЕ</div>
+          <div class="step-jp">目覚め</div>
+          <div class="step-title">Хирагана & Катакана</div>
+          <div class="step-time">⏱ 2–4 недели · 30–60 мин/день</div>
+          <div class="step-desc">Это твой алфавит. 92 символа, которые открывают все остальное. Как в RPG — сначала создаёшь персонажа. Хирагана = родные японские слова. Катакана = иностранные слова (アニメ, ゲーム).</div>
+          <div class="step-tags">
+            <span class="tag">あいうえお</span>
+            <span class="tag">アイウエオ</span>
+            <span class="tag">Mnemonics</span>
+            <span class="tag">Anki</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="road-step" style="justify-content:flex-start; padding-left:0;">
+        <div class="step-node gold">二</div>
+        <div class="step-content" style="text-align:right;">
+          <div class="step-level">ЭТАП 2 · ОРУЖИЕ</div>
+          <div class="step-jp">武器</div>
+          <div class="step-title">Базовая грамматика + 500 слов</div>
+          <div class="step-time">⏱ 1–3 месяца · 1–2 ч/день</div>
+          <div class="step-desc">Частицы は、が、を、に. Структура SOV (Подлежащее → Объект → Глагол). Первые диалоги. Это как узнать базовые атаки в файтинге.</div>
+          <div class="step-tags" style="justify-content:flex-end;">
+            <span class="tag">Genki I</span>
+            <span class="tag">Частицы</span>
+            <span class="tag">Глаголы</span>
+            <span class="tag">JLPT N5</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="road-step" style="justify-content:flex-end;">
+        <div class="step-node red">三</div>
+        <div class="step-content">
+          <div class="step-level">ЭТАП 3 · ТРЕНИРОВКА</div>
+          <div class="step-jp">修行</div>
+          <div class="step-title">Кандзи + расширение грамматики</div>
+          <div class="step-time">⏱ 3–6 месяцев · 1.5–2 ч/день</div>
+          <div class="step-desc">Первые 300 кандзи по RTK/Wanikani. Грамматика JLPT N4 — условные конструкции, вежливая речь (敬語). Читаешь первые мангу.</div>
+          <div class="step-tags">
+            <span class="tag">WaniKani</span>
+            <span class="tag">RTK</span>
+            <span class="tag">Manga</span>
+            <span class="tag">JLPT N4</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="road-step" style="justify-content:flex-start; padding-left:0;">
+        <div class="step-node orange">四</div>
+        <div class="step-content" style="text-align:right;">
+          <div class="step-level">ЭТАП 4 · БИТВА</div>
+          <div class="step-jp">戦い</div>
+          <div class="step-title">Разговорный + погружение</div>
+          <div class="step-time">⏱ 6–12 месяцев · 2–3 ч/день</div>
+          <div class="step-desc">Аниме без субтитров, Japanese podcasts, iTalki с носителями. Пишешь в японских чатах, читаешь ранобэ. Imabi для сложной грамматики.</div>
+          <div class="step-tags" style="justify-content:flex-end;">
+            <span class="tag">iTalki</span>
+            <span class="tag">Immersion</span>
+            <span class="tag">Shadowing</span>
+            <span class="tag">JLPT N3</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="road-step" style="justify-content:flex-end;">
+        <div class="step-node teal">五</div>
+        <div class="step-content">
+          <div class="step-level">ЭТАП 5 · МАСТЕРСТВО</div>
+          <div class="step-jp">達人</div>
+          <div class="step-title">Профессиональный японский</div>
+          <div class="step-time">⏱ 12–24 месяца · 2+ ч/день</div>
+          <div class="step-desc">Деловой этикет (敬語 keigo), специализированная лексика, подготовка к JLPT N2/N1. Читаешь книги, смотришь новости, проходишь собеседования.</div>
+          <div class="step-tags">
+            <span class="tag">Keigo</span>
+            <span class="tag">JLPT N2/N1</span>
+            <span class="tag">Business JP</span>
+            <span class="tag">口頭試問</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section class="checklist-bg" id="checklist">
+  <div class="container">
+    <h2 class="section-title fade-in">ЧЕК-ЛИСТ САМУРАЯ</h2>
+    <div class="section-jp fade-in">修行チェックリスト</div>
+    <div class="divider"></div>
+
+    <div class="intro-block fade-in">
+      Три уровня приоритетов: <strong>🔴 Приоритет 1</strong> — без этого никуда, учи в первую очередь.
+      <strong>🟡 Приоритет 2</strong> — нужно знать для свободного общения.
+      <strong>🟢 Приоритет 3</strong> — глубокое мастерство, для N2/N1 и работы.
+    </div>
+
+    <div class="checklist-grid fade-in">
+
+      <!-- P1 -->
+      <div class="checklist-card">
+        <div class="checklist-header p1">
+          <div class="priority-badge p1">P1</div>
+          <div class="checklist-title-block">
+            <h3>🔴 ОБЯЗАТЕЛЬНО ЗНАТЬ</h3>
+            <p>Фундамент · 3–6 месяцев</p>
+          </div>
+        </div>
+        <div class="checklist-body">
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Хирагана — все 46 символов + дакутен</div><div class="check-time">2 недели · 30 мин/день</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Катакана — все 46 символов</div><div class="check-time">2 недели · 20 мин/день</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Частицы: は、が、を、に、で、へ、と、の、も</div><div class="check-time">1 неделя практики</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Порядок слов SOV (субъект-объект-глагол)</div><div class="check-time">3 дня теории + практика</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Глаголы: группа 1, 2, 3 + спряжение です/ます</div><div class="check-time">2–3 недели</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">500 базовых слов (Anki-колода N5+N4)</div><div class="check-time">2 месяца · 10 слов/день</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Числа, время, дни недели, месяцы</div><div class="check-time">1 неделя</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Самоведение: だ/です、ある/いる</div><div class="check-time">5 дней</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Прилагательные い и な типа</div><div class="check-time">1 неделя</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">80 базовых кандзи (N5 уровень)</div><div class="check-time">1 месяц</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P2 -->
+      <div class="checklist-card">
+        <div class="checklist-header p2">
+          <div class="priority-badge p2">P2</div>
+          <div class="checklist-title-block">
+            <h3>🟡 СТОИТ ЗНАТЬ</h3>
+            <p>Разговорный уровень · 6–18 месяцев</p>
+          </div>
+        </div>
+        <div class="checklist-body">
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Вежливая речь — て-форма, た-форма глаголов</div><div class="check-time">3 недели</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Условные конструкции: たら, ば, なら, と</div><div class="check-time">2 недели</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Потенциальная форма (~られる/~える)</div><div class="check-time">1 неделя</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Пассивная и каузативная формы</div><div class="check-time">2 недели</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">2000+ слов словарного запаса</div><div class="check-time">4–6 месяцев</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">300 кандзи (WaniKani до 20-го уровня)</div><div class="check-time">3–4 месяца</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Счётные суффиксы (本、枚、台、匹...)</div><div class="check-time">1 неделя</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Указательные местоимения これ・それ・あれ</div><div class="check-time">3 дня</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Shadowing техника (имитация речи носителей)</div><div class="check-time">Ежедневно 20–30 мин</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Базовый Keigo (уважительная речь)</div><div class="check-time">1 месяц</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- P3 -->
+      <div class="checklist-card">
+        <div class="checklist-header p3">
+          <div class="priority-badge p3">P3</div>
+          <div class="checklist-title-block">
+            <h3>🟢 ГЛУБОКОЕ МАСТЕРСТВО</h3>
+            <p>N2/N1 + Работа · 18–36 месяцев</p>
+          </div>
+        </div>
+        <div class="checklist-body">
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Полный Keigo — 謙譲語、尊敬語、丁寧語</div><div class="check-time">2–3 месяца</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">2136 кандзи Jōyō (школьный стандарт)</div><div class="check-time">1–2 года</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Классическая литература и историческая речь</div><div class="check-time">По желанию</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Деловая переписка — ビジネスメール</div><div class="check-time">3 недели</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Диалекты (関西弁 Кансай, 東北弁 Тохоку)</div><div class="check-time">Длительно</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">10 000+ слов — книги, новости NHK без субтитров</div><div class="check-time">2–3 года накопительно</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">JLPT N2 (рабочий уровень в Японии)</div><div class="check-time">Экзамен 2 раза в год</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Написание эссе — резюме и деловые документы</div><div class="check-time">2 месяца</div></div>
+          </div>
+          <div class="check-item" onclick="toggle(this)">
+            <div class="check-box"></div>
+            <div><div class="check-text">Архаическая грамматика 文語文法 (для N1)</div><div class="check-time">По необходимости</div></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- LEARNING MODULES -->
+<section class="modules-bg" id="modules">
+  <div class="container">
+    <h2 class="section-title fade-in">УЧЕБНЫЕ МОДУЛИ</h2>
+    <div class="section-jp fade-in">学習モジュール</div>
+    <div class="divider"></div>
+
+    <div class="modules-grid fade-in">
+
+      <div class="module-card" data-icon="あ">
+        <div class="module-num">МОДУЛЬ 01</div>
+        <div class="module-title">Хирагана</div>
+        <div class="module-jp">ひらがな</div>
+        <div class="module-desc">Основная слоговая азбука. Как в Dark Souls — нельзя победить финального босса, не освоив базовые атаки. Каждый символ — один слог.</div>
+        <ul class="module-items">
+          <li>46 основных символов (а-ряд до ва-ряд)</li>
+          <li>Дакутен が、ざ、だ、ば + хандакутен ぱ</li>
+          <li>Малые символы ゃゅょ (комбинации)</li>
+          <li>Тренировка: RTKana, Duolingo, Anki</li>
+          <li>Метод: мнемоника + написание от руки</li>
+        </ul>
+        <span class="module-badge badge-beginner">НАЧАЛЬНЫЙ · 2 нед.</span>
+      </div>
+
+      <div class="module-card" data-icon="ア">
+        <div class="module-num">МОДУЛЬ 02</div>
+        <div class="module-title">Катакана</div>
+        <div class="module-jp">カタカナ</div>
+        <div class="module-desc">Азбука для иностранных слов. Именно здесь пишется アニメ (аниме), ゲーム (гэему), ナルト (Наруто). Выучи и читай слова из своего мира!</div>
+        <ul class="module-items">
+          <li>46 символов — те же звуки, другое начертание</li>
+          <li>Гайрайго — иностранные заимствования</li>
+          <li>コーヒー、パン、テレビ — узнаёшь?</li>
+          <li>Тренировка: читай меню в аниме!</li>
+          <li>Инструмент: Real Kana, Katakana Game</li>
+        </ul>
+        <span class="module-badge badge-beginner">НАЧАЛЬНЫЙ · 2 нед.</span>
+      </div>
+
+      <div class="module-card" data-icon="文">
+        <div class="module-num">МОДУЛЬ 03</div>
+        <div class="module-title">Грамматика N5–N4</div>
+        <div class="module-jp">文法の基礎</div>
+        <div class="module-desc">Японская грамматика — как боевая система в RPG. SOV порядок меняет всё. Частицы — как теги в программировании: помечают роль каждого слова.</div>
+        <ul class="module-items">
+          <li>Частицы: は・が・を・に・で・へ・と・の・も・か</li>
+          <li>Глаголы: группы 1, 2, 3 (る、う、する/くる)</li>
+          <li>Время: настоящее/будущее vs прошедшее</li>
+          <li>Вежливость: です/ます форма</li>
+          <li>Источник: Genki I&II, Tae Kim Grammar</li>
+        </ul>
+        <span class="module-badge badge-beginner">НАЧАЛЬНЫЙ · 2–3 мес.</span>
+      </div>
+
+      <div class="module-card" data-icon="字">
+        <div class="module-num">МОДУЛЬ 04</div>
+        <div class="module-title">Кандзи</div>
+        <div class="module-jp">漢字</div>
+        <div class="module-desc">2136 иероглифов — не так страшно, как кажется. Это как прокачка скиллов: по 10–15 в день через SRS-систему. Через год читаешь манга, через два — книги.</div>
+        <ul class="module-items">
+          <li>N5: 80 кандзи — 日、月、水、火、山、川...</li>
+          <li>N4: 180 кандзи — базовые глаголы и существительные</li>
+          <li>N3: 300+ кандзи — можно читать манга</li>
+          <li>RTK метод — запоминание по историям</li>
+          <li>WaniKani — мнемоника + SRS системы</li>
+        </ul>
+        <span class="module-badge badge-intermediate">СРЕДНИЙ · 6–18 мес.</span>
+      </div>
+
+      <div class="module-card" data-icon="話">
+        <div class="module-num">МОДУЛЬ 05</div>
+        <div class="module-title">Говорение</div>
+        <div class="module-jp">会話</div>
+        <div class="module-desc">Язык живёт в разговоре. Как прокачка персонажа через битвы — без практики с живыми людьми не вырастешь. iTalki, HiNative, японские Discord-серверы.</div>
+        <ul class="module-items">
+          <li>Shadowing — повторяй за носителями</li>
+          <li>Anki + аудио — тренируй уши</li>
+          <li>iTalki / Preply — репетиторы из Японии</li>
+          <li>Пиши в японских чатах (mixi, Twitter JP)</li>
+          <li>Языковой обмен (tandem partners)</li>
+        </ul>
+        <span class="module-badge badge-intermediate">СРЕДНИЙ · постоянно</span>
+      </div>
+
+      <div class="module-card" data-icon="礼">
+        <div class="module-num">МОДУЛЬ 06</div>
+        <div class="module-title">Кейго — вежливость</div>
+        <div class="module-jp">敬語</div>
+        <div class="module-desc">В Японии вежливость — это не просто слова, это код чести самурая. Три уровня: 丁寧語 (вежливо), 尊敬語 (уважение к собеседнику), 謙譲語 (унижение себя).</div>
+        <ul class="module-items">
+          <li>丁寧語 — です/ます форма (уже знаешь!)</li>
+          <li>尊敬語 — いらっしゃる вместо いる/ある/行く</li>
+          <li>謙譲語 — まいる、おる、いたす</li>
+          <li>Деловые фразы: お世話になっております</li>
+          <li>Нужен для JLPT N3 и выше</li>
+        </ul>
+        <span class="module-badge badge-advanced">ПРОДВИНУТЫЙ · 2–3 мес.</span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIME PLAN -->
+<section class="time-bg" id="time">
+  <div class="container">
+    <h2 class="section-title fade-in">РАСПИСАНИЕ САМУРАЯ</h2>
+    <div class="section-jp fade-in">修行スケジュール</div>
+    <div class="divider"></div>
+
+    <div class="time-grid fade-in">
+      <div class="time-card" data-jp="朝">
+        <div class="time-schedule">🌅 УТРО (20–30 мин)</div>
+        <div class="time-hours">Anki повторение</div>
+        <div class="time-activities">
+          • Повторяй карточки Anki — слова и кандзи<br>
+          • Цель: 0 карточек в очереди повторения<br>
+          • Это как медитация самурая перед битвой<br>
+          • Приложение: AnkiDroid / AnkiMobile
+        </div>
+      </div>
+      <div class="time-card" data-jp="昼">
+        <div class="time-schedule">☀️ ДЕНЬ (30–60 мин)</div>
+        <div class="time-hours">Грамматика + чтение</div>
+        <div class="time-activities">
+          • 1 урок из Genki или Bunpro<br>
+          • Читай параграф из манга или ранобэ<br>
+          • Новые слова → сразу в Anki<br>
+          • NHK Web Easy — новости простым яп.
+        </div>
+      </div>
+      <div class="time-card" data-jp="夜">
+        <div class="time-schedule">🌙 ВЕЧЕР (30–60 мин)</div>
+        <div class="time-hours">Аниме / Игры / Говорение</div>
+        <div class="time-activities">
+          • Аниме с JP субтитрами (Netflix/Crunchyroll)<br>
+          • Японская игра или VN (визуальный роман)<br>
+          • Shadowing — повторяй фразы за героями<br>
+          • 1–2 раза в неделю — сессия с iTalki
+        </div>
+      </div>
+      <div class="time-card" data-jp="週末">
+        <div class="time-schedule">🏯 ВЫХОДНЫЕ (2–3 ч)</div>
+        <div class="time-hours">Глубокое погружение</div>
+        <div class="time-activities">
+          • Смотри подкасты на Japanese Ammo<br>
+          • Пиши короткое эссе или дневник на японском<br>
+          • Читай целую главу манга/книги<br>
+          • Проходи тест JLPT Sensei
+        </div>
+      </div>
+    </div>
+
+    <!-- TABLE -->
+    <div class="fade-in" style="margin-top:3rem; overflow-x:auto;">
+      <h3 style="font-family:'Cinzel Decorative',serif; color:var(--gold); text-align:center; margin-bottom:1.5rem; letter-spacing:0.15em;">ПЛАН ПО МЕСЯЦАМ</h3>
+      <table class="study-table">
+        <thead>
+          <tr>
+            <th>Период</th>
+            <th>Цель</th>
+            <th>Что учишь</th>
+            <th>Ресурсы</th>
+            <th>Уровень</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Мес. 1–2</strong></td>
+            <td><span class="td-jp">ひらがな・カタカナ</span></td>
+            <td>Азбука + 200 слов + базовые фразы</td>
+            <td><span class="badge-pill pill-red">Anki</span><span class="badge-pill pill-gold">Duolingo</span></td>
+            <td><span class="badge-pill pill-teal">N5 старт</span></td>
+          </tr>
+          <tr>
+            <td><strong>Мес. 3–4</strong></td>
+            <td><span class="td-jp">文法の基礎</span></td>
+            <td>Частицы, глаголы, 500 слов, 80 кандзи</td>
+            <td><span class="badge-pill pill-red">Genki I</span><span class="badge-pill pill-gold">WaniKani</span></td>
+            <td><span class="badge-pill pill-teal">N5</span></td>
+          </tr>
+          <tr>
+            <td><strong>Мес. 5–8</strong></td>
+            <td><span class="td-jp">読み書き練習</span></td>
+            <td>Genki II + 300 кандзи + начало разговора</td>
+            <td><span class="badge-pill pill-red">Genki II</span><span class="badge-pill pill-gold">iTalki</span></td>
+            <td><span class="badge-pill pill-gold">N4</span></td>
+          </tr>
+          <tr>
+            <td><strong>Мес. 9–14</strong></td>
+            <td><span class="td-jp">会話力アップ</span></td>
+            <td>Погружение, манга, аниме, 1000+ слов</td>
+            <td><span class="badge-pill pill-red">Imabi</span><span class="badge-pill pill-gold">Bunpro</span></td>
+            <td><span class="badge-pill pill-gold">N3</span></td>
+          </tr>
+          <tr>
+            <td><strong>Мес. 15–24</strong></td>
+            <td><span class="td-jp">流暢に話す</span></td>
+            <td>Keigo, деловой JP, 2000+ слов, 800+ кандзи</td>
+            <td><span class="badge-pill pill-red">JLPT N2 prep</span><span class="badge-pill pill-gold">News</span></td>
+            <td><span class="badge-pill pill-teal">N2</span></td>
+          </tr>
+          <tr>
+            <td><strong>Мес. 25–36+</strong></td>
+            <td><span class="td-jp">達人レベル</span></td>
+            <td>2136 кандзи, N1 грамматика, работа на JP</td>
+            <td><span class="badge-pill pill-red">Классика</span><span class="badge-pill pill-gold">N1 prep</span></td>
+            <td><span class="badge-pill pill-teal">N1</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- POP CULTURE -->
+<section class="pop-bg" id="popculture">
+  <div class="container">
+    <h2 class="section-title fade-in">УЧИСЬ ЧЕРЕЗ АНИМЕ И ИГРЫ</h2>
+    <div class="section-jp fade-in">アニメと遊びで学ぶ</div>
+    <div class="divider"></div>
+
+    <div class="intro-block fade-in">
+      Лучший способ выучить язык — <strong>полюбить его носителей</strong>. Аниме, манга, JRPGs и визуальные романы дадут тебе тысячи часов живого японского. Герои аниме буквально <strong>учат тебя говорить</strong>.
+    </div>
+
+    <div class="pop-grid fade-in">
+      <div class="pop-card">
+        <div class="pop-icon">🍥</div>
+        <div class="pop-title">NARUTO / НАРУТО</div>
+        <div class="pop-text">Идеально для начинающих! Речь чёткая, эмоциональная. Наруто говорит простыми предложениями. Учи слова упорства и дружбы — основа японской культуры.</div>
+        <div class="pop-example">
+          <div class="jp">信じてもらえなくても、絶対に諦めない！</div>
+          <div class="tr">Даже если никто не верит — я никогда не сдамся!</div>
+        </div>
+      </div>
+      <div class="pop-card">
+        <div class="pop-icon">⚔️</div>
+        <div class="pop-title">DEMON SLAYER / КНБ</div>
+        <div class="pop-text">Самурайская лексика, формальная речь, архаичные выражения. Тандзиро говорит очень вежливо — прекрасный образец です/ます формы в действии.</div>
+        <div class="pop-example">
+          <div class="jp">俺は長男だから我慢できる！</div>
+          <div class="tr">Я старший брат, поэтому я могу терпеть!</div>
+        </div>
+      </div>
+      <div class="pop-card">
+        <div class="pop-icon">🎮</div>
+        <div class="pop-title">FINAL FANTASY / JRPG</div>
+        <div class="pop-text">Меню игр на японском — сотни слов в контексте. FF7, Persona, Dragon Quest — ставь яп. интерфейс. Визуальные романы — лучший способ читать.</div>
+        <div class="pop-example">
+          <div class="jp">攻撃する / 魔法を使う / 逃げる</div>
+          <div class="tr">Атаковать / Использовать магию / Сбежать</div>
+        </div>
+      </div>
+      <div class="pop-card">
+        <div class="pop-icon">📚</div>
+        <div class="pop-title">МАНГА ДЛЯ УЧЁБЫ</div>
+        <div class="pop-text">Начни с: Yotsuba&! (самая простая), Chi's Sweet Home, Shirokuma Cafe. Затем: One Piece, Naruto с JP субтитрами. Furigana помогает читать кандзи.</div>
+        <div class="pop-example">
+          <div class="jp">よつばと！— идеально для N5–N4</div>
+          <div class="tr">Ежедневная жизнь девочки · Живой разговорный язык</div>
+        </div>
+      </div>
+      <div class="pop-card">
+        <div class="pop-icon">🎵</div>
+        <div class="pop-title">J-POP / АНИМЕ OST</div>
+        <div class="pop-text">Гимны Naruto, Demon Slayer, Your Lie in April. Учи тексты песен — мозг запоминает через музыку в 5 раз быстрее. YOASOBI, LiSA, Yorushika.</div>
+        <div class="pop-example">
+          <div class="jp">紅蓮華 — LiSA (Demon Slayer OP)</div>
+          <div class="tr">Каждое слово — живой язык в ритме</div>
+        </div>
+      </div>
+      <div class="pop-card">
+        <div class="pop-icon">📖</div>
+        <div class="pop-title">РАНОБЭ / LIGHT NOVELS</div>
+        <div class="pop-text">Sword Art Online, Re:Zero, Oregairu — те самые книги, которые стали аниме. Сначала читай с фуриганой. Используй Yomichan (расширение для браузера).</div>
+        <div class="pop-example">
+          <div class="jp">俺ガイル → NHK Web Easy → 新聞</div>
+          <div class="tr">Путь читателя: ранобэ → новости → газеты</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS & TIPS -->
+<section class="tips-bg" id="tips">
+  <div class="container">
+    <h2 class="section-title fade-in">АРСЕНАЛ САМУРАЯ</h2>
+    <div class="section-jp fade-in">道具と戦術</div>
+    <div class="divider"></div>
+    <div class="tips-grid fade-in">
+      <div class="tip-card">
+        <div class="tip-icon">🃏</div>
+        <div class="tip-title">Anki — SRS система</div>
+        <div class="tip-text">Интервальное повторение — научно доказанный способ запоминания. Скачай колоды: Core 2000/6000, JLPT N5-N1. Делай 10–20 новых карточек в день.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">⛩️</div>
+        <div class="tip-title">WaniKani</div>
+        <div class="tip-text">Платформа для кандзи по мнемонике. 60 уровней = все Jōyō кандзи. 1–2 года при регулярной работе. Первые 3 уровня бесплатны.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🌐</div>
+        <div class="tip-title">Bunpro — грамматика</div>
+        <div class="tip-text">SRS для грамматических конструкций. Охватывает всё от N5 до N1. Объяснения на английском с примерами из аниме. Идеально как дополнение к Genki.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🎧</div>
+        <div class="tip-title">Shadowing техника</div>
+        <div class="tip-text">Слушай носителя и немедленно повторяй вслух. Начни с Shadowing: Japanese as a Foreign Language (Кента Минами). 15 мин/день = огромный прогресс.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">🔍</div>
+        <div class="tip-title">Yomichan / Jisho</div>
+        <div class="tip-text">Yomichan — расширение браузера: наводишь мышку на японское слово → мгновенный перевод. Jisho.org — лучший словарь. Незаменимы при чтении.</div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-icon">📺</div>
+        <div class="tip-title">Language Reactor</div>
+        <div class="tip-text">Netflix + Language Reactor = аниме с двойными субтитрами (JP + RU). Кликаешь на слово → мгновенный перевод + добавление в Anki. Бесценно!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-jp">道は続く</div>
+  <div class="footer-text">
+    日本語への道は一歩から始まる · Путь в японский начинается с одного шага<br><br>
+    N5 → N4 → N3 → N2 → N1 → 日本で働く ⚔️
+  </div>
+</footer>
+
+<script>
+// ─── SAKURA PARTICLES ───
+const canvas = document.getElementById('sakura-canvas');
+const ctx = canvas.getContext('2d');
+let petals = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+function createPetal() {
+  return {
+    x: Math.random() * canvas.width,
+    y: -20,
+    size: Math.random() * 8 + 4,
+    speedY: Math.random() * 1.5 + 0.5,
+    speedX: Math.random() * 1 - 0.5,
+    rotation: Math.random() * Math.PI * 2,
+    rotSpeed: (Math.random() - 0.5) * 0.05,
+    opacity: Math.random() * 0.4 + 0.1,
+    sway: Math.random() * 0.02,
+    swayOffset: Math.random() * Math.PI * 2
+  };
+}
+
+for (let i = 0; i < 60; i++) {
+  const p = createPetal();
+  p.y = Math.random() * canvas.height;
+  petals.push(p);
+}
+
+let frame = 0;
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  frame++;
+
+  petals.forEach((p, i) => {
+    p.y += p.speedY;
+    p.x += p.speedX + Math.sin(frame * p.sway + p.swayOffset) * 0.5;
+    p.rotation += p.rotSpeed;
+
+    if (p.y > canvas.height + 20) {
+      petals[i] = createPetal();
+      return;
+    }
+
+    ctx.save();
+    ctx.translate(p.x, p.y);
+    ctx.rotate(p.rotation);
+    ctx.globalAlpha = p.opacity;
+
+    // Draw sakura petal shape
+    ctx.beginPath();
+    ctx.fillStyle = '#ffb7c5';
+    for (let j = 0; j < 5; j++) {
+      const angle = (j * Math.PI * 2) / 5 - Math.PI / 2;
+      const px = Math.cos(angle) * p.size;
+      const py = Math.sin(angle) * p.size;
+      const cpx = Math.cos(angle + Math.PI / 5) * p.size * 0.5;
+      const cpy = Math.sin(angle + Math.PI / 5) * p.size * 0.5;
+      if (j === 0) ctx.moveTo(px, py);
+      else ctx.quadraticCurveTo(cpx * 0.3, cpy * 0.3, px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  });
+
+  requestAnimationFrame(animate);
+}
+animate();
+
+// ─── FADE IN ON SCROLL ───
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(el => {
+    if (el.isIntersecting) {
+      el.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1 });
+fadeEls.forEach(el => observer.observe(el));
+
+// ─── ANIMATED BAR FILLS ───
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      const fills = e.target.querySelectorAll('.bar-fill');
+      fills.forEach(f => {
+        const w = f.style.width;
+        f.style.width = '0%';
+        setTimeout(() => { f.style.width = w; }, 200);
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('.skill-bars').forEach(el => barObserver.observe(el));
+
+// ─── CHECKLIST TOGGLE ───
+function toggle(el) {
+  el.classList.toggle('done');
+  saveChecks();
+}
+
+function saveChecks() {
+  const items = document.querySelectorAll('.check-item');
+  const state = Array.from(items).map(i => i.classList.contains('done'));
+  try { localStorage.setItem('nihongo_checks', JSON.stringify(state)); } catch(e){}
+}
+
+function loadChecks() {
+  try {
+    const state = JSON.parse(localStorage.getItem('nihongo_checks') || '[]');
+    const items = document.querySelectorAll('.check-item');
+    items.forEach((item, i) => {
+      if (state[i]) item.classList.add('done');
+    });
+  } catch(e) {}
+}
+loadChecks();
+
+// ─── NAV SCROLL ───
+window.addEventListener('scroll', () => {
+  const nav = document.querySelector('nav');
+  nav.style.background = window.scrollY > 50
+    ? 'rgba(5,3,5,0.98)'
+    : 'rgba(5,3,5,0.85)';
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+  });
+});
+</script>
+</body>
+</html>

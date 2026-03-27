@@ -1,0 +1,31 @@
+{
+  "id": "en_present_simple_3",
+  "version": 1,
+  "title": "Present Simple Questions",
+  "language": "english",
+  "meta": {
+    "title": "Present Simple Questions",
+    "description": "Ask questions with do and does.",
+    "estimated_xp": 58,
+    "difficulty": 2,
+    "rating": 4.8,
+    "language": "en",
+    "tags": ["questions", "present-simple"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "title": "Do and Does",
+      "content": "Use do for I, you, we, they. Use does for he, she, it.",
+      "bullets": ["Do you work here?", "Does she like coffee?"]
+    },
+    {
+      "id": "b2",
+      "type": "quiz",
+      "question": "Which question is correct?",
+      "options": ["Does they study?", "Do they study?"],
+      "correct_answer": "Do they study?"
+    }
+  ]
+}

@@ -27,6 +27,7 @@ mixin _$LessonIsland {
   int get order => throw _privateConstructorUsedError;
   bool get isLocked => throw _privateConstructorUsedError;
   double get progress => throw _privateConstructorUsedError;
+  bool get isStarter => throw _privateConstructorUsedError;
   String? get emoji => throw _privateConstructorUsedError;
 
   /// Serializes this LessonIsland to a JSON map.
@@ -53,6 +54,7 @@ abstract class $LessonIslandCopyWith<$Res> {
       int order,
       bool isLocked,
       double progress,
+      bool isStarter,
       String? emoji});
 }
 
@@ -78,6 +80,7 @@ class _$LessonIslandCopyWithImpl<$Res, $Val extends LessonIsland>
     Object? order = null,
     Object? isLocked = null,
     Object? progress = null,
+    Object? isStarter = null,
     Object? emoji = freezed,
   }) {
     return _then(_value.copyWith(
@@ -109,6 +112,10 @@ class _$LessonIslandCopyWithImpl<$Res, $Val extends LessonIsland>
           ? _value.progress
           : progress // ignore: cast_nullable_to_non_nullable
               as double,
+      isStarter: null == isStarter
+          ? _value.isStarter
+          : isStarter // ignore: cast_nullable_to_non_nullable
+              as bool,
       emoji: freezed == emoji
           ? _value.emoji
           : emoji // ignore: cast_nullable_to_non_nullable
@@ -133,6 +140,7 @@ abstract class _$$LessonIslandImplCopyWith<$Res>
       int order,
       bool isLocked,
       double progress,
+      bool isStarter,
       String? emoji});
 }
 
@@ -156,6 +164,7 @@ class __$$LessonIslandImplCopyWithImpl<$Res>
     Object? order = null,
     Object? isLocked = null,
     Object? progress = null,
+    Object? isStarter = null,
     Object? emoji = freezed,
   }) {
     return _then(_$LessonIslandImpl(
@@ -187,6 +196,10 @@ class __$$LessonIslandImplCopyWithImpl<$Res>
           ? _value.progress
           : progress // ignore: cast_nullable_to_non_nullable
               as double,
+      isStarter: null == isStarter
+          ? _value.isStarter
+          : isStarter // ignore: cast_nullable_to_non_nullable
+              as bool,
       emoji: freezed == emoji
           ? _value.emoji
           : emoji // ignore: cast_nullable_to_non_nullable
@@ -206,6 +219,7 @@ class _$LessonIslandImpl implements _LessonIsland {
       this.order = 1,
       this.isLocked = false,
       this.progress = 0,
+      this.isStarter = false,
       this.emoji});
 
   factory _$LessonIslandImpl.fromJson(Map<String, dynamic> json) =>
@@ -229,11 +243,14 @@ class _$LessonIslandImpl implements _LessonIsland {
   @JsonKey()
   final double progress;
   @override
+  @JsonKey()
+  final bool isStarter;
+  @override
   final String? emoji;
 
   @override
   String toString() {
-    return 'LessonIsland(lessonId: $lessonId, title: $title, subtitle: $subtitle, language: $language, order: $order, isLocked: $isLocked, progress: $progress, emoji: $emoji)';
+    return 'LessonIsland(lessonId: $lessonId, title: $title, subtitle: $subtitle, language: $language, order: $order, isLocked: $isLocked, progress: $progress, isStarter: $isStarter, emoji: $emoji)';
   }
 
   @override
@@ -253,13 +270,15 @@ class _$LessonIslandImpl implements _LessonIsland {
                 other.isLocked == isLocked) &&
             (identical(other.progress, progress) ||
                 other.progress == progress) &&
+            (identical(other.isStarter, isStarter) ||
+                other.isStarter == isStarter) &&
             (identical(other.emoji, emoji) || other.emoji == emoji));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, lessonId, title, subtitle,
-      language, order, isLocked, progress, emoji);
+      language, order, isLocked, progress, isStarter, emoji);
 
   /// Create a copy of LessonIsland
   /// with the given fields replaced by the non-null parameter values.
@@ -286,6 +305,7 @@ abstract class _LessonIsland implements LessonIsland {
       final int order,
       final bool isLocked,
       final double progress,
+      final bool isStarter,
       final String? emoji}) = _$LessonIslandImpl;
 
   factory _LessonIsland.fromJson(Map<String, dynamic> json) =
@@ -305,6 +325,8 @@ abstract class _LessonIsland implements LessonIsland {
   bool get isLocked;
   @override
   double get progress;
+  @override
+  bool get isStarter;
   @override
   String? get emoji;
 
@@ -328,6 +350,8 @@ mixin _$RoadmapDocument {
   List<RoadmapSection> get sections => throw _privateConstructorUsedError;
   String? get sourcePath => throw _privateConstructorUsedError;
   bool get isImported => throw _privateConstructorUsedError;
+  String? get externalUrl => throw _privateConstructorUsedError;
+  bool get isInteractiveSite => throw _privateConstructorUsedError;
 
   /// Serializes this RoadmapDocument to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -351,7 +375,9 @@ abstract class $RoadmapDocumentCopyWith<$Res> {
       SupportedLanguage language,
       List<RoadmapSection> sections,
       String? sourcePath,
-      bool isImported});
+      bool isImported,
+      String? externalUrl,
+      bool isInteractiveSite});
 }
 
 /// @nodoc
@@ -375,6 +401,8 @@ class _$RoadmapDocumentCopyWithImpl<$Res, $Val extends RoadmapDocument>
     Object? sections = null,
     Object? sourcePath = freezed,
     Object? isImported = null,
+    Object? externalUrl = freezed,
+    Object? isInteractiveSite = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -401,6 +429,14 @@ class _$RoadmapDocumentCopyWithImpl<$Res, $Val extends RoadmapDocument>
           ? _value.isImported
           : isImported // ignore: cast_nullable_to_non_nullable
               as bool,
+      externalUrl: freezed == externalUrl
+          ? _value.externalUrl
+          : externalUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isInteractiveSite: null == isInteractiveSite
+          ? _value.isInteractiveSite
+          : isInteractiveSite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -419,7 +455,9 @@ abstract class _$$RoadmapDocumentImplCopyWith<$Res>
       SupportedLanguage language,
       List<RoadmapSection> sections,
       String? sourcePath,
-      bool isImported});
+      bool isImported,
+      String? externalUrl,
+      bool isInteractiveSite});
 }
 
 /// @nodoc
@@ -441,6 +479,8 @@ class __$$RoadmapDocumentImplCopyWithImpl<$Res>
     Object? sections = null,
     Object? sourcePath = freezed,
     Object? isImported = null,
+    Object? externalUrl = freezed,
+    Object? isInteractiveSite = null,
   }) {
     return _then(_$RoadmapDocumentImpl(
       id: null == id
@@ -467,6 +507,14 @@ class __$$RoadmapDocumentImplCopyWithImpl<$Res>
           ? _value.isImported
           : isImported // ignore: cast_nullable_to_non_nullable
               as bool,
+      externalUrl: freezed == externalUrl
+          ? _value.externalUrl
+          : externalUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isInteractiveSite: null == isInteractiveSite
+          ? _value.isInteractiveSite
+          : isInteractiveSite // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -480,7 +528,9 @@ class _$RoadmapDocumentImpl implements _RoadmapDocument {
       required this.language,
       final List<RoadmapSection> sections = const <RoadmapSection>[],
       this.sourcePath,
-      this.isImported = false})
+      this.isImported = false,
+      this.externalUrl,
+      this.isInteractiveSite = false})
       : _sections = sections;
 
   factory _$RoadmapDocumentImpl.fromJson(Map<String, dynamic> json) =>
@@ -506,10 +556,15 @@ class _$RoadmapDocumentImpl implements _RoadmapDocument {
   @override
   @JsonKey()
   final bool isImported;
+  @override
+  final String? externalUrl;
+  @override
+  @JsonKey()
+  final bool isInteractiveSite;
 
   @override
   String toString() {
-    return 'RoadmapDocument(id: $id, title: $title, language: $language, sections: $sections, sourcePath: $sourcePath, isImported: $isImported)';
+    return 'RoadmapDocument(id: $id, title: $title, language: $language, sections: $sections, sourcePath: $sourcePath, isImported: $isImported, externalUrl: $externalUrl, isInteractiveSite: $isInteractiveSite)';
   }
 
   @override
@@ -525,13 +580,25 @@ class _$RoadmapDocumentImpl implements _RoadmapDocument {
             (identical(other.sourcePath, sourcePath) ||
                 other.sourcePath == sourcePath) &&
             (identical(other.isImported, isImported) ||
-                other.isImported == isImported));
+                other.isImported == isImported) &&
+            (identical(other.externalUrl, externalUrl) ||
+                other.externalUrl == externalUrl) &&
+            (identical(other.isInteractiveSite, isInteractiveSite) ||
+                other.isInteractiveSite == isInteractiveSite));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, title, language,
-      const DeepCollectionEquality().hash(_sections), sourcePath, isImported);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      title,
+      language,
+      const DeepCollectionEquality().hash(_sections),
+      sourcePath,
+      isImported,
+      externalUrl,
+      isInteractiveSite);
 
   /// Create a copy of RoadmapDocument
   /// with the given fields replaced by the non-null parameter values.
@@ -557,7 +624,9 @@ abstract class _RoadmapDocument implements RoadmapDocument {
       required final SupportedLanguage language,
       final List<RoadmapSection> sections,
       final String? sourcePath,
-      final bool isImported}) = _$RoadmapDocumentImpl;
+      final bool isImported,
+      final String? externalUrl,
+      final bool isInteractiveSite}) = _$RoadmapDocumentImpl;
 
   factory _RoadmapDocument.fromJson(Map<String, dynamic> json) =
       _$RoadmapDocumentImpl.fromJson;
@@ -574,6 +643,10 @@ abstract class _RoadmapDocument implements RoadmapDocument {
   String? get sourcePath;
   @override
   bool get isImported;
+  @override
+  String? get externalUrl;
+  @override
+  bool get isInteractiveSite;
 
   /// Create a copy of RoadmapDocument
   /// with the given fields replaced by the non-null parameter values.

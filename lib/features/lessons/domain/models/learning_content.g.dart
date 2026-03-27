@@ -15,6 +15,7 @@ _$LessonIslandImpl _$$LessonIslandImplFromJson(Map<String, dynamic> json) =>
       order: (json['order'] as num?)?.toInt() ?? 1,
       isLocked: json['isLocked'] as bool? ?? false,
       progress: (json['progress'] as num?)?.toDouble() ?? 0,
+      isStarter: json['isStarter'] as bool? ?? false,
       emoji: json['emoji'] as String?,
     );
 
@@ -27,6 +28,7 @@ Map<String, dynamic> _$$LessonIslandImplToJson(_$LessonIslandImpl instance) =>
       'order': instance.order,
       'isLocked': instance.isLocked,
       'progress': instance.progress,
+      'isStarter': instance.isStarter,
       'emoji': instance.emoji,
     };
 
@@ -47,6 +49,8 @@ _$RoadmapDocumentImpl _$$RoadmapDocumentImplFromJson(
           const <RoadmapSection>[],
       sourcePath: json['sourcePath'] as String?,
       isImported: json['isImported'] as bool? ?? false,
+      externalUrl: json['externalUrl'] as String?,
+      isInteractiveSite: json['isInteractiveSite'] as bool? ?? false,
     );
 
 Map<String, dynamic> _$$RoadmapDocumentImplToJson(
@@ -58,6 +62,8 @@ Map<String, dynamic> _$$RoadmapDocumentImplToJson(
       'sections': instance.sections,
       'sourcePath': instance.sourcePath,
       'isImported': instance.isImported,
+      'externalUrl': instance.externalUrl,
+      'isInteractiveSite': instance.isInteractiveSite,
     };
 
 _$RoadmapSectionImpl _$$RoadmapSectionImplFromJson(Map<String, dynamic> json) =>

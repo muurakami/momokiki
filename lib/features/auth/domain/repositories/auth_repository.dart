@@ -15,4 +15,6 @@ abstract class AuthRepository {
     required int dailyGoalMinutes,
     required bool onboardingCompleted,
   });
+
+  Future<UserProfile> updatePreferredLanguage(String targetLanguage);
 }

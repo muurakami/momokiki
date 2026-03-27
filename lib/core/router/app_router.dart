@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
-import '../../features/auth/presentation/notifiers/auth_notifier.dart';
 import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/auth_screen.dart';
 import '../../features/auth/presentation/screens/onboarding/language_selection_screen.dart';
@@ -12,6 +10,8 @@ import '../../features/lessons/presentation/screens/lesson_result_screen.dart';
 import '../../features/lessons/presentation/screens/lesson_screen.dart';
 import '../../features/lessons/presentation/screens/lessons_overview_screen.dart';
 import '../../features/lessons/domain/models/lesson_progress.dart';
+import '../../features/roadmaps/presentation/screens/roadmaps_screen.dart';
+import '../../features/settings/presentation/screens/profile_settings_screen.dart';
 
 class _PlaceholderScreen extends StatelessWidget {
   final String title;
@@ -48,11 +48,14 @@ class AppRouter {
               path: '/app/practice',
               builder: (_, __) => const _PlaceholderScreen('Practice')),
           GoRoute(
+              path: '/app/roadmaps',
+              builder: (_, __) => const RoadmapsScreen()),
+          GoRoute(
               path: '/app/stats',
               builder: (_, __) => const _PlaceholderScreen('Stats')),
           GoRoute(
               path: '/app/profile',
-              builder: (_, __) => const _ProfileScreen()),
+              builder: (_, __) => const ProfileSettingsScreen()),
           GoRoute(
             path: '/app/lesson/:lessonId',
             builder: (_, state) => LessonScreen(
@@ -69,51 +72,6 @@ class AppRouter {
       ),
     ],
   );
-}
-
-class _ProfileScreen extends ConsumerWidget {
-  const _ProfileScreen();
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Profile')),
-      body: Center(
-        child: FilledButton.icon(
-          onPressed: () async {
-            final shouldSignOut = await showDialog<bool>(
-              context: context,
-              builder: (dialogContext) => AlertDialog(
-                title: const Text('Sign out?'),
-                content: const Text(
-                  'You will return to the sign in screen.',
-                ),
-                actions: [
-                  TextButton(
-                    onPressed: () => Navigator.of(dialogContext).pop(false),
-                    child: const Text('Cancel'),
-                  ),
-                  FilledButton(
-                    onPressed: () => Navigator.of(dialogContext).pop(true),
-                    child: const Text('Sign Out'),
-                  ),
-                ],
-              ),
-            );
-
-            if (shouldSignOut != true) return;
-
-            await ref.read(authNotifierProvider.notifier).signOut();
-
-            if (!context.mounted) return;
-            context.go('/auth');
-          },
-          icon: const Icon(Icons.logout),
-          label: const Text('Sign Out'),
-        ),
-      ),
-    );
-  }
 }
 
 class _ScaffoldWithNav extends StatelessWidget {
@@ -140,6 +98,10 @@ class _ScaffoldWithNav extends StatelessWidget {
               selectedIcon: Icon(Icons.style),
               label: 'Practice'),
           NavigationDestination(
+              icon: Icon(Icons.map_outlined),
+              selectedIcon: Icon(Icons.map),
+              label: 'Roadmaps'),
+          NavigationDestination(
               icon: Icon(Icons.bar_chart_outlined),
               selectedIcon: Icon(Icons.bar_chart),
               label: 'Stats'),
@@ -154,8 +116,9 @@ class _ScaffoldWithNav extends StatelessWidget {
 
   int _locationToIndex(String loc) {
     if (loc.startsWith('/app/practice')) return 1;
-    if (loc.startsWith('/app/stats')) return 2;
-    if (loc.startsWith('/app/profile')) return 3;
+    if (loc.startsWith('/app/roadmaps')) return 2;
+    if (loc.startsWith('/app/stats')) return 3;
+    if (loc.startsWith('/app/profile')) return 4;
     return 0;
   }
 
@@ -166,8 +129,10 @@ class _ScaffoldWithNav extends StatelessWidget {
       case 1:
         context.go('/app/practice');
       case 2:
-        context.go('/app/stats');
+        context.go('/app/roadmaps');
       case 3:
+        context.go('/app/stats');
+      case 4:
         context.go('/app/profile');
     }
   }

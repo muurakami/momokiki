@@ -1,0 +1,35 @@
+{
+  "id": "ja_hiragana_1",
+  "version": 1,
+  "title": "Hiragana Starter",
+  "language": "japanese",
+  "nextLessonId": "ja_katakana_1",
+  "meta": {
+    "title": "Hiragana Starter",
+    "description": "Learn the first hiragana symbols.",
+    "estimated_xp": 40,
+    "difficulty": 1,
+    "rating": 4.7,
+    "language": "ja",
+    "tags": ["hiragana", "starter"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "title": "あ い う",
+      "content": "These are the first hiragana sounds: a, i, u.",
+      "bullets": ["あ = a", "い = i", "う = u"]
+    },
+    {
+      "id": "b2",
+      "type": "choice",
+      "prompt": "Which symbol makes the sound a?",
+      "correct_option_id": "o1",
+      "options": [
+        {"id": "o1", "label": "あ"},
+        {"id": "o2", "label": "い"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "id": "en_present_simple_1",
+  "version": 1,
+  "title": "Present Simple Basics",
+  "language": "english",
+  "nextLessonId": "en_present_simple_2",
+  "meta": {
+    "title": "Present Simple Basics",
+    "description": "Talk about facts and habits in English.",
+    "estimated_xp": 50,
+    "difficulty": 1,
+    "rating": 4.9,
+    "language": "en",
+    "tags": ["grammar", "present-simple"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "title": "Use Present Simple",
+      "content": "We use the present simple for habits, routines, and facts.",
+      "bullets": ["I work every day.", "She lives in London."]
+    },
+    {
+      "id": "b2",
+      "type": "quiz",
+      "question": "Which sentence is present simple?",
+      "options": ["I am working now.", "I work every day."],
+      "correct_answer": "I work every day."
+    },
+    {
+      "id": "b3",
+      "type": "code",
+      "prompt": "Write a present simple sentence about your routine.",
+      "code_snippet": "// Example: I drink tea every morning.",
+      "expected_answer": "i study english every day",
+      "language": "text"
+    }
+  ]
+}

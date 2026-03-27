@@ -1,0 +1,32 @@
+{
+  "id": "ja_katakana_1",
+  "version": 1,
+  "title": "Katakana Starter",
+  "language": "japanese",
+  "nextLessonId": "ja_intro_3",
+  "meta": {
+    "title": "Katakana Starter",
+    "description": "Begin katakana with the first symbols.",
+    "estimated_xp": 42,
+    "difficulty": 1,
+    "rating": 4.8,
+    "language": "ja",
+    "tags": ["katakana", "starter"]
+  },
+  "blocks": [
+    {
+      "id": "b1",
+      "type": "text",
+      "title": "ア イ ウ",
+      "content": "Katakana writes many loan words and names.",
+      "bullets": ["ア = a", "イ = i", "ウ = u"]
+    },
+    {
+      "id": "b2",
+      "type": "quiz",
+      "question": "Which katakana symbol means i?",
+      "options": ["イ", "ア"],
+      "correct_answer": "イ"
+    }
+  ]
+}

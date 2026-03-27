@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The English Quest — B1 to C1</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Cinzel:wght@400;600;700&family=IM+Fell+English:ital@0;1&family=Uncial+Antiqua&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #f0d080;
+    --gold-dark: #7a5c1a;
+    --bg-dark: #0a0806;
+    --bg-mid: #120e08;
+    --bg-parchment: #1a1408;
+    --text-parchment: #d4b896;
+    --text-light: #e8d9b8;
+    --text-dim: #8a7055;
+    --red-eye: #8b1a1a;
+    --green-shire: #2d5a27;
+    --blue-mithril: #3a5a7a;
+    --ring-glow: rgba(201,168,76,0.15);
+    --shadow-deep: rgba(0,0,0,0.8);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background-color: var(--bg-dark);
+    color: var(--text-parchment);
+    font-family: 'IM Fell English', Georgia, serif;
+    overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* ═══════ BACKGROUND ═══════ */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background:
+      radial-gradient(ellipse at 20% 50%, rgba(201,168,76,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse at 80% 20%, rgba(139,26,26,0.06) 0%, transparent 50%),
+      radial-gradient(ellipse at 50% 100%, rgba(42,70,30,0.05) 0%, transparent 50%),
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ═══════ SCROLLBAR ═══════ */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--bg-dark); }
+  ::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 3px; }
+
+  /* ═══════ NAV ═══════ */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    background: linear-gradient(180deg, rgba(10,8,6,0.97) 0%, rgba(10,8,6,0.85) 100%);
+    border-bottom: 1px solid rgba(201,168,76,0.2);
+    padding: 12px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    backdrop-filter: blur(10px);
+  }
+
+  .nav-logo {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-shadow: 0 0 20px rgba(201,168,76,0.5);
+  }
+
+  .nav-links {
+    display: flex; gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem;
+    color: var(--text-dim);
+    text-decoration: none;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    transition: color 0.3s, text-shadow 0.3s;
+  }
+
+  .nav-links a:hover {
+    color: var(--gold);
+    text-shadow: 0 0 12px rgba(201,168,76,0.6);
+  }
+
+  /* ═══════ HERO ═══════ */
+  .hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    padding: 100px 20px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-ring {
+    position: absolute;
+    width: 600px; height: 600px;
+    border-radius: 50%;
+    border: 1px solid rgba(201,168,76,0.1);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    animation: ringPulse 4s ease-in-out infinite;
+  }
+  .hero-ring:nth-child(2) { width: 800px; height: 800px; animation-delay: 1s; opacity: 0.5; }
+  .hero-ring:nth-child(3) { width: 1000px; height: 1000px; animation-delay: 2s; opacity: 0.25; }
+
+  @keyframes ringPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(201,168,76,0); }
+    50% { box-shadow: 0 0 40px 2px rgba(201,168,76,0.08); }
+  }
+
+  .hero-elvish {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.7rem;
+    letter-spacing: 6px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: fadeUp 1s ease both;
+  }
+
+  .hero-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(2.8rem, 6vw, 5.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    color: var(--gold);
+    text-shadow: 0 0 60px rgba(201,168,76,0.4), 0 0 120px rgba(201,168,76,0.2);
+    animation: fadeUp 1s 0.2s ease both;
+    margin-bottom: 10px;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1rem, 2vw, 1.4rem);
+    color: var(--gold-light);
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    animation: fadeUp 1s 0.4s ease both;
+    margin-bottom: 30px;
+  }
+
+  .hero-desc {
+    font-size: 1.15rem;
+    font-style: italic;
+    color: var(--text-dim);
+    max-width: 560px;
+    line-height: 1.8;
+    animation: fadeUp 1s 0.6s ease both;
+    margin-bottom: 50px;
+  }
+
+  .hero-ring-text {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    color: rgba(201,168,76,0.4);
+    animation: fadeUp 1s 0.8s ease both;
+    margin-bottom: 50px;
+    font-style: italic;
+  }
+
+  .hero-stats {
+    display: flex; gap: 50px;
+    animation: fadeUp 1s 1s ease both;
+  }
+
+  .hero-stat {
+    text-align: center;
+  }
+
+  .hero-stat-num {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2.2rem;
+    color: var(--gold);
+    display: block;
+    text-shadow: 0 0 20px rgba(201,168,76,0.5);
+  }
+
+  .hero-stat-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+
+  .scroll-hint {
+    position: absolute; bottom: 30px;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
+    animation: fadeUp 1s 1.5s ease both;
+  }
+
+  .scroll-hint span {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+  }
+
+  .scroll-arrow {
+    width: 20px; height: 20px;
+    border-right: 1px solid var(--text-dim);
+    border-bottom: 1px solid var(--text-dim);
+    transform: rotate(45deg);
+    animation: arrowBounce 1.5s infinite;
+  }
+
+  @keyframes arrowBounce {
+    0%, 100% { transform: rotate(45deg) translateY(0); opacity: 0.5; }
+    50% { transform: rotate(45deg) translateY(5px); opacity: 1; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ═══════ DIVIDERS ═══════ */
+  .divider {
+    width: 100%; max-width: 900px;
+    margin: 0 auto 60px;
+    display: flex; align-items: center; gap: 20px;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--gold-dark), transparent);
+  }
+
+  .divider-gem {
+    width: 10px; height: 10px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    box-shadow: 0 0 10px var(--gold);
+  }
+
+  .divider-text {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 4px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* ═══════ SECTIONS ═══════ */
+  section {
+    position: relative;
+    padding: 80px 20px;
+    z-index: 1;
+  }
+
+  .section-container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .section-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: clamp(1.8rem, 4vw, 3rem);
+    color: var(--gold);
+    text-shadow: 0 0 30px rgba(201,168,76,0.3);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .section-desc {
+    font-style: italic;
+    color: var(--text-dim);
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* ═══════ MAP / JOURNEY ═══════ */
+  #map { background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-mid) 100%); }
+
+  .journey-path {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    position: relative;
+    padding: 20px 0;
+  }
+
+  .journey-path::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg, transparent, var(--gold-dark), var(--gold-dark), transparent);
+    transform: translateX(-50%);
+  }
+
+  .journey-step {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    padding: 30px 0;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s, transform 0.6s;
+  }
+
+  .journey-step.visible { opacity: 1; transform: translateY(0); }
+  .journey-step:nth-child(even) { flex-direction: row-reverse; }
+  .journey-step:nth-child(even) .step-content { text-align: right; }
+
+  .step-node {
+    flex-shrink: 0;
+    width: 60px; height: 60px;
+    border-radius: 50%;
+    border: 2px solid var(--gold-dark);
+    display: flex; align-items: center; justify-content: center;
+    background: var(--bg-dark);
+    position: relative;
+    z-index: 2;
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.3rem;
+    color: var(--gold);
+    box-shadow: 0 0 20px rgba(201,168,76,0.2);
+    transition: box-shadow 0.3s, border-color 0.3s;
+  }
+
+  .journey-step:hover .step-node {
+    border-color: var(--gold);
+    box-shadow: 0 0 30px rgba(201,168,76,0.4);
+  }
+
+  .step-content {
+    flex: 1;
+    max-width: 420px;
+  }
+
+  .step-level {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 3px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .step-name {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+  }
+
+  .step-desc {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.7;
+    margin-bottom: 12px;
+  }
+
+  .step-time {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: 'Cinzel', serif;
+    font-size: 0.65rem;
+    letter-spacing: 2px;
+    color: var(--gold-dark);
+    text-transform: uppercase;
+    border: 1px solid var(--gold-dark);
+    padding: 4px 12px;
+    border-radius: 2px;
+  }
+
+  /* ═══════ CHECKLIST ═══════ */
+  #checklist { background: var(--bg-parchment); }
+
+  .checklist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+  }
+
+  .checklist-book {
+    background: linear-gradient(135deg, rgba(201,168,76,0.04) 0%, rgba(10,8,6,0.9) 100%);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 2px;
+    padding: 32px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+  }
+
+  .checklist-book:hover {
+    border-color: rgba(201,168,76,0.35);
+    transform: translateY(-3px);
+  }
+
+  .checklist-book::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .book-fellowship::before { background: linear-gradient(90deg, var(--green-shire), #4a8a3a); }
+  .book-rohan::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+  .book-mordor::before { background: linear-gradient(90deg, var(--red-eye), #c02020); }
+
+  .book-icon {
+    font-size: 2rem;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .book-category {
+    font-family: 'Cinzel', serif;
+    font-size: 0.62rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .book-fellowship .book-category { color: #4a8a3a; }
+  .book-rohan .book-category { color: var(--gold); }
+  .book-mordor .book-category { color: var(--red-eye); }
+
+  .book-title {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 1.1rem;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+
+  .book-time {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+
+  .check-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .check-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 0.88rem;
+    color: var(--text-parchment);
+    line-height: 1.5;
+    cursor: pointer;
+    user-select: none;
+    transition: color 0.2s;
+  }
+
+  .check-item:hover { color: var(--gold-light); }
+
+  .check-box {
+    width: 16px; height: 16px;
+    flex-shrink: 0;
+    border: 1px solid var(--gold-dark);
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 2px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .check-item.done .check-box {
+    background: var(--gold-dark);
+    border-color: var(--gold);
+  }
+
+  .check-item.done .check-box::after {
+    content: '✓';
+    color: var(--gold-light);
+    font-size: 10px;
+    font-weight: bold;
+    font-style: normal;
+  }
+
+  .check-item.done span { text-decoration: line-through; color: var(--text-dim); }
+
+  /* ═══════ MODULES ═══════ */
+  #modules { background: linear-gradient(180deg, var(--bg-dark) 0%, var(--bg-parchment) 100%); }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 24px;
+  }
+
+  .module-card {
+    background: rgba(10,8,6,0.7);
+    border: 1px solid rgba(201,168,76,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+  }
+
+  .module-card:hover {
+    border-color: rgba(201,168,76,0.35);
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px rgba(201,168,76,0.05);
+  }
+
+  .card-header {
+    padding: 24px 24px 0;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .card-phase {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    padding: 3px 10px;
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 1px;
+  }
+
+  .card-hours {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--gold-dark);
+  }
+
+  .card-body {
+    padding: 16px 24px 24px;
+  }
+
+  .card-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+
+  .card-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.15rem;
+    color: var(--gold-light);
+    margin-bottom: 8px;
+  }
+
+  .card-subtitle {
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-bottom: 16px;
+    line-height: 1.6;
+  }
+
+  .card-topics {
+    display: flex; flex-wrap: wrap; gap: 8px;
+  }
+
+  .topic-tag {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
+    color: var(--text-dim);
+    border: 1px solid rgba(201,168,76,0.15);
+    padding: 3px 8px;
+    border-radius: 1px;
+    text-transform: uppercase;
+  }
+
+  .card-expanded {
+    display: none;
+    padding: 0 24px 24px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    margin-top: 10px;
+    padding-top: 20px;
+  }
+
+  .module-card.open .card-expanded { display: block; }
+  .module-card.open { border-color: rgba(201,168,76,0.3); }
+
+  .card-content-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    color: var(--gold);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .card-content-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .card-content-list li {
+    font-size: 0.88rem;
+    color: var(--text-parchment);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.5;
+  }
+
+  .card-content-list li::before {
+    content: '◆';
+    position: absolute;
+    left: 0;
+    color: var(--gold-dark);
+    font-size: 0.5rem;
+    top: 5px;
+  }
+
+  /* ═══════ TIMELINE ═══════ */
+  #timeline { background: var(--bg-parchment); }
+
+  .timeline-bar-wrap {
+    background: rgba(0,0,0,0.4);
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 2px;
+    padding: 50px 40px;
+    margin-bottom: 40px;
+    overflow: hidden;
+  }
+
+  .timeline-header-row {
+    display: grid;
+    grid-template-columns: 160px repeat(12, 1fr);
+    gap: 4px;
+    margin-bottom: 12px;
+  }
+
+  .tl-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    text-align: center;
+  }
+
+  .timeline-rows { display: flex; flex-direction: column; gap: 14px; }
+
+  .tl-row {
+    display: grid;
+    grid-template-columns: 160px repeat(12, 1fr);
+    gap: 4px;
+    align-items: center;
+  }
+
+  .tl-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.68rem;
+    color: var(--text-parchment);
+    text-align: right;
+    padding-right: 14px;
+  }
+
+  .tl-cell {
+    height: 24px;
+    border-radius: 1px;
+    position: relative;
+  }
+
+  .tl-cell.active {
+    background: linear-gradient(90deg, rgba(201,168,76,0.4), rgba(201,168,76,0.6));
+    box-shadow: 0 0 8px rgba(201,168,76,0.2);
+  }
+
+  .tl-cell.active-deep {
+    background: linear-gradient(90deg, rgba(201,168,76,0.15), rgba(201,168,76,0.3));
+  }
+
+  .tl-cell.inactive {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(201,168,76,0.06);
+  }
+
+  /* ═══════ PROGRESS ═══════ */
+  #progress { background: linear-gradient(180deg, var(--bg-parchment) 0%, var(--bg-dark) 100%); }
+
+  .progress-ring-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 80px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+
+  .ring-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .ring-svg {
+    position: relative;
+  }
+
+  .ring-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-align: center;
+  }
+
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+  }
+
+  .skill-bar-item {
+    padding: 18px 20px;
+    background: rgba(0,0,0,0.3);
+    border: 1px solid rgba(201,168,76,0.1);
+    border-radius: 2px;
+  }
+
+  .skill-bar-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .skill-bar-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.78rem;
+    color: var(--text-parchment);
+    letter-spacing: 1px;
+  }
+
+  .skill-bar-pct {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 0.9rem;
+    color: var(--gold);
+  }
+
+  .skill-bar-track {
+    height: 4px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+
+  .skill-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold));
+    border-radius: 2px;
+    transform-origin: left;
+    transform: scaleX(0);
+    transition: transform 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .skill-bar-fill.animated { transform: scaleX(1); }
+
+  /* ═══════ RESOURCES ═══════ */
+  #resources { background: var(--bg-dark); }
+
+  .resources-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+  }
+
+  .resource-card {
+    background: rgba(10,8,6,0.8);
+    border: 1px solid rgba(201,168,76,0.1);
+    padding: 26px;
+    border-radius: 2px;
+    transition: border-color 0.3s;
+  }
+
+  .resource-card:hover { border-color: rgba(201,168,76,0.3); }
+
+  .resource-type {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold-dark);
+    margin-bottom: 10px;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  .resource-type::before {
+    content: '';
+    display: inline-block;
+    width: 20px; height: 1px;
+    background: var(--gold-dark);
+  }
+
+  .resource-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1rem;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+
+  .resource-desc {
+    font-size: 0.84rem;
+    font-style: italic;
+    color: var(--text-dim);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  .resource-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .resource-list li {
+    font-size: 0.82rem;
+    color: var(--text-parchment);
+    padding-left: 14px;
+    position: relative;
+  }
+
+  .resource-list li::before {
+    content: '›';
+    position: absolute;
+    left: 0;
+    color: var(--gold-dark);
+  }
+
+  /* ═══════ FOOTER ═══════ */
+  footer {
+    text-align: center;
+    padding: 60px 20px;
+    border-top: 1px solid rgba(201,168,76,0.1);
+    background: var(--bg-dark);
+  }
+
+  .footer-rune {
+    font-family: 'Cinzel Decorative', serif;
+    font-size: 2rem;
+    color: rgba(201,168,76,0.2);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .footer-quote {
+    font-style: italic;
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    max-width: 500px;
+    margin: 0 auto 12px;
+    line-height: 1.8;
+  }
+
+  .footer-credit {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 3px;
+    color: rgba(201,168,76,0.2);
+    text-transform: uppercase;
+  }
+
+  /* ═══════ UTILITY ═══════ */
+  .gold { color: var(--gold); }
+  .italic { font-style: italic; }
+
+  /* ═══════ RESPONSIVE ═══════ */
+  @media (max-width: 768px) {
+    nav { padding: 12px 20px; }
+    .nav-links { display: none; }
+    .journey-path::before { left: 30px; }
+    .journey-step { flex-direction: column; align-items: flex-start; padding-left: 70px; }
+    .journey-step:nth-child(even) { flex-direction: column; }
+    .journey-step:nth-child(even) .step-content { text-align: left; }
+    .step-node { position: absolute; left: 0; }
+    .hero-stats { gap: 30px; }
+    .timeline-bar-wrap { padding: 30px 16px; overflow-x: auto; }
+  }
+
+  /* ═══════ FLOATING ORB ═══════ */
+  .orb {
+    position: fixed;
+    width: 300px; height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transition: transform 0.1s;
+  }
+</style>
+</head>
+<body>
+
+<div class="orb" id="orb"></div>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">⚔ English Quest</span>
+  <ul class="nav-links">
+    <li><a href="#map">The Journey</a></li>
+    <li><a href="#checklist">Scrolls</a></li>
+    <li><a href="#modules">Chapters</a></li>
+    <li><a href="#timeline">Timeline</a></li>
+    <li><a href="#resources">Armoury</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-ring"></div>
+  <div class="hero-ring"></div>
+  <div class="hero-ring"></div>
+
+  <p class="hero-elvish">⸻ The Fellowship of English ⸻</p>
+  <h1 class="hero-title">English Quest</h1>
+  <h2 class="hero-subtitle">From B1 Shire to C1 Minas Tirith</h2>
+  <p class="hero-desc">Путь воина слова — от уютных холмов Шира до вершин Белой Башни. Каждый урок — это битва. Каждое слово — оружие.</p>
+  <p class="hero-ring-text">One does not simply walk into C1 — One studies, speaks, and conquers.</p>
+
+  <div class="hero-stats">
+    <div class="hero-stat">
+      <span class="hero-stat-num">12</span>
+      <span class="hero-stat-label">Месяцев</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">480+</span>
+      <span class="hero-stat-label">Часов</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">8</span>
+      <span class="hero-stat-label">Глав</span>
+    </div>
+    <div class="hero-stat">
+      <span class="hero-stat-num">C1</span>
+      <span class="hero-stat-label">Цель</span>
+    </div>
+  </div>
+
+  <div class="scroll-hint">
+    <span>Начать путь</span>
+    <div class="scroll-arrow"></div>
+  </div>
+</section>
+
+<!-- MAP / JOURNEY -->
+<section id="map">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">⸻ The Fellowship ⸻</span>
+      <h2 class="section-title">Путь Героя</h2>
+      <p class="section-desc">Каждый великий герой начинает в Шире. Твой путь — от B1 до C1. Восемь глав, одна цель.</p>
+    </div>
+    <div class="divider"><div class="divider-line"></div><div class="divider-gem"></div><div class="divider-text">The Map of Middle-English</div><div class="divider-gem"></div><div class="divider-line"></div></div>
+
+    <div class="journey-path">
+
+      <div class="journey-step">
+        <div class="step-node">I</div>
+        <div class="step-content">
+          <p class="step-level">Глава I — Начало пути · The Shire</p>
+          <h3 class="step-name">Грамматика — Фундамент</h3>
+          <p class="step-desc">Укрепи свои основы: времена, модальные глаголы, условные предложения. Без этого любой замок рассыплется.</p>
+          <span class="step-time">⏱ 60 часов · Месяц 1–2</span>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-node">II</div>
+        <div class="step-content">
+          <p class="step-level">Глава II — Исход · Rivendell</p>
+          <h3 class="step-name">Словарный Запас — 3000→5000 слов</h3>
+          <p class="step-desc">Учи не слова — учи фразы и коллокации. Business English, профессиональная лексика, идиомы мира работы.</p>
+          <span class="step-time">⏱ 80 часов · Месяц 1–4</span>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-node">III</div>
+        <div class="step-content">
+          <p class="step-level">Глава III — Испытание · Mines of Moria</p>
+          <h3 class="step-name">Аудирование — Слух Воина</h3>
+          <p class="step-desc">Сериалы, подкасты, TED Talks. Accents: American, British, Australian. Твои уши — первое оружие в офисе.</p>
+          <span class="step-time">⏱ 70 часов · Месяц 2–5</span>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-node">IV</div>
+        <div class="step-content">
+          <p class="step-level">Глава IV — Союзники · Rohan</p>
+          <h3 class="step-name">Разговорный English — Уверенность</h3>
+          <p class="step-desc">Speaking clubs, italki, работа на встречах. Как отвечать на вопросы, презентовать идеи, не говорить "ммм".</p>
+          <span class="step-time">⏱ 80 часов · Месяц 3–7</span>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-node">V</div>
+        <div class="step-content">
+          <p class="step-level">Глава V — Письмо · Helm's Deep</p>
+          <h3 class="step-name">Письменный English — Профи</h3>
+          <p class="step-desc">Emails, reports, Slack messages. Как писать кратко, точно и профессионально. Cover letter и резюме на English.</p>
+          <span class="step-time">⏱ 50 часов · Месяц 4–7</span>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-node">VI</div>
+        <div class="step-content">
+          <p class="step-level">Глава VI — Битва · Pelennor Fields</p>
+          <h3 class="step-name">Business English — Офис и Карьера</h3>
+          <p class="step-desc">Meetings, negotiations, presentations, feedback. Весь профессиональный арсенал от job interview до performance review.</p>
+          <span class="step-time">⏱ 70 часов · Месяц 5–9</span>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-node">VII</div>
+        <div class="step-content">
+          <p class="step-level">Глава VII — Мудрость · Minas Tirith</p>
+          <h3 class="step-name">Чтение — C1 уровень</h3>
+          <p class="step-desc">Books, articles, reports, whitepapers. Скорочтение без потери смысла. Профессиональные тексты в твоей сфере.</p>
+          <span class="step-time">⏱ 60 часов · Месяц 6–10</span>
+        </div>
+      </div>
+
+      <div class="journey-step">
+        <div class="step-node">★</div>
+        <div class="step-content">
+          <p class="step-level">Финал — Коронация · The White Tower</p>
+          <h3 class="step-name">C1 — Владение языком</h3>
+          <p class="step-desc">Свободно говоришь в любой рабочей ситуации. Пишешь как профи. Понимаешь нейтивов. Получаешь ту самую работу.</p>
+          <span class="step-time">⏱ Месяц 10–12 · Итоговая аттестация</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CHECKLIST -->
+<section id="checklist">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">⸻ The Scrolls of Knowledge ⸻</span>
+      <h2 class="section-title">Три Книги Знания</h2>
+      <p class="section-desc">Красные книги Шира — всё что тебе нужно знать, разложено по приоритету.</p>
+    </div>
+
+    <div class="checklist-grid">
+
+      <!-- BOOK 1: MUST KNOW -->
+      <div class="checklist-book book-fellowship">
+        <span class="book-icon">📗</span>
+        <p class="book-category">Книга I — Обязательно</p>
+        <h3 class="book-title">Грамматика & Основы</h3>
+        <p class="book-time">⏱ 0–4 месяца · Приоритет: ВЫСШИЙ</p>
+        <ul class="check-list" id="list1">
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>12 основных времён (Simple, Continuous, Perfect, P.Cont)</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Модальные глаголы: can/could, must/have to, should, may/might</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Условные предложения (0, 1, 2, 3 типы)</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Passive Voice — как и когда использовать</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Артикли a/an/the — система и исключения</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Предлоги in/on/at и фразовые глаголы (500 шт)</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Reported speech — пересказ для митингов</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Словарь B1→B2: 3000 самых частых слов</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Business English базовый: email, meeting, task</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Job Interview: стандартные вопросы + ответы</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Резюме и Cover Letter на English</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Числа, даты, деньги, проценты — говорить уверенно</span></li>
+        </ul>
+      </div>
+
+      <!-- BOOK 2: SHOULD KNOW -->
+      <div class="checklist-book book-rohan">
+        <span class="book-icon">📙</span>
+        <p class="book-category">Книга II — Стоит знать</p>
+        <h3 class="book-title">Профессиональный Уровень</h3>
+        <p class="book-time">⏱ 3–8 месяцев · Приоритет: ВЫСОКИЙ</p>
+        <ul class="check-list" id="list2">
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Презентации: структура, transitions, Q&A</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Переговоры: hedging language, compromise phrases</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Emails: formal/informal, subject lines, follow-ups</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Meetings: chair/minute, agree/disagree, action items</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Коллокации B2: make/do/take/have + noun</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Idioms делового мира (50 ключевых)</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Аудирование: деловые подкасты без субтитров</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Professionalism: вежливый отказ, запрос, feedback</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Технический английский своей сферы (IT/Finance/etc)</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Скорочтение профессиональных статей</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Pronunciation: stress, intonation, linking words</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Small talk, networking, elevator pitch</span></li>
+        </ul>
+      </div>
+
+      <!-- BOOK 3: DEEP -->
+      <div class="checklist-book book-mordor">
+        <span class="book-icon">📕</span>
+        <p class="book-category">Книга III — Глубины</p>
+        <h3 class="book-title">Мастерство C1</h3>
+        <p class="book-time">⏱ 7–12 месяцев · Приоритет: ГЛУБОКИЙ</p>
+        <ul class="check-list" id="list3">
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Inversion & emphatic structures (Not only did I…)</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Advanced grammar: cleft sentences, fronting</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Academic/formal writing: cohesion, coherence</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Register shifts: formal ↔ informal с лёгкостью</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Leadership language: influence, motivate, delegate</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Cultural nuances: British vs American workplace</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Discourse markers — сложные связки текста</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Metaphor & analogy в переговорах</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Публичные выступления на конференциях</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Advanced idioms & collocations C1 level</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>Humour, sarcasm, understatement (British)</span></li>
+          <li class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div><span>IELTS/Cambridge C1 Academic — финал</span></li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MODULES -->
+<section id="modules">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">⸻ The Fellowship Chapters ⸻</span>
+      <h2 class="section-title">8 Глав Обучения</h2>
+      <p class="section-desc">Нажми на главу чтобы открыть детали. Каждая глава — отдельный квест со своей системой.</p>
+    </div>
+
+    <div class="modules-grid">
+
+      <div class="module-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-phase">Глава I</span>
+          <span class="card-hours">60 часов</span>
+        </div>
+        <div class="card-body">
+          <span class="card-icon">🏡</span>
+          <h3 class="card-title">Грамматика Шира</h3>
+          <p class="card-subtitle">Возводим фундамент из камня, а не из соломы. Без дыр в грамматике — нет дыр в уверенности.</p>
+          <div class="card-topics">
+            <span class="topic-tag">Tenses</span>
+            <span class="topic-tag">Conditionals</span>
+            <span class="topic-tag">Modals</span>
+            <span class="topic-tag">Passive</span>
+          </div>
+        </div>
+        <div class="card-expanded">
+          <p class="card-content-title">Что изучаем:</p>
+          <ul class="card-content-list">
+            <li>Present Perfect vs Past Simple — самая частая ошибка русских</li>
+            <li>Future формы: will / going to / Present Continuous для планов</li>
+            <li>2-й и 3-й тип условных — для переговоров и гипотез</li>
+            <li>Passive для отчётов: "The report was submitted…"</li>
+            <li>Embedded questions: "Could you tell me where…"</li>
+          </ul>
+          <br>
+          <p class="card-content-title">Как учить (LOTR-стиль):</p>
+          <ul class="card-content-list">
+            <li>🎬 Смотри LOTR с English субтитрами — подчёркивай времена</li>
+            <li>📖 Grammar in Use (Murphy) — Blue Book, Unit by unit</li>
+            <li>🎮 Grammarly на все тексты — учи на ошибках</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-phase">Глава II</span>
+          <span class="card-hours">80 часов</span>
+        </div>
+        <div class="card-body">
+          <span class="card-icon">💎</span>
+          <h3 class="card-title">Сокровища Словаря</h3>
+          <p class="card-subtitle">3000 слов B1 превращаем в 5000+ слов B2/C1. Коллокации, фразовые глаголы, бизнес-лексика.</p>
+          <div class="card-topics">
+            <span class="topic-tag">Collocations</span>
+            <span class="topic-tag">Phrasal Verbs</span>
+            <span class="topic-tag">Business</span>
+            <span class="topic-tag">Idioms</span>
+          </div>
+        </div>
+        <div class="card-expanded">
+          <p class="card-content-title">Что изучаем:</p>
+          <ul class="card-content-list">
+            <li>500 business collocations: make a decision, reach an agreement…</li>
+            <li>200 фразовых глаголов офисной жизни: follow up, hand in, bring up…</li>
+            <li>Слова-шпионы: "eventually" ≠ "eventually", "actually" в разных смыслах</li>
+            <li>Academic Word List — 570 слов для умных текстов</li>
+            <li>Синонимы для замены: said → stated / mentioned / argued</li>
+          </ul>
+          <br>
+          <p class="card-content-title">Как учить:</p>
+          <ul class="card-content-list">
+            <li>📱 Anki — 20 карточек/день со context sentences</li>
+            <li>🎬 Сериал "Succession" или "Suits" — бизнес-лексика в деле</li>
+            <li>📖 Oxford Business English Dictionary</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-phase">Глава III</span>
+          <span class="card-hours">70 часов</span>
+        </div>
+        <div class="card-body">
+          <span class="card-icon">👂</span>
+          <h3 class="card-title">Слух Гэндальфа</h3>
+          <p class="card-subtitle">Понимаешь нейтивов на совещаниях. Акценты, скорость, mumbling — всё преодолимо.</p>
+          <div class="card-topics">
+            <span class="topic-tag">Podcasts</span>
+            <span class="topic-tag">Accents</span>
+            <span class="topic-tag">Meetings</span>
+            <span class="topic-tag">TED</span>
+          </div>
+        </div>
+        <div class="card-expanded">
+          <p class="card-content-title">Уровни тренировки:</p>
+          <ul class="card-content-list">
+            <li>Level 1: TED Talks + субтитры (понимание смысла)</li>
+            <li>Level 2: TED без субтитров (тренировка уха)</li>
+            <li>Level 3: Подкасты 80 words/min — BBC Business Daily</li>
+            <li>Level 4: Подкасты 120+ wpm — The Tim Ferriss Show</li>
+            <li>Level 5: Зум-звонки с нейтивами — italki lessons</li>
+          </ul>
+          <br>
+          <p class="card-content-title">Ресурсы:</p>
+          <ul class="card-content-list">
+            <li>🎙 Подкасты: Planet Money, Freakonomics, HBR IdeaCast</li>
+            <li>📺 Сериалы: The Office, Suits, Succession (бизнес-English)</li>
+            <li>🎮 Shadowing — повторяй за нейтивами 15 мин/день</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-phase">Глава IV</span>
+          <span class="card-hours">80 часов</span>
+        </div>
+        <div class="card-body">
+          <span class="card-icon">⚔️</span>
+          <h3 class="card-title">Меч Красноречия</h3>
+          <p class="card-subtitle">Говоришь без "ммм", без паузы на поиск слова. Уверенно на митинге, в презентации, на собеседовании.</p>
+          <div class="card-topics">
+            <span class="topic-tag">Speaking</span>
+            <span class="topic-tag">Fluency</span>
+            <span class="topic-tag">Presentation</span>
+            <span class="topic-tag">Interview</span>
+          </div>
+        </div>
+        <div class="card-expanded">
+          <p class="card-content-title">Что тренируем:</p>
+          <ul class="card-content-list">
+            <li>Fillers замена: вместо "ummm" → "That's a great question…"</li>
+            <li>STAR-метод для собеседований: Situation, Task, Action, Result</li>
+            <li>Opinion expressing: "In my view… / I'd argue that… / What I find is…"</li>
+            <li>Interrupting politely: "Sorry to interrupt, but… / Can I add…"</li>
+            <li>Paraphrasing: объяснить то же другими словами</li>
+          </ul>
+          <br>
+          <p class="card-content-title">Методы:</p>
+          <ul class="card-content-list">
+            <li>💬 italki: 2-3 урока в неделю с носителем</li>
+            <li>🎤 Monologue practice: 2 мин на тему без подготовки (ежедневно)</li>
+            <li>🤖 Разговорная практика с AI (ChatGPT role-play scenarios)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-phase">Глава V</span>
+          <span class="card-hours">50 часов</span>
+        </div>
+        <div class="card-body">
+          <span class="card-icon">📜</span>
+          <h3 class="card-title">Перо Мудреца</h3>
+          <p class="card-subtitle">Emails, которые открывают двери. Reports, за которые хвалят. Сообщения, которые решают вопросы.</p>
+          <div class="card-topics">
+            <span class="topic-tag">Emails</span>
+            <span class="topic-tag">Reports</span>
+            <span class="topic-tag">Slack</span>
+            <span class="topic-tag">Structure</span>
+          </div>
+        </div>
+        <div class="card-expanded">
+          <p class="card-content-title">Типы письменного English:</p>
+          <ul class="card-content-list">
+            <li>Email: формальный / нейтральный / срочный — структура каждого</li>
+            <li>Slack/Teams: краткость + ясность без потери смысла</li>
+            <li>Report: Executive Summary, Findings, Recommendations</li>
+            <li>Cover Letter: hook → proof → fit → call to action</li>
+            <li>Performance update: как писать о своих достижениях</li>
+          </ul>
+          <br>
+          <p class="card-content-title">Принципы:</p>
+          <ul class="card-content-list">
+            <li>✂️ Pyramid principle: вывод первым, детали потом</li>
+            <li>🔤 Active voice везде где возможно</li>
+            <li>📐 Grammarly Premium — как личный редактор</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-phase">Глава VI</span>
+          <span class="card-hours">70 часов</span>
+        </div>
+        <div class="card-body">
+          <span class="card-icon">🏰</span>
+          <h3 class="card-title">Политика Белого Города</h3>
+          <p class="card-subtitle">Полный офисный арсенал. Переговоры, фидбэк, делегирование, эскалация — всё на English.</p>
+          <div class="card-topics">
+            <span class="topic-tag">Meetings</span>
+            <span class="topic-tag">Negotiation</span>
+            <span class="topic-tag">Feedback</span>
+            <span class="topic-tag">Leadership</span>
+          </div>
+        </div>
+        <div class="card-expanded">
+          <p class="card-content-title">Сценарии:</p>
+          <ul class="card-content-list">
+            <li>Job Interview: все вопросы + идеальные ответы с примерами</li>
+            <li>Performance Review: как говорить о себе и о задачах</li>
+            <li>Negotiation: softeners, hedging, counteroffer phrases</li>
+            <li>Disagreement: "I see your point, however…" — без конфликта</li>
+            <li>Delegation: "Could you take ownership of…" + follow-up</li>
+          </ul>
+          <br>
+          <p class="card-content-title">Материалы:</p>
+          <ul class="card-content-list">
+            <li>📚 Business English Pod (бесплатный подкаст-курс)</li>
+            <li>🎓 Coursera: Business English for Non-Native Speakers</li>
+            <li>🎬 "Succession" — как говорит топ-менеджмент</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-phase">Глава VII</span>
+          <span class="card-hours">60 часов</span>
+        </div>
+        <div class="card-body">
+          <span class="card-icon">📚</span>
+          <h3 class="card-title">Библиотека Гондора</h3>
+          <p class="card-subtitle">Читаешь профессиональные тексты быстро и точно. Статьи, whitepapers, книги — без словаря.</p>
+          <div class="card-topics">
+            <span class="topic-tag">Reading</span>
+            <span class="topic-tag">Speed</span>
+            <span class="topic-tag">Comprehension</span>
+            <span class="topic-tag">Analysis</span>
+          </div>
+        </div>
+        <div class="card-expanded">
+          <p class="card-content-title">Прогрессия чтения:</p>
+          <ul class="card-content-list">
+            <li>Месяц 1-3: The Economist (articles 500 words) + glossary</li>
+            <li>Месяц 3-6: HBR articles, McKinsey reports — бизнес нарратив</li>
+            <li>Месяц 6-9: Non-fiction книги ("Atomic Habits", "Deep Work")</li>
+            <li>Месяц 9-12: Fiction books в жанре игр/фэнтези для удовольствия</li>
+            <li>Техника: Chunking — читай группами слов, не по одному</li>
+          </ul>
+          <br>
+          <p class="card-content-title">Книги-рекомендации:</p>
+          <ul class="card-content-list">
+            <li>📗 "The Phoenix Project" (IT-роман, B2 уровень)</li>
+            <li>📗 "Atomic Habits" — простой язык, полезный контент</li>
+            <li>📗 "Ready Player One" — геймерам, B2/C1 vocab</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="module-card" onclick="toggleCard(this)">
+        <div class="card-header">
+          <span class="card-phase">Глава VIII</span>
+          <span class="card-hours">30 часов</span>
+        </div>
+        <div class="card-body">
+          <span class="card-icon">👑</span>
+          <h3 class="card-title">Коронация — Job Hunt</h3>
+          <p class="card-subtitle">Финальный квест. Применяешь всё накопленное. LinkedIn, резюме, собеседование, первые месяцы в роли.</p>
+          <div class="card-topics">
+            <span class="topic-tag">LinkedIn</span>
+            <span class="topic-tag">CV/Resume</span>
+            <span class="topic-tag">Onboarding</span>
+            <span class="topic-tag">C1 Test</span>
+          </div>
+        </div>
+        <div class="card-expanded">
+          <p class="card-content-title">Action plan:</p>
+          <ul class="card-content-list">
+            <li>LinkedIn профиль на English — headline, summary, experience</li>
+            <li>CV на English — action verbs, quantified achievements</li>
+            <li>Mock interviews — запись и анализ себя на видео</li>
+            <li>First 90 days plan — как говорить о своих целях в новой роли</li>
+            <li>Cambridge C1 Advanced или IELTS 7.0+ как подтверждение</li>
+          </ul>
+          <br>
+          <p class="card-content-title">Финальные метрики C1:</p>
+          <ul class="card-content-list">
+            <li>✓ Говоришь 5 мин без пауз на любую рабочую тему</li>
+            <li>✓ Email написан за 10 минут без Google Translate</li>
+            <li>✓ Понимаешь 90%+ деловых подкастов без субтитров</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- TIMELINE -->
+<section id="timeline">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">⸻ The Age of the Ring ⸻</span>
+      <h2 class="section-title">12-Месячная Карта</h2>
+      <p class="section-desc">Сколько времени и на что. Минимум 40 часов в месяц = 10 часов в неделю = 1.5 часа в день.</p>
+    </div>
+
+    <div class="timeline-bar-wrap">
+      <div class="timeline-header-row">
+        <div></div>
+        <div class="tl-label">М1</div>
+        <div class="tl-label">М2</div>
+        <div class="tl-label">М3</div>
+        <div class="tl-label">М4</div>
+        <div class="tl-label">М5</div>
+        <div class="tl-label">М6</div>
+        <div class="tl-label">М7</div>
+        <div class="tl-label">М8</div>
+        <div class="tl-label">М9</div>
+        <div class="tl-label">М10</div>
+        <div class="tl-label">М11</div>
+        <div class="tl-label">М12</div>
+      </div>
+      <div class="timeline-rows">
+        <div class="tl-row"><div class="tl-name">Грамматика</div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active-deep"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div></div>
+        <div class="tl-row"><div class="tl-name">Словарь</div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active-deep"></div><div class="tl-cell active-deep"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div></div>
+        <div class="tl-row"><div class="tl-name">Аудирование</div><div class="tl-cell inactive"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active-deep"></div><div class="tl-cell active-deep"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div></div>
+        <div class="tl-row"><div class="tl-name">Speaking</div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active-deep"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div></div>
+        <div class="tl-row"><div class="tl-name">Writing</div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active-deep"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div></div>
+        <div class="tl-row"><div class="tl-name">Business English</div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active-deep"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div></div>
+        <div class="tl-row"><div class="tl-name">Чтение C1</div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active-deep"></div><div class="tl-cell inactive"></div></div>
+        <div class="tl-row"><div class="tl-name">Job Hunt / C1 Test</div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell inactive"></div><div class="tl-cell active"></div><div class="tl-cell active"></div><div class="tl-cell active"></div></div>
+      </div>
+    </div>
+
+    <!-- DAILY PLAN -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;">
+      <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(201,168,76,0.15);padding:24px;border-radius:2px;text-align:center;">
+        <div style="font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--gold);margin-bottom:8px;">1.5ч</div>
+        <div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;">В день (минимум)</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(201,168,76,0.15);padding:24px;border-radius:2px;text-align:center;">
+        <div style="font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--gold);margin-bottom:8px;">10ч</div>
+        <div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;">В неделю</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(201,168,76,0.15);padding:24px;border-radius:2px;text-align:center;">
+        <div style="font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--gold);margin-bottom:8px;">40ч</div>
+        <div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;">В месяц</div>
+      </div>
+      <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(201,168,76,0.15);padding:24px;border-radius:2px;text-align:center;">
+        <div style="font-family:'Cinzel Decorative',serif;font-size:2rem;color:var(--gold);margin-bottom:8px;">480ч</div>
+        <div style="font-family:'Cinzel',serif;font-size:0.7rem;color:var(--text-dim);text-transform:uppercase;letter-spacing:2px;">Всего за год</div>
+      </div>
+    </div>
+
+    <!-- DAILY SCHEDULE -->
+    <div style="margin-top:40px;background:rgba(0,0,0,0.3);border:1px solid rgba(201,168,76,0.12);border-radius:2px;padding:32px;">
+      <p style="font-family:'Cinzel',serif;font-size:0.8rem;color:var(--gold);letter-spacing:3px;text-transform:uppercase;margin-bottom:20px;">⚔ Дневной Распорядок Воина</p>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;">
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-family:'Cinzel Decorative',serif;color:var(--gold-dark);font-size:0.85rem;white-space:nowrap;">🌅 Утро</span>
+          <div><div style="font-family:'Cinzel',serif;font-size:0.78rem;color:var(--text-parchment);">20 мин Anki</div><div style="font-size:0.78rem;color:var(--text-dim);font-style:italic;">Словарь — пока мозг свежий</div></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-family:'Cinzel Decorative',serif;color:var(--gold-dark);font-size:0.85rem;white-space:nowrap;">🎧 Дорога</span>
+          <div><div style="font-family:'Cinzel',serif;font-size:0.78rem;color:var(--text-parchment);">30 мин Подкаст/аудио</div><div style="font-size:0.78rem;color:var(--text-dim);font-style:italic;">Пассивное аудирование</div></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-family:'Cinzel Decorative',serif;color:var(--gold-dark);font-size:0.85rem;white-space:nowrap;">📖 Вечер</span>
+          <div><div style="font-family:'Cinzel',serif;font-size:0.78rem;color:var(--text-parchment);">40 мин Активное обучение</div><div style="font-size:0.78rem;color:var(--text-dim);font-style:italic;">Грамматика / Writing / Speaking</div></div>
+        </div>
+        <div style="display:flex;gap:14px;align-items:flex-start;">
+          <span style="font-family:'Cinzel Decorative',serif;color:var(--gold-dark);font-size:0.85rem;white-space:nowrap;">🎬 Ночь</span>
+          <div><div style="font-family:'Cinzel',serif;font-size:0.78rem;color:var(--text-parchment);">1 эп. сериала на English</div><div style="font-size:0.78rem;color:var(--text-dim);font-style:italic;">Иммерсия + удовольствие</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<section id="progress">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">⸻ The Palantír ⸻</span>
+      <h2 class="section-title">Метрики Роста</h2>
+      <p class="section-desc">Видящий камень показывает правду. Вот где ты должен быть на каждом этапе.</p>
+    </div>
+
+    <div class="skills-grid">
+      <div class="skill-bar-item">
+        <div class="skill-bar-header">
+          <span class="skill-bar-name">🗣 Speaking Confidence</span>
+          <span class="skill-bar-pct">B1→C1</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.85"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;">
+          <span style="font-size:0.7rem;color:var(--text-dim);">Сейчас: B1 (40%)</span>
+          <span style="font-size:0.7rem;color:var(--gold-dark);">Цель: C1 (85%)</span>
+        </div>
+      </div>
+
+      <div class="skill-bar-item">
+        <div class="skill-bar-header">
+          <span class="skill-bar-name">👂 Listening</span>
+          <span class="skill-bar-pct">→90%</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.9"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;">
+          <span style="font-size:0.7rem;color:var(--text-dim);">Нейтивы в реальном темпе</span>
+          <span style="font-size:0.7rem;color:var(--gold-dark);">12 месяцев</span>
+        </div>
+      </div>
+
+      <div class="skill-bar-item">
+        <div class="skill-bar-header">
+          <span class="skill-bar-name">✍ Writing Quality</span>
+          <span class="skill-bar-pct">→Professional</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.8"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;">
+          <span style="font-size:0.7rem;color:var(--text-dim);">Email за 10 мин</span>
+          <span style="font-size:0.7rem;color:var(--gold-dark);">8 месяцев</span>
+        </div>
+      </div>
+
+      <div class="skill-bar-item">
+        <div class="skill-bar-header">
+          <span class="skill-bar-name">📖 Reading Speed</span>
+          <span class="skill-bar-pct">→250 wpm</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.75"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;">
+          <span style="font-size:0.7rem;color:var(--text-dim);">Сейчас ~120 wpm</span>
+          <span style="font-size:0.7rem;color:var(--gold-dark);">10 месяцев</span>
+        </div>
+      </div>
+
+      <div class="skill-bar-item">
+        <div class="skill-bar-header">
+          <span class="skill-bar-name">💼 Business English</span>
+          <span class="skill-bar-pct">→Advanced</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.88"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;">
+          <span style="font-size:0.7rem;color:var(--text-dim);">Meetings, negotiations</span>
+          <span style="font-size:0.7rem;color:var(--gold-dark);">9 месяцев</span>
+        </div>
+      </div>
+
+      <div class="skill-bar-item">
+        <div class="skill-bar-header">
+          <span class="skill-bar-name">📝 Vocabulary Size</span>
+          <span class="skill-bar-pct">5000+ слов</span>
+        </div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" data-width="0.7"></div></div>
+        <div style="display:flex;justify-content:space-between;margin-top:6px;">
+          <span style="font-size:0.7rem;color:var(--text-dim);">Сейчас: ~3000</span>
+          <span style="font-size:0.7rem;color:var(--gold-dark);">6 месяцев</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="section-container">
+    <div class="section-header">
+      <span class="section-tag">⸻ The Armoury ⸻</span>
+      <h2 class="section-title">Арсенал Воина</h2>
+      <p class="section-desc">Лучшие ресурсы для каждого навыка. Отобраны для любителей игр, фильмов и книг.</p>
+    </div>
+
+    <div class="resources-grid">
+
+      <div class="resource-card">
+        <p class="resource-type">🎮 Для геймеров</p>
+        <h3 class="resource-title">Игровой English</h3>
+        <p class="resource-desc">Играй на английском — это иммерсия без усилий.</p>
+        <ul class="resource-list">
+          <li>Любая RPG на English (Witcher 3, Starfield, BG3)</li>
+          <li>Читай все диалоги — не пропускай субтитры</li>
+          <li>Game Dev English: хороший LinkedIn-нишевый навык</li>
+          <li>Twitch — стримы на английском для аудирования</li>
+          <li>Vocabulary игровой: lore, quest, narrative</li>
+        </ul>
+      </div>
+
+      <div class="resource-card">
+        <p class="resource-type">🎬 Для киноманов</p>
+        <h3 class="resource-title">Метод сериалов</h3>
+        <p class="resource-desc">Netflix/HBO как учебник — 3 этапа работы с контентом.</p>
+        <ul class="resource-list">
+          <li>Suits, Succession, The Office — бизнес-English</li>
+          <li>Breaking Bad — American accent, сложный нарратив</li>
+          <li>Метод: 1-й раз без суб → 2-й с EN суб → теневой</li>
+          <li>Language Reactor (расширение) — двойные субтитры</li>
+          <li>Выбирай жанр: corporate drama > fantasy для work vocab</li>
+        </ul>
+      </div>
+
+      <div class="resource-card">
+        <p class="resource-type">📚 Для книголюбов</p>
+        <h3 class="resource-title">Книги-Учебники</h3>
+        <p class="resource-desc">Читай и учись одновременно — лучший способ поглощения слов.</p>
+        <ul class="resource-list">
+          <li>Grammar: English Grammar in Use (Raymond Murphy)</li>
+          <li>Vocabulary: English Collocations in Use (Advanced)</li>
+          <li>Business: Business Vocabulary in Use (B2-C1)</li>
+          <li>Fiction: "Ready Player One" — B2, geek-friendly</li>
+          <li>Fiction: "The Martian" — C1, tech + humour</li>
+        </ul>
+      </div>
+
+      <div class="resource-card">
+        <p class="resource-type">📱 Приложения</p>
+        <h3 class="resource-title">Цифровое оружие</h3>
+        <p class="resource-desc">Лучший стек приложений для автономного изучения.</p>
+        <ul class="resource-list">
+          <li>Anki — карточки со своими примерами (бесплатно)</li>
+          <li>italki — уроки с native speakers (от $10/час)</li>
+          <li>Grammarly Premium — AI-редактор твоих текстов</li>
+          <li>ELSA Speak — тренировка произношения с AI</li>
+          <li>ChatGPT — role-play scenarios, mock interviews</li>
+        </ul>
+      </div>
+
+      <div class="resource-card">
+        <p class="resource-type">🎙 Подкасты</p>
+        <h3 class="resource-title">Аудио-Арсенал</h3>
+        <p class="resource-desc">40+ минут в день пассивного аудирования = резкий рост за 3 месяца.</p>
+        <ul class="resource-list">
+          <li>BBC Global News Podcast (News English, чёткий акцент)</li>
+          <li>Business English Pod (специально для офиса)</li>
+          <li>HBR IdeaCast (бизнес + leadership)</li>
+          <li>Lex Fridman Podcast (tech, slow clear speech)</li>
+          <li>6 Minute English BBC (B1-B2, идеальное начало)</li>
+        </ul>
+      </div>
+
+      <div class="resource-card">
+        <p class="resource-type">🌐 Онлайн</p>
+        <h3 class="resource-title">Курсы и Платформы</h3>
+        <p class="resource-desc">Структурированное обучение для системного роста.</p>
+        <ul class="resource-list">
+          <li>Coursera: English for Career Development (UPenn)</li>
+          <li>Business English Certificate (Cambridge BEC)</li>
+          <li>BBC Learning English — бесплатно, официально</li>
+          <li>Effortless English (A.J. Hoge) — natural method</li>
+          <li>English Attack! — видео + упражнения</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-rune">⚔</span>
+  <p class="footer-quote">"Even the smallest person can change the course of the future."<br>— А твой English изменит курс твоей карьеры.</p>
+  <p class="footer-credit">The English Quest · B1 to C1 · The Fellowship of Language · 2024–2025</p>
+</footer>
+
+<script>
+  // Orb follow
+  const orb = document.getElementById('orb');
+  document.addEventListener('mousemove', (e) => {
+    orb.style.left = (e.clientX - 150) + 'px';
+    orb.style.top = (e.clientY - 150) + 'px';
+  });
+
+  // Intersection observer for journey steps
+  const steps = document.querySelectorAll('.journey-step');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.1 });
+  steps.forEach(s => observer.observe(s));
+
+  // Skill bars
+  const bars = document.querySelectorAll('.skill-bar-fill');
+  const barObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const w = e.target.getAttribute('data-width');
+        e.target.style.transform = `scaleX(${w})`;
+        e.target.classList.add('animated');
+      }
+    });
+  }, { threshold: 0.3 });
+  bars.forEach(b => barObserver.observe(b));
+
+  // Toggle module cards
+  function toggleCard(card) {
+    card.classList.toggle('open');
+  }
+
+  // Toggle checklist items
+  function toggleCheck(item) {
+    item.classList.toggle('done');
+    saveChecks();
+  }
+
+  // Save/load checklist state
+  function saveChecks() {
+    const data = {};
+    document.querySelectorAll('.check-item').forEach((item, i) => {
+      data[i] = item.classList.contains('done');
+    });
+    try { localStorage.setItem('eq_checks', JSON.stringify(data)); } catch(e) {}
+  }
+
+  function loadChecks() {
+    try {
+      const data = JSON.parse(localStorage.getItem('eq_checks') || '{}');
+      document.querySelectorAll('.check-item').forEach((item, i) => {
+        if (data[i]) item.classList.add('done');
+      });
+    } catch(e) {}
+  }
+
+  loadChecks();
+
+  // Smooth reveal on scroll
+  const allCards = document.querySelectorAll('.module-card, .resource-card, .checklist-book, .skill-bar-item');
+  const cardObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.05 });
+  allCards.forEach(c => {
+    c.style.opacity = '0';
+    c.style.transform = 'translateY(20px)';
+    c.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    cardObserver.observe(c);
+  });
+</script>
+</body>
+</html>

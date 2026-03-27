@@ -74,6 +74,7 @@ class RoadmapParser {
       sections: sections,
       sourcePath: sourcePath,
       isImported: true,
+      isInteractiveSite: false,
     );
   }
 
