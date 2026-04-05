@@ -22,4 +22,8 @@ void main() {
     expect(uri.scheme, 'file');
     expect(uri.toString(), contains('english%20quest.html'));
   });
+
+  test('default html roadmap asset path is app-relative asset key', () {
+    expect(service.selectViewer('roadmapcontent/english_quest.html'), RoadmapViewerType.html);
+  });
 }

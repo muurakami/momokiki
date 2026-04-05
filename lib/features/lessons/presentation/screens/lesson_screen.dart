@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../notifiers/lesson_session_notifier.dart';
 import '../notifiers/lesson_session_state.dart';
 import '../widgets/block_router.dart';
@@ -52,7 +55,30 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             }
 
             if (state.errorMessage != null) {
-              return Center(child: Text(state.errorMessage!));
+              return Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(AppSpacing.lg),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text('Lesson temporarily unavailable', style: AppTypography.headlineMedium),
+                      const SizedBox(height: AppSpacing.sm),
+                      Text(
+                        state.errorMessage!,
+                        textAlign: TextAlign.center,
+                        style: AppTypography.bodyMedium,
+                      ),
+                      const SizedBox(height: AppSpacing.md),
+                      FilledButton(
+                        onPressed: () => ref
+                            .read(lessonSessionNotifierProvider.notifier)
+                            .loadLesson(widget.lessonId),
+                        child: const Text('Retry'),
+                      ),
+                    ],
+                  ),
+                ),
+              );
             }
 
             if (lesson == null || progress == null) {
@@ -70,6 +96,8 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                _LessonXpHeader(state: state),
+                const SizedBox(height: AppSpacing.md),
                 LessonProgressBar(
                   currentBlock: progress.currentBlockIndex + 1,
                   totalBlocks: lesson.blocks.length,
@@ -79,6 +107,11 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                   child: SingleChildScrollView(
                     child: LessonBlockRouter(
                       block: currentBlock,
+                      result: state.lastResult,
+                      feedbackMessage: state.feedbackMessage,
+                      correctAnswerLabel: state.correctAnswerLabel,
+                      showRetryPrompt: state.showRetryPrompt,
+                      currentAttemptCount: state.currentAttemptCount,
                       onSubmitted: ({submittedAnswer, selectedOptionIds = const <String>[]}) {
                         return ref.read(lessonSessionNotifierProvider.notifier).submitBlock(
                               submittedAnswer: submittedAnswer,
@@ -96,6 +129,60 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
             );
           },
         ),
+      ),
+    );
+  }
+}
+
+class _LessonXpHeader extends StatelessWidget {
+  const _LessonXpHeader({required this.state});
+
+  final LessonSessionState state;
+
+  @override
+  Widget build(BuildContext context) {
+    final stats = state.stats;
+    final earnedXp = state.currentBlockEarnedXp;
+
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Total XP', style: AppTypography.labelSmall),
+                Text(
+                  '${stats?.totalXp ?? state.totalXpPreview} XP',
+                  style: AppTypography.headlineMedium,
+                ),
+                Text(
+                  'Level ${stats?.level ?? 1}',
+                  style: AppTypography.bodyMedium,
+                ),
+              ],
+            ),
+          ),
+          AnimatedContainer(
+            duration: const Duration(milliseconds: 250),
+            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+            decoration: BoxDecoration(
+              color: earnedXp > 0
+                  ? AppColors.accent.withValues(alpha: 0.25)
+                  : AppColors.camel.withValues(alpha: 0.15),
+              borderRadius: BorderRadius.circular(999),
+            ),
+            child: Text(
+              earnedXp > 0 ? '+$earnedXp XP' : 'Try for XP',
+              style: AppTypography.labelLarge.copyWith(color: AppColors.primary),
+            ),
+          ),
+        ],
       ),
     );
   }

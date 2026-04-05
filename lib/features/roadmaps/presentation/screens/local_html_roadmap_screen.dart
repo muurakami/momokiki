@@ -20,6 +20,7 @@ class LocalHtmlRoadmapScreen extends StatefulWidget {
 class _LocalHtmlRoadmapScreenState extends State<LocalHtmlRoadmapScreen> {
   WebViewController? _controller;
   String? _errorMessage;
+  double _progress = 0;
 
   @override
   void initState() {
@@ -38,9 +39,29 @@ class _LocalHtmlRoadmapScreenState extends State<LocalHtmlRoadmapScreen> {
       }
 
       final controller = WebViewController()
-        ..setJavaScriptMode(JavaScriptMode.unrestricted)
+        ..setJavaScriptMode(JavaScriptMode.disabled)
         ..setNavigationDelegate(
           NavigationDelegate(
+            onProgress: (progress) {
+              if (!mounted) {
+                return;
+              }
+              setState(() {
+                _progress = progress / 100;
+              });
+            },
+            onNavigationRequest: (request) {
+              final currentUri = Uri.tryParse(request.url);
+              if (currentUri == null) {
+                return NavigationDecision.prevent;
+              }
+
+              if (currentUri.scheme == 'file' || request.url.startsWith('about:blank')) {
+                return NavigationDecision.navigate;
+              }
+
+              return NavigationDecision.prevent;
+            },
             onWebResourceError: (error) {
               if (!mounted) {
                 return;
@@ -78,7 +99,12 @@ class _LocalHtmlRoadmapScreenState extends State<LocalHtmlRoadmapScreen> {
           ? Center(child: Text(_errorMessage!))
           : _controller == null
               ? const Center(child: CircularProgressIndicator())
-              : WebViewWidget(controller: _controller!),
+              : Column(
+                  children: [
+                    if (_progress < 1) LinearProgressIndicator(value: _progress),
+                    Expanded(child: WebViewWidget(controller: _controller!)),
+                  ],
+                ),
     );
   }
 }

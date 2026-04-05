@@ -35,7 +35,7 @@ class RoadmapAssetDataSource {
         content: english,
         language: SupportedLanguage.english,
       ).copyWith(
-        externalUrl: 'momokiki/roadmapcontent/english_quest.html',
+        externalUrl: 'roadmapcontent/english_quest.html',
         isInteractiveSite: true,
       ),
       _parser.parse(
@@ -44,7 +44,7 @@ class RoadmapAssetDataSource {
         content: japanese,
         language: SupportedLanguage.japanese,
       ).copyWith(
-        externalUrl: 'momokiki/roadmapcontent/japan_master.html',
+        externalUrl: 'roadmapcontent/japan_master.html',
         isInteractiveSite: true,
       ),
     ];

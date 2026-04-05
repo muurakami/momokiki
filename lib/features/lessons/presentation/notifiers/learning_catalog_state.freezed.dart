@@ -19,6 +19,9 @@ mixin _$LearningCatalogState {
   SupportedLanguage get selectedLanguage => throw _privateConstructorUsedError;
   List<LessonIsland> get lessons => throw _privateConstructorUsedError;
   List<RoadmapDocument> get roadmaps => throw _privateConstructorUsedError;
+  int get totalXp => throw _privateConstructorUsedError;
+  int get level => throw _privateConstructorUsedError;
+  double get levelProgress => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
@@ -39,6 +42,9 @@ abstract class $LearningCatalogStateCopyWith<$Res> {
       {SupportedLanguage selectedLanguage,
       List<LessonIsland> lessons,
       List<RoadmapDocument> roadmaps,
+      int totalXp,
+      int level,
+      double levelProgress,
       bool isLoading,
       String? errorMessage});
 }
@@ -62,6 +68,9 @@ class _$LearningCatalogStateCopyWithImpl<$Res,
     Object? selectedLanguage = null,
     Object? lessons = null,
     Object? roadmaps = null,
+    Object? totalXp = null,
+    Object? level = null,
+    Object? levelProgress = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
@@ -78,6 +87,18 @@ class _$LearningCatalogStateCopyWithImpl<$Res,
           ? _value.roadmaps
           : roadmaps // ignore: cast_nullable_to_non_nullable
               as List<RoadmapDocument>,
+      totalXp: null == totalXp
+          ? _value.totalXp
+          : totalXp // ignore: cast_nullable_to_non_nullable
+              as int,
+      level: null == level
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as int,
+      levelProgress: null == levelProgress
+          ? _value.levelProgress
+          : levelProgress // ignore: cast_nullable_to_non_nullable
+              as double,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -102,6 +123,9 @@ abstract class _$$LearningCatalogStateImplCopyWith<$Res>
       {SupportedLanguage selectedLanguage,
       List<LessonIsland> lessons,
       List<RoadmapDocument> roadmaps,
+      int totalXp,
+      int level,
+      double levelProgress,
       bool isLoading,
       String? errorMessage});
 }
@@ -122,6 +146,9 @@ class __$$LearningCatalogStateImplCopyWithImpl<$Res>
     Object? selectedLanguage = null,
     Object? lessons = null,
     Object? roadmaps = null,
+    Object? totalXp = null,
+    Object? level = null,
+    Object? levelProgress = null,
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
@@ -138,6 +165,18 @@ class __$$LearningCatalogStateImplCopyWithImpl<$Res>
           ? _value._roadmaps
           : roadmaps // ignore: cast_nullable_to_non_nullable
               as List<RoadmapDocument>,
+      totalXp: null == totalXp
+          ? _value.totalXp
+          : totalXp // ignore: cast_nullable_to_non_nullable
+              as int,
+      level: null == level
+          ? _value.level
+          : level // ignore: cast_nullable_to_non_nullable
+              as int,
+      levelProgress: null == levelProgress
+          ? _value.levelProgress
+          : levelProgress // ignore: cast_nullable_to_non_nullable
+              as double,
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
@@ -157,6 +196,9 @@ class _$LearningCatalogStateImpl implements _LearningCatalogState {
       {this.selectedLanguage = SupportedLanguage.english,
       final List<LessonIsland> lessons = const <LessonIsland>[],
       final List<RoadmapDocument> roadmaps = const <RoadmapDocument>[],
+      this.totalXp = 0,
+      this.level = 1,
+      this.levelProgress = 0,
       this.isLoading = false,
       this.errorMessage})
       : _lessons = lessons,
@@ -185,13 +227,22 @@ class _$LearningCatalogStateImpl implements _LearningCatalogState {
 
   @override
   @JsonKey()
+  final int totalXp;
+  @override
+  @JsonKey()
+  final int level;
+  @override
+  @JsonKey()
+  final double levelProgress;
+  @override
+  @JsonKey()
   final bool isLoading;
   @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'LearningCatalogState(selectedLanguage: $selectedLanguage, lessons: $lessons, roadmaps: $roadmaps, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'LearningCatalogState(selectedLanguage: $selectedLanguage, lessons: $lessons, roadmaps: $roadmaps, totalXp: $totalXp, level: $level, levelProgress: $levelProgress, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
@@ -203,6 +254,10 @@ class _$LearningCatalogStateImpl implements _LearningCatalogState {
                 other.selectedLanguage == selectedLanguage) &&
             const DeepCollectionEquality().equals(other._lessons, _lessons) &&
             const DeepCollectionEquality().equals(other._roadmaps, _roadmaps) &&
+            (identical(other.totalXp, totalXp) || other.totalXp == totalXp) &&
+            (identical(other.level, level) || other.level == level) &&
+            (identical(other.levelProgress, levelProgress) ||
+                other.levelProgress == levelProgress) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.errorMessage, errorMessage) ||
@@ -215,6 +270,9 @@ class _$LearningCatalogStateImpl implements _LearningCatalogState {
       selectedLanguage,
       const DeepCollectionEquality().hash(_lessons),
       const DeepCollectionEquality().hash(_roadmaps),
+      totalXp,
+      level,
+      levelProgress,
       isLoading,
       errorMessage);
 
@@ -234,6 +292,9 @@ abstract class _LearningCatalogState implements LearningCatalogState {
       {final SupportedLanguage selectedLanguage,
       final List<LessonIsland> lessons,
       final List<RoadmapDocument> roadmaps,
+      final int totalXp,
+      final int level,
+      final double levelProgress,
       final bool isLoading,
       final String? errorMessage}) = _$LearningCatalogStateImpl;
 
@@ -243,6 +304,12 @@ abstract class _LearningCatalogState implements LearningCatalogState {
   List<LessonIsland> get lessons;
   @override
   List<RoadmapDocument> get roadmaps;
+  @override
+  int get totalXp;
+  @override
+  int get level;
+  @override
+  double get levelProgress;
   @override
   bool get isLoading;
   @override

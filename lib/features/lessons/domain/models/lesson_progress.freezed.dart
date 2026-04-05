@@ -25,9 +25,13 @@ mixin _$LessonProgress {
   int get currentBlockIndex => throw _privateConstructorUsedError;
   int get correctAnswers => throw _privateConstructorUsedError;
   int get answeredBlocks => throw _privateConstructorUsedError;
+  int get attemptCount => throw _privateConstructorUsedError;
+  int get incorrectAnswers => throw _privateConstructorUsedError;
   int get earnedXp => throw _privateConstructorUsedError;
   bool get isCompleted => throw _privateConstructorUsedError;
   String? get lastBlockId => throw _privateConstructorUsedError;
+  List<String> get completedBlockIds => throw _privateConstructorUsedError;
+  DateTime? get lastAttemptAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
   DateTime? get completedAt => throw _privateConstructorUsedError;
 
@@ -53,9 +57,13 @@ abstract class $LessonProgressCopyWith<$Res> {
       int currentBlockIndex,
       int correctAnswers,
       int answeredBlocks,
+      int attemptCount,
+      int incorrectAnswers,
       int earnedXp,
       bool isCompleted,
       String? lastBlockId,
+      List<String> completedBlockIds,
+      DateTime? lastAttemptAt,
       DateTime? updatedAt,
       DateTime? completedAt});
 }
@@ -80,9 +88,13 @@ class _$LessonProgressCopyWithImpl<$Res, $Val extends LessonProgress>
     Object? currentBlockIndex = null,
     Object? correctAnswers = null,
     Object? answeredBlocks = null,
+    Object? attemptCount = null,
+    Object? incorrectAnswers = null,
     Object? earnedXp = null,
     Object? isCompleted = null,
     Object? lastBlockId = freezed,
+    Object? completedBlockIds = null,
+    Object? lastAttemptAt = freezed,
     Object? updatedAt = freezed,
     Object? completedAt = freezed,
   }) {
@@ -107,6 +119,14 @@ class _$LessonProgressCopyWithImpl<$Res, $Val extends LessonProgress>
           ? _value.answeredBlocks
           : answeredBlocks // ignore: cast_nullable_to_non_nullable
               as int,
+      attemptCount: null == attemptCount
+          ? _value.attemptCount
+          : attemptCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      incorrectAnswers: null == incorrectAnswers
+          ? _value.incorrectAnswers
+          : incorrectAnswers // ignore: cast_nullable_to_non_nullable
+              as int,
       earnedXp: null == earnedXp
           ? _value.earnedXp
           : earnedXp // ignore: cast_nullable_to_non_nullable
@@ -119,6 +139,14 @@ class _$LessonProgressCopyWithImpl<$Res, $Val extends LessonProgress>
           ? _value.lastBlockId
           : lastBlockId // ignore: cast_nullable_to_non_nullable
               as String?,
+      completedBlockIds: null == completedBlockIds
+          ? _value.completedBlockIds
+          : completedBlockIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      lastAttemptAt: freezed == lastAttemptAt
+          ? _value.lastAttemptAt
+          : lastAttemptAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -145,9 +173,13 @@ abstract class _$$LessonProgressImplCopyWith<$Res>
       int currentBlockIndex,
       int correctAnswers,
       int answeredBlocks,
+      int attemptCount,
+      int incorrectAnswers,
       int earnedXp,
       bool isCompleted,
       String? lastBlockId,
+      List<String> completedBlockIds,
+      DateTime? lastAttemptAt,
       DateTime? updatedAt,
       DateTime? completedAt});
 }
@@ -170,9 +202,13 @@ class __$$LessonProgressImplCopyWithImpl<$Res>
     Object? currentBlockIndex = null,
     Object? correctAnswers = null,
     Object? answeredBlocks = null,
+    Object? attemptCount = null,
+    Object? incorrectAnswers = null,
     Object? earnedXp = null,
     Object? isCompleted = null,
     Object? lastBlockId = freezed,
+    Object? completedBlockIds = null,
+    Object? lastAttemptAt = freezed,
     Object? updatedAt = freezed,
     Object? completedAt = freezed,
   }) {
@@ -197,6 +233,14 @@ class __$$LessonProgressImplCopyWithImpl<$Res>
           ? _value.answeredBlocks
           : answeredBlocks // ignore: cast_nullable_to_non_nullable
               as int,
+      attemptCount: null == attemptCount
+          ? _value.attemptCount
+          : attemptCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      incorrectAnswers: null == incorrectAnswers
+          ? _value.incorrectAnswers
+          : incorrectAnswers // ignore: cast_nullable_to_non_nullable
+              as int,
       earnedXp: null == earnedXp
           ? _value.earnedXp
           : earnedXp // ignore: cast_nullable_to_non_nullable
@@ -209,6 +253,14 @@ class __$$LessonProgressImplCopyWithImpl<$Res>
           ? _value.lastBlockId
           : lastBlockId // ignore: cast_nullable_to_non_nullable
               as String?,
+      completedBlockIds: null == completedBlockIds
+          ? _value._completedBlockIds
+          : completedBlockIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      lastAttemptAt: freezed == lastAttemptAt
+          ? _value.lastAttemptAt
+          : lastAttemptAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       updatedAt: freezed == updatedAt
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
@@ -230,12 +282,17 @@ class _$LessonProgressImpl extends _LessonProgress {
       this.currentBlockIndex = 0,
       this.correctAnswers = 0,
       this.answeredBlocks = 0,
+      this.attemptCount = 0,
+      this.incorrectAnswers = 0,
       this.earnedXp = 0,
       this.isCompleted = false,
       this.lastBlockId,
+      final List<String> completedBlockIds = const <String>[],
+      this.lastAttemptAt,
       this.updatedAt,
       this.completedAt})
-      : super._();
+      : _completedBlockIds = completedBlockIds,
+        super._();
 
   factory _$LessonProgressImpl.fromJson(Map<String, dynamic> json) =>
       _$$LessonProgressImplFromJson(json);
@@ -255,12 +312,30 @@ class _$LessonProgressImpl extends _LessonProgress {
   final int answeredBlocks;
   @override
   @JsonKey()
+  final int attemptCount;
+  @override
+  @JsonKey()
+  final int incorrectAnswers;
+  @override
+  @JsonKey()
   final int earnedXp;
   @override
   @JsonKey()
   final bool isCompleted;
   @override
   final String? lastBlockId;
+  final List<String> _completedBlockIds;
+  @override
+  @JsonKey()
+  List<String> get completedBlockIds {
+    if (_completedBlockIds is EqualUnmodifiableListView)
+      return _completedBlockIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_completedBlockIds);
+  }
+
+  @override
+  final DateTime? lastAttemptAt;
   @override
   final DateTime? updatedAt;
   @override
@@ -268,7 +343,7 @@ class _$LessonProgressImpl extends _LessonProgress {
 
   @override
   String toString() {
-    return 'LessonProgress(lessonId: $lessonId, userId: $userId, currentBlockIndex: $currentBlockIndex, correctAnswers: $correctAnswers, answeredBlocks: $answeredBlocks, earnedXp: $earnedXp, isCompleted: $isCompleted, lastBlockId: $lastBlockId, updatedAt: $updatedAt, completedAt: $completedAt)';
+    return 'LessonProgress(lessonId: $lessonId, userId: $userId, currentBlockIndex: $currentBlockIndex, correctAnswers: $correctAnswers, answeredBlocks: $answeredBlocks, attemptCount: $attemptCount, incorrectAnswers: $incorrectAnswers, earnedXp: $earnedXp, isCompleted: $isCompleted, lastBlockId: $lastBlockId, completedBlockIds: $completedBlockIds, lastAttemptAt: $lastAttemptAt, updatedAt: $updatedAt, completedAt: $completedAt)';
   }
 
   @override
@@ -285,12 +360,20 @@ class _$LessonProgressImpl extends _LessonProgress {
                 other.correctAnswers == correctAnswers) &&
             (identical(other.answeredBlocks, answeredBlocks) ||
                 other.answeredBlocks == answeredBlocks) &&
+            (identical(other.attemptCount, attemptCount) ||
+                other.attemptCount == attemptCount) &&
+            (identical(other.incorrectAnswers, incorrectAnswers) ||
+                other.incorrectAnswers == incorrectAnswers) &&
             (identical(other.earnedXp, earnedXp) ||
                 other.earnedXp == earnedXp) &&
             (identical(other.isCompleted, isCompleted) ||
                 other.isCompleted == isCompleted) &&
             (identical(other.lastBlockId, lastBlockId) ||
                 other.lastBlockId == lastBlockId) &&
+            const DeepCollectionEquality()
+                .equals(other._completedBlockIds, _completedBlockIds) &&
+            (identical(other.lastAttemptAt, lastAttemptAt) ||
+                other.lastAttemptAt == lastAttemptAt) &&
             (identical(other.updatedAt, updatedAt) ||
                 other.updatedAt == updatedAt) &&
             (identical(other.completedAt, completedAt) ||
@@ -306,9 +389,13 @@ class _$LessonProgressImpl extends _LessonProgress {
       currentBlockIndex,
       correctAnswers,
       answeredBlocks,
+      attemptCount,
+      incorrectAnswers,
       earnedXp,
       isCompleted,
       lastBlockId,
+      const DeepCollectionEquality().hash(_completedBlockIds),
+      lastAttemptAt,
       updatedAt,
       completedAt);
 
@@ -336,9 +423,13 @@ abstract class _LessonProgress extends LessonProgress {
       final int currentBlockIndex,
       final int correctAnswers,
       final int answeredBlocks,
+      final int attemptCount,
+      final int incorrectAnswers,
       final int earnedXp,
       final bool isCompleted,
       final String? lastBlockId,
+      final List<String> completedBlockIds,
+      final DateTime? lastAttemptAt,
       final DateTime? updatedAt,
       final DateTime? completedAt}) = _$LessonProgressImpl;
   const _LessonProgress._() : super._();
@@ -357,11 +448,19 @@ abstract class _LessonProgress extends LessonProgress {
   @override
   int get answeredBlocks;
   @override
+  int get attemptCount;
+  @override
+  int get incorrectAnswers;
+  @override
   int get earnedXp;
   @override
   bool get isCompleted;
   @override
   String? get lastBlockId;
+  @override
+  List<String> get completedBlockIds;
+  @override
+  DateTime? get lastAttemptAt;
   @override
   DateTime? get updatedAt;
   @override
@@ -386,8 +485,12 @@ mixin _$LessonBlockResult {
   String get blockType => throw _privateConstructorUsedError;
   bool get isCorrect => throw _privateConstructorUsedError;
   int get earnedXp => throw _privateConstructorUsedError;
+  int get attemptNumber => throw _privateConstructorUsedError;
   int? get timeSpentSeconds => throw _privateConstructorUsedError;
   String? get submittedAnswer => throw _privateConstructorUsedError;
+  String? get correctAnswerLabel => throw _privateConstructorUsedError;
+  String? get feedbackMessage => throw _privateConstructorUsedError;
+  bool get shouldRetry => throw _privateConstructorUsedError;
   List<String> get selectedOptionIds => throw _privateConstructorUsedError;
 
   /// Serializes this LessonBlockResult to a JSON map.
@@ -412,8 +515,12 @@ abstract class $LessonBlockResultCopyWith<$Res> {
       String blockType,
       bool isCorrect,
       int earnedXp,
+      int attemptNumber,
       int? timeSpentSeconds,
       String? submittedAnswer,
+      String? correctAnswerLabel,
+      String? feedbackMessage,
+      bool shouldRetry,
       List<String> selectedOptionIds});
 }
 
@@ -437,8 +544,12 @@ class _$LessonBlockResultCopyWithImpl<$Res, $Val extends LessonBlockResult>
     Object? blockType = null,
     Object? isCorrect = null,
     Object? earnedXp = null,
+    Object? attemptNumber = null,
     Object? timeSpentSeconds = freezed,
     Object? submittedAnswer = freezed,
+    Object? correctAnswerLabel = freezed,
+    Object? feedbackMessage = freezed,
+    Object? shouldRetry = null,
     Object? selectedOptionIds = null,
   }) {
     return _then(_value.copyWith(
@@ -462,6 +573,10 @@ class _$LessonBlockResultCopyWithImpl<$Res, $Val extends LessonBlockResult>
           ? _value.earnedXp
           : earnedXp // ignore: cast_nullable_to_non_nullable
               as int,
+      attemptNumber: null == attemptNumber
+          ? _value.attemptNumber
+          : attemptNumber // ignore: cast_nullable_to_non_nullable
+              as int,
       timeSpentSeconds: freezed == timeSpentSeconds
           ? _value.timeSpentSeconds
           : timeSpentSeconds // ignore: cast_nullable_to_non_nullable
@@ -470,6 +585,18 @@ class _$LessonBlockResultCopyWithImpl<$Res, $Val extends LessonBlockResult>
           ? _value.submittedAnswer
           : submittedAnswer // ignore: cast_nullable_to_non_nullable
               as String?,
+      correctAnswerLabel: freezed == correctAnswerLabel
+          ? _value.correctAnswerLabel
+          : correctAnswerLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
+      feedbackMessage: freezed == feedbackMessage
+          ? _value.feedbackMessage
+          : feedbackMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shouldRetry: null == shouldRetry
+          ? _value.shouldRetry
+          : shouldRetry // ignore: cast_nullable_to_non_nullable
+              as bool,
       selectedOptionIds: null == selectedOptionIds
           ? _value.selectedOptionIds
           : selectedOptionIds // ignore: cast_nullable_to_non_nullable
@@ -492,8 +619,12 @@ abstract class _$$LessonBlockResultImplCopyWith<$Res>
       String blockType,
       bool isCorrect,
       int earnedXp,
+      int attemptNumber,
       int? timeSpentSeconds,
       String? submittedAnswer,
+      String? correctAnswerLabel,
+      String? feedbackMessage,
+      bool shouldRetry,
       List<String> selectedOptionIds});
 }
 
@@ -515,8 +646,12 @@ class __$$LessonBlockResultImplCopyWithImpl<$Res>
     Object? blockType = null,
     Object? isCorrect = null,
     Object? earnedXp = null,
+    Object? attemptNumber = null,
     Object? timeSpentSeconds = freezed,
     Object? submittedAnswer = freezed,
+    Object? correctAnswerLabel = freezed,
+    Object? feedbackMessage = freezed,
+    Object? shouldRetry = null,
     Object? selectedOptionIds = null,
   }) {
     return _then(_$LessonBlockResultImpl(
@@ -540,6 +675,10 @@ class __$$LessonBlockResultImplCopyWithImpl<$Res>
           ? _value.earnedXp
           : earnedXp // ignore: cast_nullable_to_non_nullable
               as int,
+      attemptNumber: null == attemptNumber
+          ? _value.attemptNumber
+          : attemptNumber // ignore: cast_nullable_to_non_nullable
+              as int,
       timeSpentSeconds: freezed == timeSpentSeconds
           ? _value.timeSpentSeconds
           : timeSpentSeconds // ignore: cast_nullable_to_non_nullable
@@ -548,6 +687,18 @@ class __$$LessonBlockResultImplCopyWithImpl<$Res>
           ? _value.submittedAnswer
           : submittedAnswer // ignore: cast_nullable_to_non_nullable
               as String?,
+      correctAnswerLabel: freezed == correctAnswerLabel
+          ? _value.correctAnswerLabel
+          : correctAnswerLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
+      feedbackMessage: freezed == feedbackMessage
+          ? _value.feedbackMessage
+          : feedbackMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      shouldRetry: null == shouldRetry
+          ? _value.shouldRetry
+          : shouldRetry // ignore: cast_nullable_to_non_nullable
+              as bool,
       selectedOptionIds: null == selectedOptionIds
           ? _value._selectedOptionIds
           : selectedOptionIds // ignore: cast_nullable_to_non_nullable
@@ -565,8 +716,12 @@ class _$LessonBlockResultImpl implements _LessonBlockResult {
       required this.blockType,
       required this.isCorrect,
       this.earnedXp = 0,
+      this.attemptNumber = 1,
       this.timeSpentSeconds,
       this.submittedAnswer,
+      this.correctAnswerLabel,
+      this.feedbackMessage,
+      this.shouldRetry = false,
       final List<String> selectedOptionIds = const <String>[]})
       : _selectedOptionIds = selectedOptionIds;
 
@@ -585,9 +740,19 @@ class _$LessonBlockResultImpl implements _LessonBlockResult {
   @JsonKey()
   final int earnedXp;
   @override
+  @JsonKey()
+  final int attemptNumber;
+  @override
   final int? timeSpentSeconds;
   @override
   final String? submittedAnswer;
+  @override
+  final String? correctAnswerLabel;
+  @override
+  final String? feedbackMessage;
+  @override
+  @JsonKey()
+  final bool shouldRetry;
   final List<String> _selectedOptionIds;
   @override
   @JsonKey()
@@ -600,7 +765,7 @@ class _$LessonBlockResultImpl implements _LessonBlockResult {
 
   @override
   String toString() {
-    return 'LessonBlockResult(lessonId: $lessonId, blockId: $blockId, blockType: $blockType, isCorrect: $isCorrect, earnedXp: $earnedXp, timeSpentSeconds: $timeSpentSeconds, submittedAnswer: $submittedAnswer, selectedOptionIds: $selectedOptionIds)';
+    return 'LessonBlockResult(lessonId: $lessonId, blockId: $blockId, blockType: $blockType, isCorrect: $isCorrect, earnedXp: $earnedXp, attemptNumber: $attemptNumber, timeSpentSeconds: $timeSpentSeconds, submittedAnswer: $submittedAnswer, correctAnswerLabel: $correctAnswerLabel, feedbackMessage: $feedbackMessage, shouldRetry: $shouldRetry, selectedOptionIds: $selectedOptionIds)';
   }
 
   @override
@@ -617,10 +782,18 @@ class _$LessonBlockResultImpl implements _LessonBlockResult {
                 other.isCorrect == isCorrect) &&
             (identical(other.earnedXp, earnedXp) ||
                 other.earnedXp == earnedXp) &&
+            (identical(other.attemptNumber, attemptNumber) ||
+                other.attemptNumber == attemptNumber) &&
             (identical(other.timeSpentSeconds, timeSpentSeconds) ||
                 other.timeSpentSeconds == timeSpentSeconds) &&
             (identical(other.submittedAnswer, submittedAnswer) ||
                 other.submittedAnswer == submittedAnswer) &&
+            (identical(other.correctAnswerLabel, correctAnswerLabel) ||
+                other.correctAnswerLabel == correctAnswerLabel) &&
+            (identical(other.feedbackMessage, feedbackMessage) ||
+                other.feedbackMessage == feedbackMessage) &&
+            (identical(other.shouldRetry, shouldRetry) ||
+                other.shouldRetry == shouldRetry) &&
             const DeepCollectionEquality()
                 .equals(other._selectedOptionIds, _selectedOptionIds));
   }
@@ -634,8 +807,12 @@ class _$LessonBlockResultImpl implements _LessonBlockResult {
       blockType,
       isCorrect,
       earnedXp,
+      attemptNumber,
       timeSpentSeconds,
       submittedAnswer,
+      correctAnswerLabel,
+      feedbackMessage,
+      shouldRetry,
       const DeepCollectionEquality().hash(_selectedOptionIds));
 
   /// Create a copy of LessonBlockResult
@@ -662,8 +839,12 @@ abstract class _LessonBlockResult implements LessonBlockResult {
       required final String blockType,
       required final bool isCorrect,
       final int earnedXp,
+      final int attemptNumber,
       final int? timeSpentSeconds,
       final String? submittedAnswer,
+      final String? correctAnswerLabel,
+      final String? feedbackMessage,
+      final bool shouldRetry,
       final List<String> selectedOptionIds}) = _$LessonBlockResultImpl;
 
   factory _LessonBlockResult.fromJson(Map<String, dynamic> json) =
@@ -680,9 +861,17 @@ abstract class _LessonBlockResult implements LessonBlockResult {
   @override
   int get earnedXp;
   @override
+  int get attemptNumber;
+  @override
   int? get timeSpentSeconds;
   @override
   String? get submittedAnswer;
+  @override
+  String? get correctAnswerLabel;
+  @override
+  String? get feedbackMessage;
+  @override
+  bool get shouldRetry;
   @override
   List<String> get selectedOptionIds;
 
@@ -705,6 +894,10 @@ mixin _$LessonSummary {
   int get correctAnswers => throw _privateConstructorUsedError;
   int get earnedXp => throw _privateConstructorUsedError;
   double get accuracy => throw _privateConstructorUsedError;
+  int get totalAttempts => throw _privateConstructorUsedError;
+  int get levelBefore => throw _privateConstructorUsedError;
+  int get levelAfter => throw _privateConstructorUsedError;
+  int get totalXpAfter => throw _privateConstructorUsedError;
   String? get nextLessonId => throw _privateConstructorUsedError;
 
   /// Serializes this LessonSummary to a JSON map.
@@ -729,6 +922,10 @@ abstract class $LessonSummaryCopyWith<$Res> {
       int correctAnswers,
       int earnedXp,
       double accuracy,
+      int totalAttempts,
+      int levelBefore,
+      int levelAfter,
+      int totalXpAfter,
       String? nextLessonId});
 }
 
@@ -752,6 +949,10 @@ class _$LessonSummaryCopyWithImpl<$Res, $Val extends LessonSummary>
     Object? correctAnswers = null,
     Object? earnedXp = null,
     Object? accuracy = null,
+    Object? totalAttempts = null,
+    Object? levelBefore = null,
+    Object? levelAfter = null,
+    Object? totalXpAfter = null,
     Object? nextLessonId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -775,6 +976,22 @@ class _$LessonSummaryCopyWithImpl<$Res, $Val extends LessonSummary>
           ? _value.accuracy
           : accuracy // ignore: cast_nullable_to_non_nullable
               as double,
+      totalAttempts: null == totalAttempts
+          ? _value.totalAttempts
+          : totalAttempts // ignore: cast_nullable_to_non_nullable
+              as int,
+      levelBefore: null == levelBefore
+          ? _value.levelBefore
+          : levelBefore // ignore: cast_nullable_to_non_nullable
+              as int,
+      levelAfter: null == levelAfter
+          ? _value.levelAfter
+          : levelAfter // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalXpAfter: null == totalXpAfter
+          ? _value.totalXpAfter
+          : totalXpAfter // ignore: cast_nullable_to_non_nullable
+              as int,
       nextLessonId: freezed == nextLessonId
           ? _value.nextLessonId
           : nextLessonId // ignore: cast_nullable_to_non_nullable
@@ -797,6 +1014,10 @@ abstract class _$$LessonSummaryImplCopyWith<$Res>
       int correctAnswers,
       int earnedXp,
       double accuracy,
+      int totalAttempts,
+      int levelBefore,
+      int levelAfter,
+      int totalXpAfter,
       String? nextLessonId});
 }
 
@@ -818,6 +1039,10 @@ class __$$LessonSummaryImplCopyWithImpl<$Res>
     Object? correctAnswers = null,
     Object? earnedXp = null,
     Object? accuracy = null,
+    Object? totalAttempts = null,
+    Object? levelBefore = null,
+    Object? levelAfter = null,
+    Object? totalXpAfter = null,
     Object? nextLessonId = freezed,
   }) {
     return _then(_$LessonSummaryImpl(
@@ -841,6 +1066,22 @@ class __$$LessonSummaryImplCopyWithImpl<$Res>
           ? _value.accuracy
           : accuracy // ignore: cast_nullable_to_non_nullable
               as double,
+      totalAttempts: null == totalAttempts
+          ? _value.totalAttempts
+          : totalAttempts // ignore: cast_nullable_to_non_nullable
+              as int,
+      levelBefore: null == levelBefore
+          ? _value.levelBefore
+          : levelBefore // ignore: cast_nullable_to_non_nullable
+              as int,
+      levelAfter: null == levelAfter
+          ? _value.levelAfter
+          : levelAfter // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalXpAfter: null == totalXpAfter
+          ? _value.totalXpAfter
+          : totalXpAfter // ignore: cast_nullable_to_non_nullable
+              as int,
       nextLessonId: freezed == nextLessonId
           ? _value.nextLessonId
           : nextLessonId // ignore: cast_nullable_to_non_nullable
@@ -858,6 +1099,10 @@ class _$LessonSummaryImpl extends _LessonSummary {
       required this.correctAnswers,
       required this.earnedXp,
       required this.accuracy,
+      this.totalAttempts = 0,
+      this.levelBefore = 1,
+      this.levelAfter = 1,
+      this.totalXpAfter = 0,
       this.nextLessonId})
       : super._();
 
@@ -875,11 +1120,23 @@ class _$LessonSummaryImpl extends _LessonSummary {
   @override
   final double accuracy;
   @override
+  @JsonKey()
+  final int totalAttempts;
+  @override
+  @JsonKey()
+  final int levelBefore;
+  @override
+  @JsonKey()
+  final int levelAfter;
+  @override
+  @JsonKey()
+  final int totalXpAfter;
+  @override
   final String? nextLessonId;
 
   @override
   String toString() {
-    return 'LessonSummary(lessonId: $lessonId, totalBlocks: $totalBlocks, correctAnswers: $correctAnswers, earnedXp: $earnedXp, accuracy: $accuracy, nextLessonId: $nextLessonId)';
+    return 'LessonSummary(lessonId: $lessonId, totalBlocks: $totalBlocks, correctAnswers: $correctAnswers, earnedXp: $earnedXp, accuracy: $accuracy, totalAttempts: $totalAttempts, levelBefore: $levelBefore, levelAfter: $levelAfter, totalXpAfter: $totalXpAfter, nextLessonId: $nextLessonId)';
   }
 
   @override
@@ -897,14 +1154,32 @@ class _$LessonSummaryImpl extends _LessonSummary {
                 other.earnedXp == earnedXp) &&
             (identical(other.accuracy, accuracy) ||
                 other.accuracy == accuracy) &&
+            (identical(other.totalAttempts, totalAttempts) ||
+                other.totalAttempts == totalAttempts) &&
+            (identical(other.levelBefore, levelBefore) ||
+                other.levelBefore == levelBefore) &&
+            (identical(other.levelAfter, levelAfter) ||
+                other.levelAfter == levelAfter) &&
+            (identical(other.totalXpAfter, totalXpAfter) ||
+                other.totalXpAfter == totalXpAfter) &&
             (identical(other.nextLessonId, nextLessonId) ||
                 other.nextLessonId == nextLessonId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, lessonId, totalBlocks,
-      correctAnswers, earnedXp, accuracy, nextLessonId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      lessonId,
+      totalBlocks,
+      correctAnswers,
+      earnedXp,
+      accuracy,
+      totalAttempts,
+      levelBefore,
+      levelAfter,
+      totalXpAfter,
+      nextLessonId);
 
   /// Create a copy of LessonSummary
   /// with the given fields replaced by the non-null parameter values.
@@ -929,6 +1204,10 @@ abstract class _LessonSummary extends LessonSummary {
       required final int correctAnswers,
       required final int earnedXp,
       required final double accuracy,
+      final int totalAttempts,
+      final int levelBefore,
+      final int levelAfter,
+      final int totalXpAfter,
       final String? nextLessonId}) = _$LessonSummaryImpl;
   const _LessonSummary._() : super._();
 
@@ -945,6 +1224,14 @@ abstract class _LessonSummary extends LessonSummary {
   int get earnedXp;
   @override
   double get accuracy;
+  @override
+  int get totalAttempts;
+  @override
+  int get levelBefore;
+  @override
+  int get levelAfter;
+  @override
+  int get totalXpAfter;
   @override
   String? get nextLessonId;
 
@@ -1472,5 +1759,367 @@ abstract class _ProgressSyncPayload implements ProgressSyncPayload {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ProgressSyncPayloadImplCopyWith<_$ProgressSyncPayloadImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+LessonAttempt _$LessonAttemptFromJson(Map<String, dynamic> json) {
+  return _LessonAttempt.fromJson(json);
+}
+
+/// @nodoc
+mixin _$LessonAttempt {
+  String get userId => throw _privateConstructorUsedError;
+  String get lessonId => throw _privateConstructorUsedError;
+  String get blockId => throw _privateConstructorUsedError;
+  int get attemptNumber => throw _privateConstructorUsedError;
+  String? get submittedAnswer => throw _privateConstructorUsedError;
+  List<String> get selectedOptionIds => throw _privateConstructorUsedError;
+  bool get isCorrect => throw _privateConstructorUsedError;
+  String? get feedbackMessage => throw _privateConstructorUsedError;
+  int get earnedXp => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+
+  /// Serializes this LessonAttempt to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of LessonAttempt
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $LessonAttemptCopyWith<LessonAttempt> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $LessonAttemptCopyWith<$Res> {
+  factory $LessonAttemptCopyWith(
+          LessonAttempt value, $Res Function(LessonAttempt) then) =
+      _$LessonAttemptCopyWithImpl<$Res, LessonAttempt>;
+  @useResult
+  $Res call(
+      {String userId,
+      String lessonId,
+      String blockId,
+      int attemptNumber,
+      String? submittedAnswer,
+      List<String> selectedOptionIds,
+      bool isCorrect,
+      String? feedbackMessage,
+      int earnedXp,
+      DateTime? createdAt});
+}
+
+/// @nodoc
+class _$LessonAttemptCopyWithImpl<$Res, $Val extends LessonAttempt>
+    implements $LessonAttemptCopyWith<$Res> {
+  _$LessonAttemptCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of LessonAttempt
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = null,
+    Object? lessonId = null,
+    Object? blockId = null,
+    Object? attemptNumber = null,
+    Object? submittedAnswer = freezed,
+    Object? selectedOptionIds = null,
+    Object? isCorrect = null,
+    Object? feedbackMessage = freezed,
+    Object? earnedXp = null,
+    Object? createdAt = freezed,
+  }) {
+    return _then(_value.copyWith(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      lessonId: null == lessonId
+          ? _value.lessonId
+          : lessonId // ignore: cast_nullable_to_non_nullable
+              as String,
+      blockId: null == blockId
+          ? _value.blockId
+          : blockId // ignore: cast_nullable_to_non_nullable
+              as String,
+      attemptNumber: null == attemptNumber
+          ? _value.attemptNumber
+          : attemptNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      submittedAnswer: freezed == submittedAnswer
+          ? _value.submittedAnswer
+          : submittedAnswer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedOptionIds: null == selectedOptionIds
+          ? _value.selectedOptionIds
+          : selectedOptionIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isCorrect: null == isCorrect
+          ? _value.isCorrect
+          : isCorrect // ignore: cast_nullable_to_non_nullable
+              as bool,
+      feedbackMessage: freezed == feedbackMessage
+          ? _value.feedbackMessage
+          : feedbackMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      earnedXp: null == earnedXp
+          ? _value.earnedXp
+          : earnedXp // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$LessonAttemptImplCopyWith<$Res>
+    implements $LessonAttemptCopyWith<$Res> {
+  factory _$$LessonAttemptImplCopyWith(
+          _$LessonAttemptImpl value, $Res Function(_$LessonAttemptImpl) then) =
+      __$$LessonAttemptImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String userId,
+      String lessonId,
+      String blockId,
+      int attemptNumber,
+      String? submittedAnswer,
+      List<String> selectedOptionIds,
+      bool isCorrect,
+      String? feedbackMessage,
+      int earnedXp,
+      DateTime? createdAt});
+}
+
+/// @nodoc
+class __$$LessonAttemptImplCopyWithImpl<$Res>
+    extends _$LessonAttemptCopyWithImpl<$Res, _$LessonAttemptImpl>
+    implements _$$LessonAttemptImplCopyWith<$Res> {
+  __$$LessonAttemptImplCopyWithImpl(
+      _$LessonAttemptImpl _value, $Res Function(_$LessonAttemptImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LessonAttempt
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? userId = null,
+    Object? lessonId = null,
+    Object? blockId = null,
+    Object? attemptNumber = null,
+    Object? submittedAnswer = freezed,
+    Object? selectedOptionIds = null,
+    Object? isCorrect = null,
+    Object? feedbackMessage = freezed,
+    Object? earnedXp = null,
+    Object? createdAt = freezed,
+  }) {
+    return _then(_$LessonAttemptImpl(
+      userId: null == userId
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String,
+      lessonId: null == lessonId
+          ? _value.lessonId
+          : lessonId // ignore: cast_nullable_to_non_nullable
+              as String,
+      blockId: null == blockId
+          ? _value.blockId
+          : blockId // ignore: cast_nullable_to_non_nullable
+              as String,
+      attemptNumber: null == attemptNumber
+          ? _value.attemptNumber
+          : attemptNumber // ignore: cast_nullable_to_non_nullable
+              as int,
+      submittedAnswer: freezed == submittedAnswer
+          ? _value.submittedAnswer
+          : submittedAnswer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      selectedOptionIds: null == selectedOptionIds
+          ? _value._selectedOptionIds
+          : selectedOptionIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      isCorrect: null == isCorrect
+          ? _value.isCorrect
+          : isCorrect // ignore: cast_nullable_to_non_nullable
+              as bool,
+      feedbackMessage: freezed == feedbackMessage
+          ? _value.feedbackMessage
+          : feedbackMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      earnedXp: null == earnedXp
+          ? _value.earnedXp
+          : earnedXp // ignore: cast_nullable_to_non_nullable
+              as int,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$LessonAttemptImpl implements _LessonAttempt {
+  const _$LessonAttemptImpl(
+      {required this.userId,
+      required this.lessonId,
+      required this.blockId,
+      required this.attemptNumber,
+      this.submittedAnswer,
+      final List<String> selectedOptionIds = const <String>[],
+      required this.isCorrect,
+      this.feedbackMessage,
+      this.earnedXp = 0,
+      this.createdAt})
+      : _selectedOptionIds = selectedOptionIds;
+
+  factory _$LessonAttemptImpl.fromJson(Map<String, dynamic> json) =>
+      _$$LessonAttemptImplFromJson(json);
+
+  @override
+  final String userId;
+  @override
+  final String lessonId;
+  @override
+  final String blockId;
+  @override
+  final int attemptNumber;
+  @override
+  final String? submittedAnswer;
+  final List<String> _selectedOptionIds;
+  @override
+  @JsonKey()
+  List<String> get selectedOptionIds {
+    if (_selectedOptionIds is EqualUnmodifiableListView)
+      return _selectedOptionIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_selectedOptionIds);
+  }
+
+  @override
+  final bool isCorrect;
+  @override
+  final String? feedbackMessage;
+  @override
+  @JsonKey()
+  final int earnedXp;
+  @override
+  final DateTime? createdAt;
+
+  @override
+  String toString() {
+    return 'LessonAttempt(userId: $userId, lessonId: $lessonId, blockId: $blockId, attemptNumber: $attemptNumber, submittedAnswer: $submittedAnswer, selectedOptionIds: $selectedOptionIds, isCorrect: $isCorrect, feedbackMessage: $feedbackMessage, earnedXp: $earnedXp, createdAt: $createdAt)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$LessonAttemptImpl &&
+            (identical(other.userId, userId) || other.userId == userId) &&
+            (identical(other.lessonId, lessonId) ||
+                other.lessonId == lessonId) &&
+            (identical(other.blockId, blockId) || other.blockId == blockId) &&
+            (identical(other.attemptNumber, attemptNumber) ||
+                other.attemptNumber == attemptNumber) &&
+            (identical(other.submittedAnswer, submittedAnswer) ||
+                other.submittedAnswer == submittedAnswer) &&
+            const DeepCollectionEquality()
+                .equals(other._selectedOptionIds, _selectedOptionIds) &&
+            (identical(other.isCorrect, isCorrect) ||
+                other.isCorrect == isCorrect) &&
+            (identical(other.feedbackMessage, feedbackMessage) ||
+                other.feedbackMessage == feedbackMessage) &&
+            (identical(other.earnedXp, earnedXp) ||
+                other.earnedXp == earnedXp) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      userId,
+      lessonId,
+      blockId,
+      attemptNumber,
+      submittedAnswer,
+      const DeepCollectionEquality().hash(_selectedOptionIds),
+      isCorrect,
+      feedbackMessage,
+      earnedXp,
+      createdAt);
+
+  /// Create a copy of LessonAttempt
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LessonAttemptImplCopyWith<_$LessonAttemptImpl> get copyWith =>
+      __$$LessonAttemptImplCopyWithImpl<_$LessonAttemptImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LessonAttemptImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _LessonAttempt implements LessonAttempt {
+  const factory _LessonAttempt(
+      {required final String userId,
+      required final String lessonId,
+      required final String blockId,
+      required final int attemptNumber,
+      final String? submittedAnswer,
+      final List<String> selectedOptionIds,
+      required final bool isCorrect,
+      final String? feedbackMessage,
+      final int earnedXp,
+      final DateTime? createdAt}) = _$LessonAttemptImpl;
+
+  factory _LessonAttempt.fromJson(Map<String, dynamic> json) =
+      _$LessonAttemptImpl.fromJson;
+
+  @override
+  String get userId;
+  @override
+  String get lessonId;
+  @override
+  String get blockId;
+  @override
+  int get attemptNumber;
+  @override
+  String? get submittedAnswer;
+  @override
+  List<String> get selectedOptionIds;
+  @override
+  bool get isCorrect;
+  @override
+  String? get feedbackMessage;
+  @override
+  int get earnedXp;
+  @override
+  DateTime? get createdAt;
+
+  /// Create a copy of LessonAttempt
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$LessonAttemptImplCopyWith<_$LessonAttemptImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

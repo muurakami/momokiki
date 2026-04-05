@@ -45,6 +45,22 @@ Supported block types:
 
 Local demo lessons live in `assets/lessons/lesson_intro_1.json` through `assets/lessons/lesson_intro_5.json`.
 
+Lesson data shape now includes UI-facing progress fields such as:
+- `id`
+- `title`
+- `description`
+- `status`
+- `progress`
+- `xp`
+- `questions`
+- `attempts`
+- `resources`
+
+Roadmap viewers:
+- Markdown and TXT files open inside the app through the native markdown viewer.
+- Local HTML roadmaps open inside the app through an embedded WebView.
+- Local roadmap files are copied to application support storage for offline access.
+
 Supabase tables expected by the lesson engine:
 - `lessons`
 - `user_progress`

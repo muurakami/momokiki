@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:drift/drift.dart' as drift;
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/database/app_database.dart';
@@ -30,9 +31,13 @@ class DriftLessonProgressDataSource {
       currentBlockIndex: row.currentBlockIndex,
       correctAnswers: row.correctAnswers,
       answeredBlocks: row.answeredBlocks,
+      attemptCount: 0,
+      incorrectAnswers: 0,
       earnedXp: row.earnedXp,
       isCompleted: row.isCompleted,
       lastBlockId: row.lastBlockId,
+      completedBlockIds: const <String>[],
+      lastAttemptAt: row.updatedAt,
       updatedAt: row.updatedAt,
       completedAt: row.completedAt,
     );
@@ -121,5 +126,61 @@ class DriftLessonProgressDataSource {
     await (_database.delete(_database.lessonSyncQueueTable)
           ..where((tbl) => tbl.id.equals(id)))
         .go();
+  }
+
+  Future<void> saveAttempt(LessonAttempt attempt) async {
+    try {
+      await _database.into(_database.lessonAttemptTable).insert(
+            LessonAttemptTableCompanion.insert(
+              userId: attempt.userId,
+              lessonId: attempt.lessonId,
+              blockId: attempt.blockId,
+              attemptNumber: attempt.attemptNumber,
+              submittedAnswer: drift.Value(attempt.submittedAnswer),
+              selectedOptionIdsJson: drift.Value(jsonEncode(attempt.selectedOptionIds)),
+              isCorrect: attempt.isCorrect,
+              feedbackMessage: drift.Value(attempt.feedbackMessage),
+              earnedXp: drift.Value(attempt.earnedXp),
+              createdAt: drift.Value(attempt.createdAt ?? DateTime.now()),
+            ),
+          );
+    } catch (error, stackTrace) {
+      debugPrint('saveAttempt cache fallback: $error');
+      debugPrintStack(stackTrace: stackTrace);
+    }
+  }
+
+  Future<List<LessonAttempt>> getAttempts({
+    required String userId,
+    required String lessonId,
+  }) async {
+    try {
+      final rows = await (_database.select(_database.lessonAttemptTable)
+            ..where((tbl) => tbl.userId.equals(userId) & tbl.lessonId.equals(lessonId))
+            ..orderBy([(tbl) => drift.OrderingTerm.asc(tbl.createdAt)]))
+          .get();
+
+      return rows
+          .map(
+            (row) => LessonAttempt(
+              userId: row.userId,
+              lessonId: row.lessonId,
+              blockId: row.blockId,
+              attemptNumber: row.attemptNumber,
+              submittedAnswer: row.submittedAnswer,
+              selectedOptionIds:
+                  (jsonDecode(row.selectedOptionIdsJson) as List<dynamic>).cast<String>(),
+              isCorrect: row.isCorrect,
+              feedbackMessage: row.feedbackMessage,
+              earnedXp: row.earnedXp,
+              createdAt: row.createdAt,
+            ),
+          )
+          .toList();
+    } catch (error, stackTrace) {
+      debugPrint('getAttempts cache fallback: $error');
+      debugPrintStack(stackTrace: stackTrace);
+      return const <LessonAttempt>[];
+    }
   }
 }

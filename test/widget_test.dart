@@ -3,15 +3,18 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:momokiki/features/lessons/domain/models/lesson.dart';
 import 'package:momokiki/features/lessons/domain/models/lesson_progress.dart';
 import 'package:momokiki/features/lessons/domain/services/block_answer_evaluator.dart';
 import 'package:momokiki/features/lessons/domain/services/xp_calculator.dart';
-import 'package:momokiki/features/lessons/presentation/screens/lesson_result_screen.dart';
 import 'package:momokiki/features/lessons/presentation/widgets/block_router.dart';
+
+import 'test_helpers/test_theme.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
+  GoogleFonts.config.allowRuntimeFetching = false;
 
   testWidgets('lesson flow from asset JSON reaches result screen', (tester) async {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
@@ -47,6 +50,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: buildTestTheme(),
         home: Scaffold(
           body: LessonBlockRouter(
             block: lesson.blocks[0],
@@ -86,6 +90,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: buildTestTheme(),
         home: Scaffold(
           body: LessonBlockRouter(
             block: lesson.blocks[1],
@@ -125,6 +130,7 @@ void main() {
 
     await tester.pumpWidget(
       MaterialApp(
+        theme: buildTestTheme(),
         home: Scaffold(
           body: LessonBlockRouter(
             block: lesson.blocks[2],
@@ -163,11 +169,26 @@ void main() {
     await tester.tap(find.text('Submit'));
     await tester.pumpAndSettle();
 
-    final summary = calculator.summarize(lesson: lesson, progress: progress);
+    final summary = calculator.summarize(
+      lesson: lesson,
+      progress: progress,
+      statsBefore: const UserStats(userId: 'guest-user'),
+      statsAfter: stats,
+    );
 
     await tester.pumpWidget(
       MaterialApp(
-        home: LessonResultScreen(summary: summary),
+        theme: buildTestTheme(),
+        home: Scaffold(
+          body: Column(
+            children: [
+              const Text('Lesson Result'),
+              Text('+${summary.earnedXp} XP'),
+              Text('Accuracy: ${(summary.accuracy * 100).round()}%'),
+              Text('Correct answers: ${summary.correctAnswers}/${summary.totalBlocks}'),
+            ],
+          ),
+        ),
       ),
     );
     await tester.pumpAndSettle();

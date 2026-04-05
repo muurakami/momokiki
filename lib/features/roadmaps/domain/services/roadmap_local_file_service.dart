@@ -12,6 +12,10 @@ class RoadmapLocalFileService {
     required String sourcePath,
   }) async {
     final normalized = sourcePath.replaceAll('\\', '/').trim();
+    if (normalized.startsWith('http://') || normalized.startsWith('https://')) {
+      throw const FormatException('Remote URLs are not supported for local roadmap copies.');
+    }
+
     final directory = await getApplicationSupportDirectory();
     final roadmapsDirectory = Directory('${directory.path}/roadmaps');
 
@@ -26,9 +30,13 @@ class RoadmapLocalFileService {
       return localFile;
     }
 
-    final assetData = await rootBundle.load(normalized);
-    await localFile.writeAsBytes(assetData.buffer.asUint8List(), flush: true);
-    return localFile;
+    try {
+      final assetData = await rootBundle.load(normalized);
+      await localFile.writeAsBytes(assetData.buffer.asUint8List(), flush: true);
+      return localFile;
+    } catch (error) {
+      throw Exception('Roadmap asset missing: $normalized');
+    }
   }
 
   Future<bool> exists(String path) async {

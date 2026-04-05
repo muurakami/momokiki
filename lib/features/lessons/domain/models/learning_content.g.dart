@@ -11,11 +11,17 @@ _$LessonIslandImpl _$$LessonIslandImplFromJson(Map<String, dynamic> json) =>
       lessonId: json['lessonId'] as String,
       title: json['title'] as String,
       subtitle: json['subtitle'] as String,
+      description: json['description'] as String?,
       language: $enumDecode(_$SupportedLanguageEnumMap, json['language']),
       order: (json['order'] as num?)?.toInt() ?? 1,
       isLocked: json['isLocked'] as bool? ?? false,
       progress: (json['progress'] as num?)?.toDouble() ?? 0,
       isStarter: json['isStarter'] as bool? ?? false,
+      xpReward: (json['xpReward'] as num?)?.toInt() ?? 0,
+      earnedXp: (json['earnedXp'] as num?)?.toInt() ?? 0,
+      status: $enumDecodeNullable(_$LessonStatusEnumMap, json['status']) ??
+          LessonStatus.notStarted,
+      ctaLabel: json['ctaLabel'] as String? ?? 'Start',
       emoji: json['emoji'] as String?,
     );
 
@@ -24,17 +30,28 @@ Map<String, dynamic> _$$LessonIslandImplToJson(_$LessonIslandImpl instance) =>
       'lessonId': instance.lessonId,
       'title': instance.title,
       'subtitle': instance.subtitle,
+      'description': instance.description,
       'language': _$SupportedLanguageEnumMap[instance.language]!,
       'order': instance.order,
       'isLocked': instance.isLocked,
       'progress': instance.progress,
       'isStarter': instance.isStarter,
+      'xpReward': instance.xpReward,
+      'earnedXp': instance.earnedXp,
+      'status': _$LessonStatusEnumMap[instance.status]!,
+      'ctaLabel': instance.ctaLabel,
       'emoji': instance.emoji,
     };
 
 const _$SupportedLanguageEnumMap = {
   SupportedLanguage.english: 'english',
   SupportedLanguage.japanese: 'japanese',
+};
+
+const _$LessonStatusEnumMap = {
+  LessonStatus.notStarted: 'notStarted',
+  LessonStatus.inProgress: 'inProgress',
+  LessonStatus.completed: 'completed',
 };
 
 _$RoadmapDocumentImpl _$$RoadmapDocumentImplFromJson(

@@ -63,6 +63,8 @@ class XpCalculator {
   LessonSummary summarize({
     required Lesson lesson,
     required LessonProgress progress,
+    required UserStats statsBefore,
+    required UserStats statsAfter,
   }) {
     return LessonSummary(
       lessonId: lesson.id,
@@ -70,7 +72,22 @@ class XpCalculator {
       correctAnswers: progress.correctAnswers,
       earnedXp: progress.earnedXp,
       accuracy: progress.accuracy,
+      totalAttempts: progress.attemptCount,
+      levelBefore: statsBefore.level,
+      levelAfter: statsAfter.level,
+      totalXpAfter: statsAfter.totalXp,
       nextLessonId: lesson.nextLessonId,
     );
+  }
+
+  double getLevelProgress(UserStats stats) {
+    final currentLevelXpFloor = stats.level <= 1 ? 0 : getRequiredXP(stats.level);
+    final nextLevelXp = getRequiredXP(stats.level + 1);
+    final span = nextLevelXp - currentLevelXpFloor;
+    if (span <= 0) {
+      return 0;
+    }
+
+    return ((stats.totalXp - currentLevelXpFloor) / span).clamp(0, 1);
   }
 }

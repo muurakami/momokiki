@@ -2053,6 +2053,579 @@ class LessonSyncQueueTableCompanion
   }
 }
 
+class $LessonAttemptTableTable extends LessonAttemptTable
+    with TableInfo<$LessonAttemptTableTable, LessonAttemptTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $LessonAttemptTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<int> id = GeneratedColumn<int>(
+      'id', aliasedName, false,
+      hasAutoIncrement: true,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('PRIMARY KEY AUTOINCREMENT'));
+  static const VerificationMeta _userIdMeta = const VerificationMeta('userId');
+  @override
+  late final GeneratedColumn<String> userId = GeneratedColumn<String>(
+      'user_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _lessonIdMeta =
+      const VerificationMeta('lessonId');
+  @override
+  late final GeneratedColumn<String> lessonId = GeneratedColumn<String>(
+      'lesson_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _blockIdMeta =
+      const VerificationMeta('blockId');
+  @override
+  late final GeneratedColumn<String> blockId = GeneratedColumn<String>(
+      'block_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _attemptNumberMeta =
+      const VerificationMeta('attemptNumber');
+  @override
+  late final GeneratedColumn<int> attemptNumber = GeneratedColumn<int>(
+      'attempt_number', aliasedName, false,
+      type: DriftSqlType.int, requiredDuringInsert: true);
+  static const VerificationMeta _submittedAnswerMeta =
+      const VerificationMeta('submittedAnswer');
+  @override
+  late final GeneratedColumn<String> submittedAnswer = GeneratedColumn<String>(
+      'submitted_answer', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _selectedOptionIdsJsonMeta =
+      const VerificationMeta('selectedOptionIdsJson');
+  @override
+  late final GeneratedColumn<String> selectedOptionIdsJson =
+      GeneratedColumn<String>('selected_option_ids_json', aliasedName, false,
+          type: DriftSqlType.string,
+          requiredDuringInsert: false,
+          defaultValue: const Constant('[]'));
+  static const VerificationMeta _isCorrectMeta =
+      const VerificationMeta('isCorrect');
+  @override
+  late final GeneratedColumn<bool> isCorrect = GeneratedColumn<bool>(
+      'is_correct', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_correct" IN (0, 1))'));
+  static const VerificationMeta _feedbackMessageMeta =
+      const VerificationMeta('feedbackMessage');
+  @override
+  late final GeneratedColumn<String> feedbackMessage = GeneratedColumn<String>(
+      'feedback_message', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _earnedXpMeta =
+      const VerificationMeta('earnedXp');
+  @override
+  late final GeneratedColumn<int> earnedXp = GeneratedColumn<int>(
+      'earned_xp', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        userId,
+        lessonId,
+        blockId,
+        attemptNumber,
+        submittedAnswer,
+        selectedOptionIdsJson,
+        isCorrect,
+        feedbackMessage,
+        earnedXp,
+        createdAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'lesson_attempt_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<LessonAttemptTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    }
+    if (data.containsKey('user_id')) {
+      context.handle(_userIdMeta,
+          userId.isAcceptableOrUnknown(data['user_id']!, _userIdMeta));
+    } else if (isInserting) {
+      context.missing(_userIdMeta);
+    }
+    if (data.containsKey('lesson_id')) {
+      context.handle(_lessonIdMeta,
+          lessonId.isAcceptableOrUnknown(data['lesson_id']!, _lessonIdMeta));
+    } else if (isInserting) {
+      context.missing(_lessonIdMeta);
+    }
+    if (data.containsKey('block_id')) {
+      context.handle(_blockIdMeta,
+          blockId.isAcceptableOrUnknown(data['block_id']!, _blockIdMeta));
+    } else if (isInserting) {
+      context.missing(_blockIdMeta);
+    }
+    if (data.containsKey('attempt_number')) {
+      context.handle(
+          _attemptNumberMeta,
+          attemptNumber.isAcceptableOrUnknown(
+              data['attempt_number']!, _attemptNumberMeta));
+    } else if (isInserting) {
+      context.missing(_attemptNumberMeta);
+    }
+    if (data.containsKey('submitted_answer')) {
+      context.handle(
+          _submittedAnswerMeta,
+          submittedAnswer.isAcceptableOrUnknown(
+              data['submitted_answer']!, _submittedAnswerMeta));
+    }
+    if (data.containsKey('selected_option_ids_json')) {
+      context.handle(
+          _selectedOptionIdsJsonMeta,
+          selectedOptionIdsJson.isAcceptableOrUnknown(
+              data['selected_option_ids_json']!, _selectedOptionIdsJsonMeta));
+    }
+    if (data.containsKey('is_correct')) {
+      context.handle(_isCorrectMeta,
+          isCorrect.isAcceptableOrUnknown(data['is_correct']!, _isCorrectMeta));
+    } else if (isInserting) {
+      context.missing(_isCorrectMeta);
+    }
+    if (data.containsKey('feedback_message')) {
+      context.handle(
+          _feedbackMessageMeta,
+          feedbackMessage.isAcceptableOrUnknown(
+              data['feedback_message']!, _feedbackMessageMeta));
+    }
+    if (data.containsKey('earned_xp')) {
+      context.handle(_earnedXpMeta,
+          earnedXp.isAcceptableOrUnknown(data['earned_xp']!, _earnedXpMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  LessonAttemptTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return LessonAttemptTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}id'])!,
+      userId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}user_id'])!,
+      lessonId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}lesson_id'])!,
+      blockId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}block_id'])!,
+      attemptNumber: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}attempt_number'])!,
+      submittedAnswer: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}submitted_answer']),
+      selectedOptionIdsJson: attachedDatabase.typeMapping.read(
+          DriftSqlType.string,
+          data['${effectivePrefix}selected_option_ids_json'])!,
+      isCorrect: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_correct'])!,
+      feedbackMessage: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}feedback_message']),
+      earnedXp: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}earned_xp'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $LessonAttemptTableTable createAlias(String alias) {
+    return $LessonAttemptTableTable(attachedDatabase, alias);
+  }
+}
+
+class LessonAttemptTableData extends DataClass
+    implements Insertable<LessonAttemptTableData> {
+  final int id;
+  final String userId;
+  final String lessonId;
+  final String blockId;
+  final int attemptNumber;
+  final String? submittedAnswer;
+  final String selectedOptionIdsJson;
+  final bool isCorrect;
+  final String? feedbackMessage;
+  final int earnedXp;
+  final DateTime createdAt;
+  const LessonAttemptTableData(
+      {required this.id,
+      required this.userId,
+      required this.lessonId,
+      required this.blockId,
+      required this.attemptNumber,
+      this.submittedAnswer,
+      required this.selectedOptionIdsJson,
+      required this.isCorrect,
+      this.feedbackMessage,
+      required this.earnedXp,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<int>(id);
+    map['user_id'] = Variable<String>(userId);
+    map['lesson_id'] = Variable<String>(lessonId);
+    map['block_id'] = Variable<String>(blockId);
+    map['attempt_number'] = Variable<int>(attemptNumber);
+    if (!nullToAbsent || submittedAnswer != null) {
+      map['submitted_answer'] = Variable<String>(submittedAnswer);
+    }
+    map['selected_option_ids_json'] = Variable<String>(selectedOptionIdsJson);
+    map['is_correct'] = Variable<bool>(isCorrect);
+    if (!nullToAbsent || feedbackMessage != null) {
+      map['feedback_message'] = Variable<String>(feedbackMessage);
+    }
+    map['earned_xp'] = Variable<int>(earnedXp);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  LessonAttemptTableCompanion toCompanion(bool nullToAbsent) {
+    return LessonAttemptTableCompanion(
+      id: Value(id),
+      userId: Value(userId),
+      lessonId: Value(lessonId),
+      blockId: Value(blockId),
+      attemptNumber: Value(attemptNumber),
+      submittedAnswer: submittedAnswer == null && nullToAbsent
+          ? const Value.absent()
+          : Value(submittedAnswer),
+      selectedOptionIdsJson: Value(selectedOptionIdsJson),
+      isCorrect: Value(isCorrect),
+      feedbackMessage: feedbackMessage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(feedbackMessage),
+      earnedXp: Value(earnedXp),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory LessonAttemptTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return LessonAttemptTableData(
+      id: serializer.fromJson<int>(json['id']),
+      userId: serializer.fromJson<String>(json['userId']),
+      lessonId: serializer.fromJson<String>(json['lessonId']),
+      blockId: serializer.fromJson<String>(json['blockId']),
+      attemptNumber: serializer.fromJson<int>(json['attemptNumber']),
+      submittedAnswer: serializer.fromJson<String?>(json['submittedAnswer']),
+      selectedOptionIdsJson:
+          serializer.fromJson<String>(json['selectedOptionIdsJson']),
+      isCorrect: serializer.fromJson<bool>(json['isCorrect']),
+      feedbackMessage: serializer.fromJson<String?>(json['feedbackMessage']),
+      earnedXp: serializer.fromJson<int>(json['earnedXp']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<int>(id),
+      'userId': serializer.toJson<String>(userId),
+      'lessonId': serializer.toJson<String>(lessonId),
+      'blockId': serializer.toJson<String>(blockId),
+      'attemptNumber': serializer.toJson<int>(attemptNumber),
+      'submittedAnswer': serializer.toJson<String?>(submittedAnswer),
+      'selectedOptionIdsJson': serializer.toJson<String>(selectedOptionIdsJson),
+      'isCorrect': serializer.toJson<bool>(isCorrect),
+      'feedbackMessage': serializer.toJson<String?>(feedbackMessage),
+      'earnedXp': serializer.toJson<int>(earnedXp),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  LessonAttemptTableData copyWith(
+          {int? id,
+          String? userId,
+          String? lessonId,
+          String? blockId,
+          int? attemptNumber,
+          Value<String?> submittedAnswer = const Value.absent(),
+          String? selectedOptionIdsJson,
+          bool? isCorrect,
+          Value<String?> feedbackMessage = const Value.absent(),
+          int? earnedXp,
+          DateTime? createdAt}) =>
+      LessonAttemptTableData(
+        id: id ?? this.id,
+        userId: userId ?? this.userId,
+        lessonId: lessonId ?? this.lessonId,
+        blockId: blockId ?? this.blockId,
+        attemptNumber: attemptNumber ?? this.attemptNumber,
+        submittedAnswer: submittedAnswer.present
+            ? submittedAnswer.value
+            : this.submittedAnswer,
+        selectedOptionIdsJson:
+            selectedOptionIdsJson ?? this.selectedOptionIdsJson,
+        isCorrect: isCorrect ?? this.isCorrect,
+        feedbackMessage: feedbackMessage.present
+            ? feedbackMessage.value
+            : this.feedbackMessage,
+        earnedXp: earnedXp ?? this.earnedXp,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  LessonAttemptTableData copyWithCompanion(LessonAttemptTableCompanion data) {
+    return LessonAttemptTableData(
+      id: data.id.present ? data.id.value : this.id,
+      userId: data.userId.present ? data.userId.value : this.userId,
+      lessonId: data.lessonId.present ? data.lessonId.value : this.lessonId,
+      blockId: data.blockId.present ? data.blockId.value : this.blockId,
+      attemptNumber: data.attemptNumber.present
+          ? data.attemptNumber.value
+          : this.attemptNumber,
+      submittedAnswer: data.submittedAnswer.present
+          ? data.submittedAnswer.value
+          : this.submittedAnswer,
+      selectedOptionIdsJson: data.selectedOptionIdsJson.present
+          ? data.selectedOptionIdsJson.value
+          : this.selectedOptionIdsJson,
+      isCorrect: data.isCorrect.present ? data.isCorrect.value : this.isCorrect,
+      feedbackMessage: data.feedbackMessage.present
+          ? data.feedbackMessage.value
+          : this.feedbackMessage,
+      earnedXp: data.earnedXp.present ? data.earnedXp.value : this.earnedXp,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LessonAttemptTableData(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('lessonId: $lessonId, ')
+          ..write('blockId: $blockId, ')
+          ..write('attemptNumber: $attemptNumber, ')
+          ..write('submittedAnswer: $submittedAnswer, ')
+          ..write('selectedOptionIdsJson: $selectedOptionIdsJson, ')
+          ..write('isCorrect: $isCorrect, ')
+          ..write('feedbackMessage: $feedbackMessage, ')
+          ..write('earnedXp: $earnedXp, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      userId,
+      lessonId,
+      blockId,
+      attemptNumber,
+      submittedAnswer,
+      selectedOptionIdsJson,
+      isCorrect,
+      feedbackMessage,
+      earnedXp,
+      createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is LessonAttemptTableData &&
+          other.id == this.id &&
+          other.userId == this.userId &&
+          other.lessonId == this.lessonId &&
+          other.blockId == this.blockId &&
+          other.attemptNumber == this.attemptNumber &&
+          other.submittedAnswer == this.submittedAnswer &&
+          other.selectedOptionIdsJson == this.selectedOptionIdsJson &&
+          other.isCorrect == this.isCorrect &&
+          other.feedbackMessage == this.feedbackMessage &&
+          other.earnedXp == this.earnedXp &&
+          other.createdAt == this.createdAt);
+}
+
+class LessonAttemptTableCompanion
+    extends UpdateCompanion<LessonAttemptTableData> {
+  final Value<int> id;
+  final Value<String> userId;
+  final Value<String> lessonId;
+  final Value<String> blockId;
+  final Value<int> attemptNumber;
+  final Value<String?> submittedAnswer;
+  final Value<String> selectedOptionIdsJson;
+  final Value<bool> isCorrect;
+  final Value<String?> feedbackMessage;
+  final Value<int> earnedXp;
+  final Value<DateTime> createdAt;
+  const LessonAttemptTableCompanion({
+    this.id = const Value.absent(),
+    this.userId = const Value.absent(),
+    this.lessonId = const Value.absent(),
+    this.blockId = const Value.absent(),
+    this.attemptNumber = const Value.absent(),
+    this.submittedAnswer = const Value.absent(),
+    this.selectedOptionIdsJson = const Value.absent(),
+    this.isCorrect = const Value.absent(),
+    this.feedbackMessage = const Value.absent(),
+    this.earnedXp = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  });
+  LessonAttemptTableCompanion.insert({
+    this.id = const Value.absent(),
+    required String userId,
+    required String lessonId,
+    required String blockId,
+    required int attemptNumber,
+    this.submittedAnswer = const Value.absent(),
+    this.selectedOptionIdsJson = const Value.absent(),
+    required bool isCorrect,
+    this.feedbackMessage = const Value.absent(),
+    this.earnedXp = const Value.absent(),
+    this.createdAt = const Value.absent(),
+  })  : userId = Value(userId),
+        lessonId = Value(lessonId),
+        blockId = Value(blockId),
+        attemptNumber = Value(attemptNumber),
+        isCorrect = Value(isCorrect);
+  static Insertable<LessonAttemptTableData> custom({
+    Expression<int>? id,
+    Expression<String>? userId,
+    Expression<String>? lessonId,
+    Expression<String>? blockId,
+    Expression<int>? attemptNumber,
+    Expression<String>? submittedAnswer,
+    Expression<String>? selectedOptionIdsJson,
+    Expression<bool>? isCorrect,
+    Expression<String>? feedbackMessage,
+    Expression<int>? earnedXp,
+    Expression<DateTime>? createdAt,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (userId != null) 'user_id': userId,
+      if (lessonId != null) 'lesson_id': lessonId,
+      if (blockId != null) 'block_id': blockId,
+      if (attemptNumber != null) 'attempt_number': attemptNumber,
+      if (submittedAnswer != null) 'submitted_answer': submittedAnswer,
+      if (selectedOptionIdsJson != null)
+        'selected_option_ids_json': selectedOptionIdsJson,
+      if (isCorrect != null) 'is_correct': isCorrect,
+      if (feedbackMessage != null) 'feedback_message': feedbackMessage,
+      if (earnedXp != null) 'earned_xp': earnedXp,
+      if (createdAt != null) 'created_at': createdAt,
+    });
+  }
+
+  LessonAttemptTableCompanion copyWith(
+      {Value<int>? id,
+      Value<String>? userId,
+      Value<String>? lessonId,
+      Value<String>? blockId,
+      Value<int>? attemptNumber,
+      Value<String?>? submittedAnswer,
+      Value<String>? selectedOptionIdsJson,
+      Value<bool>? isCorrect,
+      Value<String?>? feedbackMessage,
+      Value<int>? earnedXp,
+      Value<DateTime>? createdAt}) {
+    return LessonAttemptTableCompanion(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      lessonId: lessonId ?? this.lessonId,
+      blockId: blockId ?? this.blockId,
+      attemptNumber: attemptNumber ?? this.attemptNumber,
+      submittedAnswer: submittedAnswer ?? this.submittedAnswer,
+      selectedOptionIdsJson:
+          selectedOptionIdsJson ?? this.selectedOptionIdsJson,
+      isCorrect: isCorrect ?? this.isCorrect,
+      feedbackMessage: feedbackMessage ?? this.feedbackMessage,
+      earnedXp: earnedXp ?? this.earnedXp,
+      createdAt: createdAt ?? this.createdAt,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<int>(id.value);
+    }
+    if (userId.present) {
+      map['user_id'] = Variable<String>(userId.value);
+    }
+    if (lessonId.present) {
+      map['lesson_id'] = Variable<String>(lessonId.value);
+    }
+    if (blockId.present) {
+      map['block_id'] = Variable<String>(blockId.value);
+    }
+    if (attemptNumber.present) {
+      map['attempt_number'] = Variable<int>(attemptNumber.value);
+    }
+    if (submittedAnswer.present) {
+      map['submitted_answer'] = Variable<String>(submittedAnswer.value);
+    }
+    if (selectedOptionIdsJson.present) {
+      map['selected_option_ids_json'] =
+          Variable<String>(selectedOptionIdsJson.value);
+    }
+    if (isCorrect.present) {
+      map['is_correct'] = Variable<bool>(isCorrect.value);
+    }
+    if (feedbackMessage.present) {
+      map['feedback_message'] = Variable<String>(feedbackMessage.value);
+    }
+    if (earnedXp.present) {
+      map['earned_xp'] = Variable<int>(earnedXp.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('LessonAttemptTableCompanion(')
+          ..write('id: $id, ')
+          ..write('userId: $userId, ')
+          ..write('lessonId: $lessonId, ')
+          ..write('blockId: $blockId, ')
+          ..write('attemptNumber: $attemptNumber, ')
+          ..write('submittedAnswer: $submittedAnswer, ')
+          ..write('selectedOptionIdsJson: $selectedOptionIdsJson, ')
+          ..write('isCorrect: $isCorrect, ')
+          ..write('feedbackMessage: $feedbackMessage, ')
+          ..write('earnedXp: $earnedXp, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $DictionaryCacheTableTable extends DictionaryCacheTable
     with TableInfo<$DictionaryCacheTableTable, DictionaryCacheTableData> {
   @override
@@ -2693,6 +3266,8 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $UserStatsTableTable userStatsTable = $UserStatsTableTable(this);
   late final $LessonSyncQueueTableTable lessonSyncQueueTable =
       $LessonSyncQueueTableTable(this);
+  late final $LessonAttemptTableTable lessonAttemptTable =
+      $LessonAttemptTableTable(this);
   late final $DictionaryCacheTableTable dictionaryCacheTable =
       $DictionaryCacheTableTable(this);
   late final $AnswerHistoryLocalTableTable answerHistoryLocalTable =
@@ -2707,6 +3282,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         lessonProgressTable,
         userStatsTable,
         lessonSyncQueueTable,
+        lessonAttemptTable,
         dictionaryCacheTable,
         answerHistoryLocalTable
       ];
@@ -3761,6 +4337,274 @@ typedef $$LessonSyncQueueTableTableProcessedTableManager
         ),
         LessonSyncQueueTableData,
         PrefetchHooks Function()>;
+typedef $$LessonAttemptTableTableCreateCompanionBuilder
+    = LessonAttemptTableCompanion Function({
+  Value<int> id,
+  required String userId,
+  required String lessonId,
+  required String blockId,
+  required int attemptNumber,
+  Value<String?> submittedAnswer,
+  Value<String> selectedOptionIdsJson,
+  required bool isCorrect,
+  Value<String?> feedbackMessage,
+  Value<int> earnedXp,
+  Value<DateTime> createdAt,
+});
+typedef $$LessonAttemptTableTableUpdateCompanionBuilder
+    = LessonAttemptTableCompanion Function({
+  Value<int> id,
+  Value<String> userId,
+  Value<String> lessonId,
+  Value<String> blockId,
+  Value<int> attemptNumber,
+  Value<String?> submittedAnswer,
+  Value<String> selectedOptionIdsJson,
+  Value<bool> isCorrect,
+  Value<String?> feedbackMessage,
+  Value<int> earnedXp,
+  Value<DateTime> createdAt,
+});
+
+class $$LessonAttemptTableTableFilterComposer
+    extends Composer<_$AppDatabase, $LessonAttemptTableTable> {
+  $$LessonAttemptTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get lessonId => $composableBuilder(
+      column: $table.lessonId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get blockId => $composableBuilder(
+      column: $table.blockId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get attemptNumber => $composableBuilder(
+      column: $table.attemptNumber, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get submittedAnswer => $composableBuilder(
+      column: $table.submittedAnswer,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get selectedOptionIdsJson => $composableBuilder(
+      column: $table.selectedOptionIdsJson,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isCorrect => $composableBuilder(
+      column: $table.isCorrect, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get feedbackMessage => $composableBuilder(
+      column: $table.feedbackMessage,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get earnedXp => $composableBuilder(
+      column: $table.earnedXp, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$LessonAttemptTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $LessonAttemptTableTable> {
+  $$LessonAttemptTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<int> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get userId => $composableBuilder(
+      column: $table.userId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get lessonId => $composableBuilder(
+      column: $table.lessonId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get blockId => $composableBuilder(
+      column: $table.blockId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get attemptNumber => $composableBuilder(
+      column: $table.attemptNumber,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get submittedAnswer => $composableBuilder(
+      column: $table.submittedAnswer,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get selectedOptionIdsJson => $composableBuilder(
+      column: $table.selectedOptionIdsJson,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isCorrect => $composableBuilder(
+      column: $table.isCorrect, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get feedbackMessage => $composableBuilder(
+      column: $table.feedbackMessage,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get earnedXp => $composableBuilder(
+      column: $table.earnedXp, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$LessonAttemptTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $LessonAttemptTableTable> {
+  $$LessonAttemptTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<int> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get userId =>
+      $composableBuilder(column: $table.userId, builder: (column) => column);
+
+  GeneratedColumn<String> get lessonId =>
+      $composableBuilder(column: $table.lessonId, builder: (column) => column);
+
+  GeneratedColumn<String> get blockId =>
+      $composableBuilder(column: $table.blockId, builder: (column) => column);
+
+  GeneratedColumn<int> get attemptNumber => $composableBuilder(
+      column: $table.attemptNumber, builder: (column) => column);
+
+  GeneratedColumn<String> get submittedAnswer => $composableBuilder(
+      column: $table.submittedAnswer, builder: (column) => column);
+
+  GeneratedColumn<String> get selectedOptionIdsJson => $composableBuilder(
+      column: $table.selectedOptionIdsJson, builder: (column) => column);
+
+  GeneratedColumn<bool> get isCorrect =>
+      $composableBuilder(column: $table.isCorrect, builder: (column) => column);
+
+  GeneratedColumn<String> get feedbackMessage => $composableBuilder(
+      column: $table.feedbackMessage, builder: (column) => column);
+
+  GeneratedColumn<int> get earnedXp =>
+      $composableBuilder(column: $table.earnedXp, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$LessonAttemptTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $LessonAttemptTableTable,
+    LessonAttemptTableData,
+    $$LessonAttemptTableTableFilterComposer,
+    $$LessonAttemptTableTableOrderingComposer,
+    $$LessonAttemptTableTableAnnotationComposer,
+    $$LessonAttemptTableTableCreateCompanionBuilder,
+    $$LessonAttemptTableTableUpdateCompanionBuilder,
+    (
+      LessonAttemptTableData,
+      BaseReferences<_$AppDatabase, $LessonAttemptTableTable,
+          LessonAttemptTableData>
+    ),
+    LessonAttemptTableData,
+    PrefetchHooks Function()> {
+  $$LessonAttemptTableTableTableManager(
+      _$AppDatabase db, $LessonAttemptTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$LessonAttemptTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$LessonAttemptTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$LessonAttemptTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            Value<String> userId = const Value.absent(),
+            Value<String> lessonId = const Value.absent(),
+            Value<String> blockId = const Value.absent(),
+            Value<int> attemptNumber = const Value.absent(),
+            Value<String?> submittedAnswer = const Value.absent(),
+            Value<String> selectedOptionIdsJson = const Value.absent(),
+            Value<bool> isCorrect = const Value.absent(),
+            Value<String?> feedbackMessage = const Value.absent(),
+            Value<int> earnedXp = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+          }) =>
+              LessonAttemptTableCompanion(
+            id: id,
+            userId: userId,
+            lessonId: lessonId,
+            blockId: blockId,
+            attemptNumber: attemptNumber,
+            submittedAnswer: submittedAnswer,
+            selectedOptionIdsJson: selectedOptionIdsJson,
+            isCorrect: isCorrect,
+            feedbackMessage: feedbackMessage,
+            earnedXp: earnedXp,
+            createdAt: createdAt,
+          ),
+          createCompanionCallback: ({
+            Value<int> id = const Value.absent(),
+            required String userId,
+            required String lessonId,
+            required String blockId,
+            required int attemptNumber,
+            Value<String?> submittedAnswer = const Value.absent(),
+            Value<String> selectedOptionIdsJson = const Value.absent(),
+            required bool isCorrect,
+            Value<String?> feedbackMessage = const Value.absent(),
+            Value<int> earnedXp = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+          }) =>
+              LessonAttemptTableCompanion.insert(
+            id: id,
+            userId: userId,
+            lessonId: lessonId,
+            blockId: blockId,
+            attemptNumber: attemptNumber,
+            submittedAnswer: submittedAnswer,
+            selectedOptionIdsJson: selectedOptionIdsJson,
+            isCorrect: isCorrect,
+            feedbackMessage: feedbackMessage,
+            earnedXp: earnedXp,
+            createdAt: createdAt,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$LessonAttemptTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $LessonAttemptTableTable,
+    LessonAttemptTableData,
+    $$LessonAttemptTableTableFilterComposer,
+    $$LessonAttemptTableTableOrderingComposer,
+    $$LessonAttemptTableTableAnnotationComposer,
+    $$LessonAttemptTableTableCreateCompanionBuilder,
+    $$LessonAttemptTableTableUpdateCompanionBuilder,
+    (
+      LessonAttemptTableData,
+      BaseReferences<_$AppDatabase, $LessonAttemptTableTable,
+          LessonAttemptTableData>
+    ),
+    LessonAttemptTableData,
+    PrefetchHooks Function()>;
 typedef $$DictionaryCacheTableTableCreateCompanionBuilder
     = DictionaryCacheTableCompanion Function({
   required String word,
@@ -4130,6 +4974,8 @@ class $AppDatabaseManager {
       $$UserStatsTableTableTableManager(_db, _db.userStatsTable);
   $$LessonSyncQueueTableTableTableManager get lessonSyncQueueTable =>
       $$LessonSyncQueueTableTableTableManager(_db, _db.lessonSyncQueueTable);
+  $$LessonAttemptTableTableTableManager get lessonAttemptTable =>
+      $$LessonAttemptTableTableTableManager(_db, _db.lessonAttemptTable);
   $$DictionaryCacheTableTableTableManager get dictionaryCacheTable =>
       $$DictionaryCacheTableTableTableManager(_db, _db.dictionaryCacheTable);
   $$AnswerHistoryLocalTableTableTableManager get answerHistoryLocalTable =>

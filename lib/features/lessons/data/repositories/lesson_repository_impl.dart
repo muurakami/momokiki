@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:flutter/foundation.dart';
 
 import '../../domain/models/lesson.dart';
 import '../../domain/models/lesson_progress.dart';
@@ -80,6 +81,19 @@ class LessonRepositoryImpl implements LessonRepository {
   }
 
   @override
+  Future<void> saveAttempt(LessonAttempt attempt) {
+    return _progressLocal.saveAttempt(attempt);
+  }
+
+  @override
+  Future<List<LessonAttempt>> getAttempts({
+    required String userId,
+    required String lessonId,
+  }) {
+    return _progressLocal.getAttempts(userId: userId, lessonId: lessonId);
+  }
+
+  @override
   Future<void> completeLesson({
     required LessonSummary summary,
     required LessonProgress progress,
@@ -128,5 +142,11 @@ class LessonRepositoryImpl implements LessonRepository {
         break;
       }
     }
+  }
+
+  @override
+  String toString() {
+    debugPrint('LessonRepositoryImpl active: remote+local cache enabled');
+    return super.toString();
   }
 }

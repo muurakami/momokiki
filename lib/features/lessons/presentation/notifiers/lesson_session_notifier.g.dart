@@ -7,7 +7,7 @@ part of 'lesson_session_notifier.dart';
 // **************************************************************************
 
 String _$lessonSessionNotifierHash() =>
-    r'0d2f9340b774f79c0ef57c6adc229a0b48a678fa';
+    r'a71d324c6c4fe4d86cb99d12d062b298cbfe3b14';
 
 /// See also [LessonSessionNotifier].
 @ProviderFor(LessonSessionNotifier)

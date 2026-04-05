@@ -43,6 +43,37 @@ class _LessonsOverviewScreenState extends ConsumerState<LessonsOverviewScreen> {
                   Container(
                     padding: const EdgeInsets.all(AppSpacing.md),
                     decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFE8F0E0), Colors.white],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
+                      ),
+                      borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Your progress', style: AppTypography.headlineMedium),
+                        const SizedBox(height: AppSpacing.sm),
+                        Text('XP ${state.totalXp} • Level ${state.level}',
+                            style: AppTypography.bodyLarge),
+                        const SizedBox(height: AppSpacing.sm),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(999),
+                          child: LinearProgressIndicator(
+                            value: state.levelProgress,
+                            minHeight: 12,
+                            backgroundColor: AppColors.camel.withValues(alpha: 0.2),
+                            color: AppColors.secondary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: AppSpacing.md),
+                  Container(
+                    padding: const EdgeInsets.all(AppSpacing.md),
+                    decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
                     ),
@@ -113,7 +144,7 @@ class _LessonIslandCard extends StatelessWidget {
       borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 250),
-        width: 220,
+        width: 280,
         padding: const EdgeInsets.all(AppSpacing.md),
         decoration: BoxDecoration(
           gradient: const LinearGradient(
@@ -147,17 +178,31 @@ class _LessonIslandCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                if (lesson.progress > 0)
-                  Text(
-                    '${(lesson.progress * 100).round()}%',
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+                  decoration: BoxDecoration(
+                    color: AppColors.accent.withValues(alpha: 0.18),
+                    borderRadius: BorderRadius.circular(999),
+                  ),
+                  child: Text(
+                    switch (lesson.status) {
+                      LessonStatus.completed => 'Completed',
+                      LessonStatus.inProgress => 'In progress',
+                      LessonStatus.notStarted => 'Not started',
+                    },
                     style: AppTypography.labelSmall.copyWith(color: AppColors.primary),
                   ),
+                ),
               ],
             ),
             const SizedBox(height: AppSpacing.md),
             Text(lesson.title, style: AppTypography.headlineMedium),
             const SizedBox(height: AppSpacing.xs),
             Text(lesson.subtitle, style: AppTypography.bodyMedium),
+            if (lesson.description != null) ...[
+              const SizedBox(height: AppSpacing.sm),
+              Text(lesson.description!, style: AppTypography.bodyMedium),
+            ],
             const SizedBox(height: AppSpacing.md),
             ClipRRect(
               borderRadius: BorderRadius.circular(999),
@@ -167,6 +212,17 @@ class _LessonIslandCard extends StatelessWidget {
                 backgroundColor: AppColors.camel.withValues(alpha: 0.25),
                 color: AppColors.secondary,
               ),
+            ),
+            const SizedBox(height: AppSpacing.sm),
+            Row(
+              children: [
+                Text('${lesson.earnedXp}/${lesson.xpReward} XP', style: AppTypography.labelSmall),
+                const Spacer(),
+                FilledButton.tonal(
+                  onPressed: onTap,
+                  child: Text(lesson.ctaLabel),
+                ),
+              ],
             ),
           ],
         ),

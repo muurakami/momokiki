@@ -19,6 +19,13 @@ abstract class LessonRepository {
     required LessonBlockResult result,
   });
 
+  Future<void> saveAttempt(LessonAttempt attempt);
+
+  Future<List<LessonAttempt>> getAttempts({
+    required String userId,
+    required String lessonId,
+  });
+
   Future<void> completeLesson({
     required LessonSummary summary,
     required LessonProgress progress,

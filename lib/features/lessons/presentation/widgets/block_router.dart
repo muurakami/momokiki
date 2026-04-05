@@ -1,15 +1,26 @@
 import 'package:flutter/material.dart';
 
 import '../../domain/models/lesson.dart';
+import '../../domain/models/lesson_progress.dart';
 
 class LessonBlockRouter extends StatelessWidget {
   const LessonBlockRouter({
     required this.block,
     required this.onSubmitted,
+    this.result,
+    this.feedbackMessage,
+    this.correctAnswerLabel,
+    this.showRetryPrompt = false,
+    this.currentAttemptCount = 0,
     super.key,
   });
 
   final LessonBlock block;
+  final LessonBlockResult? result;
+  final String? feedbackMessage;
+  final String? correctAnswerLabel;
+  final bool showRetryPrompt;
+  final int currentAttemptCount;
   final Future<void> Function({
     String? submittedAnswer,
     List<String> selectedOptionIds,
@@ -17,24 +28,86 @@ class LessonBlockRouter extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return block.map(
-      text: (value) => _TextBlockView(block: value, onSubmitted: onSubmitted),
-      quiz: (value) => _QuizBlockView(block: value, onSubmitted: onSubmitted),
-      video: (value) => _VideoBlockView(block: value, onSubmitted: onSubmitted),
-      code: (value) => _CodeBlockView(block: value, onSubmitted: onSubmitted),
-      choice: (value) => _ChoiceBlockView(block: value, onSubmitted: onSubmitted),
-      unknown: (value) => Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text('Unsupported block: ${value.rawType ?? 'unknown'}'),
-            const SizedBox(height: 12),
-            FilledButton(
-              onPressed: () => onSubmitted(selectedOptionIds: const <String>[]),
-              child: const Text('Skip'),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        block.map(
+          text: (value) => _TextBlockView(block: value, onSubmitted: onSubmitted),
+          quiz: (value) => _QuizBlockView(block: value, onSubmitted: onSubmitted),
+          video: (value) => _VideoBlockView(block: value, onSubmitted: onSubmitted),
+          code: (value) => _CodeBlockView(block: value, onSubmitted: onSubmitted),
+          choice: (value) => _ChoiceBlockView(block: value, onSubmitted: onSubmitted),
+          unknown: (value) => Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Unsupported block: ${value.rawType ?? 'unknown'}'),
+                const SizedBox(height: 12),
+                FilledButton(
+                  onPressed: () => onSubmitted(selectedOptionIds: const <String>[]),
+                  child: const Text('Skip'),
+                ),
+              ],
             ),
-          ],
+          ),
         ),
+        if (result != null || showRetryPrompt) ...[
+          const SizedBox(height: 20),
+          _FeedbackPanel(
+            result: result,
+            feedbackMessage: feedbackMessage,
+            correctAnswerLabel: correctAnswerLabel,
+            currentAttemptCount: currentAttemptCount,
+          ),
+        ],
+      ],
+    );
+  }
+}
+
+class _FeedbackPanel extends StatelessWidget {
+  const _FeedbackPanel({
+    required this.result,
+    required this.feedbackMessage,
+    required this.correctAnswerLabel,
+    required this.currentAttemptCount,
+  });
+
+  final LessonBlockResult? result;
+  final String? feedbackMessage;
+  final String? correctAnswerLabel;
+  final int currentAttemptCount;
+
+  @override
+  Widget build(BuildContext context) {
+    final isCorrect = result?.isCorrect ?? false;
+
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: isCorrect ? const Color(0xFFE8F5E2) : const Color(0xFFFDE8E8),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: isCorrect ? const Color(0xFF6A994E) : const Color(0xFF6F1D1B),
+        ),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            isCorrect ? 'Correct answer' : 'Try again',
+            style: Theme.of(context).textTheme.titleMedium,
+          ),
+          const SizedBox(height: 8),
+          if (feedbackMessage != null) Text(feedbackMessage!),
+          if (!isCorrect && correctAnswerLabel != null) ...[
+            const SizedBox(height: 8),
+            Text('Correct answer: $correctAnswerLabel'),
+          ],
+          const SizedBox(height: 8),
+          Text('Attempts: $currentAttemptCount'),
+        ],
       ),
     );
   }

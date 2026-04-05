@@ -21,7 +21,14 @@ mixin _$LessonSessionState {
   LessonProgress? get progress => throw _privateConstructorUsedError;
   UserStats? get stats => throw _privateConstructorUsedError;
   LessonSummary? get summary => throw _privateConstructorUsedError;
+  LessonBlockResult? get lastResult => throw _privateConstructorUsedError;
+  String? get feedbackMessage => throw _privateConstructorUsedError;
+  String? get correctAnswerLabel => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
+  int get currentAttemptCount => throw _privateConstructorUsedError;
+  bool get showRetryPrompt => throw _privateConstructorUsedError;
+  int get currentBlockEarnedXp => throw _privateConstructorUsedError;
+  int get totalXpPreview => throw _privateConstructorUsedError;
   bool get submitting => throw _privateConstructorUsedError;
 
   /// Create a copy of LessonSessionState
@@ -43,13 +50,21 @@ abstract class $LessonSessionStateCopyWith<$Res> {
       LessonProgress? progress,
       UserStats? stats,
       LessonSummary? summary,
+      LessonBlockResult? lastResult,
+      String? feedbackMessage,
+      String? correctAnswerLabel,
       String? errorMessage,
+      int currentAttemptCount,
+      bool showRetryPrompt,
+      int currentBlockEarnedXp,
+      int totalXpPreview,
       bool submitting});
 
   $LessonCopyWith<$Res>? get lesson;
   $LessonProgressCopyWith<$Res>? get progress;
   $UserStatsCopyWith<$Res>? get stats;
   $LessonSummaryCopyWith<$Res>? get summary;
+  $LessonBlockResultCopyWith<$Res>? get lastResult;
 }
 
 /// @nodoc
@@ -72,7 +87,14 @@ class _$LessonSessionStateCopyWithImpl<$Res, $Val extends LessonSessionState>
     Object? progress = freezed,
     Object? stats = freezed,
     Object? summary = freezed,
+    Object? lastResult = freezed,
+    Object? feedbackMessage = freezed,
+    Object? correctAnswerLabel = freezed,
     Object? errorMessage = freezed,
+    Object? currentAttemptCount = null,
+    Object? showRetryPrompt = null,
+    Object? currentBlockEarnedXp = null,
+    Object? totalXpPreview = null,
     Object? submitting = null,
   }) {
     return _then(_value.copyWith(
@@ -96,10 +118,38 @@ class _$LessonSessionStateCopyWithImpl<$Res, $Val extends LessonSessionState>
           ? _value.summary
           : summary // ignore: cast_nullable_to_non_nullable
               as LessonSummary?,
+      lastResult: freezed == lastResult
+          ? _value.lastResult
+          : lastResult // ignore: cast_nullable_to_non_nullable
+              as LessonBlockResult?,
+      feedbackMessage: freezed == feedbackMessage
+          ? _value.feedbackMessage
+          : feedbackMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      correctAnswerLabel: freezed == correctAnswerLabel
+          ? _value.correctAnswerLabel
+          : correctAnswerLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      currentAttemptCount: null == currentAttemptCount
+          ? _value.currentAttemptCount
+          : currentAttemptCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      showRetryPrompt: null == showRetryPrompt
+          ? _value.showRetryPrompt
+          : showRetryPrompt // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentBlockEarnedXp: null == currentBlockEarnedXp
+          ? _value.currentBlockEarnedXp
+          : currentBlockEarnedXp // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalXpPreview: null == totalXpPreview
+          ? _value.totalXpPreview
+          : totalXpPreview // ignore: cast_nullable_to_non_nullable
+              as int,
       submitting: null == submitting
           ? _value.submitting
           : submitting // ignore: cast_nullable_to_non_nullable
@@ -162,6 +212,20 @@ class _$LessonSessionStateCopyWithImpl<$Res, $Val extends LessonSessionState>
       return _then(_value.copyWith(summary: value) as $Val);
     });
   }
+
+  /// Create a copy of LessonSessionState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $LessonBlockResultCopyWith<$Res>? get lastResult {
+    if (_value.lastResult == null) {
+      return null;
+    }
+
+    return $LessonBlockResultCopyWith<$Res>(_value.lastResult!, (value) {
+      return _then(_value.copyWith(lastResult: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -178,7 +242,14 @@ abstract class _$$LessonSessionStateImplCopyWith<$Res>
       LessonProgress? progress,
       UserStats? stats,
       LessonSummary? summary,
+      LessonBlockResult? lastResult,
+      String? feedbackMessage,
+      String? correctAnswerLabel,
       String? errorMessage,
+      int currentAttemptCount,
+      bool showRetryPrompt,
+      int currentBlockEarnedXp,
+      int totalXpPreview,
       bool submitting});
 
   @override
@@ -189,6 +260,8 @@ abstract class _$$LessonSessionStateImplCopyWith<$Res>
   $UserStatsCopyWith<$Res>? get stats;
   @override
   $LessonSummaryCopyWith<$Res>? get summary;
+  @override
+  $LessonBlockResultCopyWith<$Res>? get lastResult;
 }
 
 /// @nodoc
@@ -209,7 +282,14 @@ class __$$LessonSessionStateImplCopyWithImpl<$Res>
     Object? progress = freezed,
     Object? stats = freezed,
     Object? summary = freezed,
+    Object? lastResult = freezed,
+    Object? feedbackMessage = freezed,
+    Object? correctAnswerLabel = freezed,
     Object? errorMessage = freezed,
+    Object? currentAttemptCount = null,
+    Object? showRetryPrompt = null,
+    Object? currentBlockEarnedXp = null,
+    Object? totalXpPreview = null,
     Object? submitting = null,
   }) {
     return _then(_$LessonSessionStateImpl(
@@ -233,10 +313,38 @@ class __$$LessonSessionStateImplCopyWithImpl<$Res>
           ? _value.summary
           : summary // ignore: cast_nullable_to_non_nullable
               as LessonSummary?,
+      lastResult: freezed == lastResult
+          ? _value.lastResult
+          : lastResult // ignore: cast_nullable_to_non_nullable
+              as LessonBlockResult?,
+      feedbackMessage: freezed == feedbackMessage
+          ? _value.feedbackMessage
+          : feedbackMessage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      correctAnswerLabel: freezed == correctAnswerLabel
+          ? _value.correctAnswerLabel
+          : correctAnswerLabel // ignore: cast_nullable_to_non_nullable
+              as String?,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
           : errorMessage // ignore: cast_nullable_to_non_nullable
               as String?,
+      currentAttemptCount: null == currentAttemptCount
+          ? _value.currentAttemptCount
+          : currentAttemptCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      showRetryPrompt: null == showRetryPrompt
+          ? _value.showRetryPrompt
+          : showRetryPrompt // ignore: cast_nullable_to_non_nullable
+              as bool,
+      currentBlockEarnedXp: null == currentBlockEarnedXp
+          ? _value.currentBlockEarnedXp
+          : currentBlockEarnedXp // ignore: cast_nullable_to_non_nullable
+              as int,
+      totalXpPreview: null == totalXpPreview
+          ? _value.totalXpPreview
+          : totalXpPreview // ignore: cast_nullable_to_non_nullable
+              as int,
       submitting: null == submitting
           ? _value.submitting
           : submitting // ignore: cast_nullable_to_non_nullable
@@ -254,7 +362,14 @@ class _$LessonSessionStateImpl extends _LessonSessionState {
       this.progress,
       this.stats,
       this.summary,
+      this.lastResult,
+      this.feedbackMessage,
+      this.correctAnswerLabel,
       this.errorMessage,
+      this.currentAttemptCount = 0,
+      this.showRetryPrompt = false,
+      this.currentBlockEarnedXp = 0,
+      this.totalXpPreview = 0,
       this.submitting = false})
       : super._();
 
@@ -270,14 +385,32 @@ class _$LessonSessionStateImpl extends _LessonSessionState {
   @override
   final LessonSummary? summary;
   @override
+  final LessonBlockResult? lastResult;
+  @override
+  final String? feedbackMessage;
+  @override
+  final String? correctAnswerLabel;
+  @override
   final String? errorMessage;
+  @override
+  @JsonKey()
+  final int currentAttemptCount;
+  @override
+  @JsonKey()
+  final bool showRetryPrompt;
+  @override
+  @JsonKey()
+  final int currentBlockEarnedXp;
+  @override
+  @JsonKey()
+  final int totalXpPreview;
   @override
   @JsonKey()
   final bool submitting;
 
   @override
   String toString() {
-    return 'LessonSessionState(isLoading: $isLoading, lesson: $lesson, progress: $progress, stats: $stats, summary: $summary, errorMessage: $errorMessage, submitting: $submitting)';
+    return 'LessonSessionState(isLoading: $isLoading, lesson: $lesson, progress: $progress, stats: $stats, summary: $summary, lastResult: $lastResult, feedbackMessage: $feedbackMessage, correctAnswerLabel: $correctAnswerLabel, errorMessage: $errorMessage, currentAttemptCount: $currentAttemptCount, showRetryPrompt: $showRetryPrompt, currentBlockEarnedXp: $currentBlockEarnedXp, totalXpPreview: $totalXpPreview, submitting: $submitting)';
   }
 
   @override
@@ -292,15 +425,43 @@ class _$LessonSessionStateImpl extends _LessonSessionState {
                 other.progress == progress) &&
             (identical(other.stats, stats) || other.stats == stats) &&
             (identical(other.summary, summary) || other.summary == summary) &&
+            (identical(other.lastResult, lastResult) ||
+                other.lastResult == lastResult) &&
+            (identical(other.feedbackMessage, feedbackMessage) ||
+                other.feedbackMessage == feedbackMessage) &&
+            (identical(other.correctAnswerLabel, correctAnswerLabel) ||
+                other.correctAnswerLabel == correctAnswerLabel) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage) &&
+            (identical(other.currentAttemptCount, currentAttemptCount) ||
+                other.currentAttemptCount == currentAttemptCount) &&
+            (identical(other.showRetryPrompt, showRetryPrompt) ||
+                other.showRetryPrompt == showRetryPrompt) &&
+            (identical(other.currentBlockEarnedXp, currentBlockEarnedXp) ||
+                other.currentBlockEarnedXp == currentBlockEarnedXp) &&
+            (identical(other.totalXpPreview, totalXpPreview) ||
+                other.totalXpPreview == totalXpPreview) &&
             (identical(other.submitting, submitting) ||
                 other.submitting == submitting));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, isLoading, lesson, progress,
-      stats, summary, errorMessage, submitting);
+  int get hashCode => Object.hash(
+      runtimeType,
+      isLoading,
+      lesson,
+      progress,
+      stats,
+      summary,
+      lastResult,
+      feedbackMessage,
+      correctAnswerLabel,
+      errorMessage,
+      currentAttemptCount,
+      showRetryPrompt,
+      currentBlockEarnedXp,
+      totalXpPreview,
+      submitting);
 
   /// Create a copy of LessonSessionState
   /// with the given fields replaced by the non-null parameter values.
@@ -319,7 +480,14 @@ abstract class _LessonSessionState extends LessonSessionState {
       final LessonProgress? progress,
       final UserStats? stats,
       final LessonSummary? summary,
+      final LessonBlockResult? lastResult,
+      final String? feedbackMessage,
+      final String? correctAnswerLabel,
       final String? errorMessage,
+      final int currentAttemptCount,
+      final bool showRetryPrompt,
+      final int currentBlockEarnedXp,
+      final int totalXpPreview,
       final bool submitting}) = _$LessonSessionStateImpl;
   const _LessonSessionState._() : super._();
 
@@ -334,7 +502,21 @@ abstract class _LessonSessionState extends LessonSessionState {
   @override
   LessonSummary? get summary;
   @override
+  LessonBlockResult? get lastResult;
+  @override
+  String? get feedbackMessage;
+  @override
+  String? get correctAnswerLabel;
+  @override
   String? get errorMessage;
+  @override
+  int get currentAttemptCount;
+  @override
+  bool get showRetryPrompt;
+  @override
+  int get currentBlockEarnedXp;
+  @override
+  int get totalXpPreview;
   @override
   bool get submitting;
 

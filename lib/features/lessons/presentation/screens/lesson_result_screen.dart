@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../../core/theme/app_colors.dart';
+import '../../../../core/theme/app_spacing.dart';
+import '../../../../core/theme/app_typography.dart';
 import '../../domain/models/lesson_progress.dart';
 
 class LessonResultScreen extends StatelessWidget {
@@ -14,18 +17,31 @@ class LessonResultScreen extends StatelessWidget {
       appBar: AppBar(title: const Text('Lesson Result')),
       body: Center(
         child: Padding(
-          padding: const EdgeInsets.all(24),
+          padding: const EdgeInsets.all(AppSpacing.lg),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text(
-                '+${summary.earnedXp} XP',
-                style: Theme.of(context).textTheme.displaySmall,
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                decoration: BoxDecoration(
+                  color: AppColors.accent.withValues(alpha: 0.25),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: Text(
+                  '+${summary.earnedXp} XP',
+                  style: AppTypography.displayMedium,
+                ),
               ),
               const SizedBox(height: 12),
               Text('Accuracy: ${(summary.accuracy * 100).round()}%'),
               const SizedBox(height: 8),
               Text('Correct answers: ${summary.correctAnswers}/${summary.totalBlocks}'),
+              const SizedBox(height: 8),
+              Text('Attempts: ${summary.totalAttempts}'),
+              const SizedBox(height: 8),
+              Text('Level ${summary.levelBefore} -> ${summary.levelAfter}'),
+              const SizedBox(height: 8),
+              Text('Total XP: ${summary.totalXpAfter}'),
               const SizedBox(height: 24),
               FilledButton(
                 onPressed: () {

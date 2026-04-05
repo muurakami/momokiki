@@ -10,6 +10,9 @@ class LearningCatalogState with _$LearningCatalogState {
     @Default(SupportedLanguage.english) SupportedLanguage selectedLanguage,
     @Default(<LessonIsland>[]) List<LessonIsland> lessons,
     @Default(<RoadmapDocument>[]) List<RoadmapDocument> roadmaps,
+    @Default(0) int totalXp,
+    @Default(1) int level,
+    @Default(0) double levelProgress,
     @Default(false) bool isLoading,
     String? errorMessage,
   }) = _LearningCatalogState;

@@ -15,7 +15,14 @@ class LessonSessionState with _$LessonSessionState {
     LessonProgress? progress,
     UserStats? stats,
     LessonSummary? summary,
+    LessonBlockResult? lastResult,
+    String? feedbackMessage,
+    String? correctAnswerLabel,
     String? errorMessage,
+    @Default(0) int currentAttemptCount,
+    @Default(false) bool showRetryPrompt,
+    @Default(0) int currentBlockEarnedXp,
+    @Default(0) int totalXpPreview,
     @Default(false) bool submitting,
   }) = _LessonSessionState;
 

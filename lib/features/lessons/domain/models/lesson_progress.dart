@@ -13,9 +13,13 @@ class LessonProgress with _$LessonProgress {
     @Default(0) int currentBlockIndex,
     @Default(0) int correctAnswers,
     @Default(0) int answeredBlocks,
+    @Default(0) int attemptCount,
+    @Default(0) int incorrectAnswers,
     @Default(0) int earnedXp,
     @Default(false) bool isCompleted,
     String? lastBlockId,
+    @Default(<String>[]) List<String> completedBlockIds,
+    DateTime? lastAttemptAt,
     DateTime? updatedAt,
     DateTime? completedAt,
   }) = _LessonProgress;
@@ -40,8 +44,12 @@ class LessonBlockResult with _$LessonBlockResult {
     required String blockType,
     required bool isCorrect,
     @Default(0) int earnedXp,
+    @Default(1) int attemptNumber,
     int? timeSpentSeconds,
     String? submittedAnswer,
+    String? correctAnswerLabel,
+    String? feedbackMessage,
+    @Default(false) bool shouldRetry,
     @Default(<String>[]) List<String> selectedOptionIds,
   }) = _LessonBlockResult;
 
@@ -59,6 +67,10 @@ class LessonSummary with _$LessonSummary {
     required int correctAnswers,
     required int earnedXp,
     required double accuracy,
+    @Default(0) int totalAttempts,
+    @Default(1) int levelBefore,
+    @Default(1) int levelAfter,
+    @Default(0) int totalXpAfter,
     String? nextLessonId,
   }) = _LessonSummary;
 
@@ -92,4 +104,23 @@ class ProgressSyncPayload with _$ProgressSyncPayload {
 
   factory ProgressSyncPayload.fromJson(Map<String, Object?> json) =>
       _$ProgressSyncPayloadFromJson(json);
+}
+
+@Freezed(fromJson: true, toJson: true)
+class LessonAttempt with _$LessonAttempt {
+  const factory LessonAttempt({
+    required String userId,
+    required String lessonId,
+    required String blockId,
+    required int attemptNumber,
+    String? submittedAnswer,
+    @Default(<String>[]) List<String> selectedOptionIds,
+    required bool isCorrect,
+    String? feedbackMessage,
+    @Default(0) int earnedXp,
+    DateTime? createdAt,
+  }) = _LessonAttempt;
+
+  factory LessonAttempt.fromJson(Map<String, Object?> json) =>
+      _$LessonAttemptFromJson(json);
 }

@@ -23,11 +23,16 @@ mixin _$LessonIsland {
   String get lessonId => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get subtitle => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
   SupportedLanguage get language => throw _privateConstructorUsedError;
   int get order => throw _privateConstructorUsedError;
   bool get isLocked => throw _privateConstructorUsedError;
   double get progress => throw _privateConstructorUsedError;
   bool get isStarter => throw _privateConstructorUsedError;
+  int get xpReward => throw _privateConstructorUsedError;
+  int get earnedXp => throw _privateConstructorUsedError;
+  LessonStatus get status => throw _privateConstructorUsedError;
+  String get ctaLabel => throw _privateConstructorUsedError;
   String? get emoji => throw _privateConstructorUsedError;
 
   /// Serializes this LessonIsland to a JSON map.
@@ -50,11 +55,16 @@ abstract class $LessonIslandCopyWith<$Res> {
       {String lessonId,
       String title,
       String subtitle,
+      String? description,
       SupportedLanguage language,
       int order,
       bool isLocked,
       double progress,
       bool isStarter,
+      int xpReward,
+      int earnedXp,
+      LessonStatus status,
+      String ctaLabel,
       String? emoji});
 }
 
@@ -76,11 +86,16 @@ class _$LessonIslandCopyWithImpl<$Res, $Val extends LessonIsland>
     Object? lessonId = null,
     Object? title = null,
     Object? subtitle = null,
+    Object? description = freezed,
     Object? language = null,
     Object? order = null,
     Object? isLocked = null,
     Object? progress = null,
     Object? isStarter = null,
+    Object? xpReward = null,
+    Object? earnedXp = null,
+    Object? status = null,
+    Object? ctaLabel = null,
     Object? emoji = freezed,
   }) {
     return _then(_value.copyWith(
@@ -96,6 +111,10 @@ class _$LessonIslandCopyWithImpl<$Res, $Val extends LessonIsland>
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
               as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -116,6 +135,22 @@ class _$LessonIslandCopyWithImpl<$Res, $Val extends LessonIsland>
           ? _value.isStarter
           : isStarter // ignore: cast_nullable_to_non_nullable
               as bool,
+      xpReward: null == xpReward
+          ? _value.xpReward
+          : xpReward // ignore: cast_nullable_to_non_nullable
+              as int,
+      earnedXp: null == earnedXp
+          ? _value.earnedXp
+          : earnedXp // ignore: cast_nullable_to_non_nullable
+              as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as LessonStatus,
+      ctaLabel: null == ctaLabel
+          ? _value.ctaLabel
+          : ctaLabel // ignore: cast_nullable_to_non_nullable
+              as String,
       emoji: freezed == emoji
           ? _value.emoji
           : emoji // ignore: cast_nullable_to_non_nullable
@@ -136,11 +171,16 @@ abstract class _$$LessonIslandImplCopyWith<$Res>
       {String lessonId,
       String title,
       String subtitle,
+      String? description,
       SupportedLanguage language,
       int order,
       bool isLocked,
       double progress,
       bool isStarter,
+      int xpReward,
+      int earnedXp,
+      LessonStatus status,
+      String ctaLabel,
       String? emoji});
 }
 
@@ -160,11 +200,16 @@ class __$$LessonIslandImplCopyWithImpl<$Res>
     Object? lessonId = null,
     Object? title = null,
     Object? subtitle = null,
+    Object? description = freezed,
     Object? language = null,
     Object? order = null,
     Object? isLocked = null,
     Object? progress = null,
     Object? isStarter = null,
+    Object? xpReward = null,
+    Object? earnedXp = null,
+    Object? status = null,
+    Object? ctaLabel = null,
     Object? emoji = freezed,
   }) {
     return _then(_$LessonIslandImpl(
@@ -180,6 +225,10 @@ class __$$LessonIslandImplCopyWithImpl<$Res>
           ? _value.subtitle
           : subtitle // ignore: cast_nullable_to_non_nullable
               as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -200,6 +249,22 @@ class __$$LessonIslandImplCopyWithImpl<$Res>
           ? _value.isStarter
           : isStarter // ignore: cast_nullable_to_non_nullable
               as bool,
+      xpReward: null == xpReward
+          ? _value.xpReward
+          : xpReward // ignore: cast_nullable_to_non_nullable
+              as int,
+      earnedXp: null == earnedXp
+          ? _value.earnedXp
+          : earnedXp // ignore: cast_nullable_to_non_nullable
+              as int,
+      status: null == status
+          ? _value.status
+          : status // ignore: cast_nullable_to_non_nullable
+              as LessonStatus,
+      ctaLabel: null == ctaLabel
+          ? _value.ctaLabel
+          : ctaLabel // ignore: cast_nullable_to_non_nullable
+              as String,
       emoji: freezed == emoji
           ? _value.emoji
           : emoji // ignore: cast_nullable_to_non_nullable
@@ -215,11 +280,16 @@ class _$LessonIslandImpl implements _LessonIsland {
       {required this.lessonId,
       required this.title,
       required this.subtitle,
+      this.description,
       required this.language,
       this.order = 1,
       this.isLocked = false,
       this.progress = 0,
       this.isStarter = false,
+      this.xpReward = 0,
+      this.earnedXp = 0,
+      this.status = LessonStatus.notStarted,
+      this.ctaLabel = 'Start',
       this.emoji});
 
   factory _$LessonIslandImpl.fromJson(Map<String, dynamic> json) =>
@@ -231,6 +301,8 @@ class _$LessonIslandImpl implements _LessonIsland {
   final String title;
   @override
   final String subtitle;
+  @override
+  final String? description;
   @override
   final SupportedLanguage language;
   @override
@@ -246,11 +318,23 @@ class _$LessonIslandImpl implements _LessonIsland {
   @JsonKey()
   final bool isStarter;
   @override
+  @JsonKey()
+  final int xpReward;
+  @override
+  @JsonKey()
+  final int earnedXp;
+  @override
+  @JsonKey()
+  final LessonStatus status;
+  @override
+  @JsonKey()
+  final String ctaLabel;
+  @override
   final String? emoji;
 
   @override
   String toString() {
-    return 'LessonIsland(lessonId: $lessonId, title: $title, subtitle: $subtitle, language: $language, order: $order, isLocked: $isLocked, progress: $progress, isStarter: $isStarter, emoji: $emoji)';
+    return 'LessonIsland(lessonId: $lessonId, title: $title, subtitle: $subtitle, description: $description, language: $language, order: $order, isLocked: $isLocked, progress: $progress, isStarter: $isStarter, xpReward: $xpReward, earnedXp: $earnedXp, status: $status, ctaLabel: $ctaLabel, emoji: $emoji)';
   }
 
   @override
@@ -263,6 +347,8 @@ class _$LessonIslandImpl implements _LessonIsland {
             (identical(other.title, title) || other.title == title) &&
             (identical(other.subtitle, subtitle) ||
                 other.subtitle == subtitle) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
             (identical(other.language, language) ||
                 other.language == language) &&
             (identical(other.order, order) || other.order == order) &&
@@ -272,13 +358,34 @@ class _$LessonIslandImpl implements _LessonIsland {
                 other.progress == progress) &&
             (identical(other.isStarter, isStarter) ||
                 other.isStarter == isStarter) &&
+            (identical(other.xpReward, xpReward) ||
+                other.xpReward == xpReward) &&
+            (identical(other.earnedXp, earnedXp) ||
+                other.earnedXp == earnedXp) &&
+            (identical(other.status, status) || other.status == status) &&
+            (identical(other.ctaLabel, ctaLabel) ||
+                other.ctaLabel == ctaLabel) &&
             (identical(other.emoji, emoji) || other.emoji == emoji));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, lessonId, title, subtitle,
-      language, order, isLocked, progress, isStarter, emoji);
+  int get hashCode => Object.hash(
+      runtimeType,
+      lessonId,
+      title,
+      subtitle,
+      description,
+      language,
+      order,
+      isLocked,
+      progress,
+      isStarter,
+      xpReward,
+      earnedXp,
+      status,
+      ctaLabel,
+      emoji);
 
   /// Create a copy of LessonIsland
   /// with the given fields replaced by the non-null parameter values.
@@ -301,11 +408,16 @@ abstract class _LessonIsland implements LessonIsland {
       {required final String lessonId,
       required final String title,
       required final String subtitle,
+      final String? description,
       required final SupportedLanguage language,
       final int order,
       final bool isLocked,
       final double progress,
       final bool isStarter,
+      final int xpReward,
+      final int earnedXp,
+      final LessonStatus status,
+      final String ctaLabel,
       final String? emoji}) = _$LessonIslandImpl;
 
   factory _LessonIsland.fromJson(Map<String, dynamic> json) =
@@ -318,6 +430,8 @@ abstract class _LessonIsland implements LessonIsland {
   @override
   String get subtitle;
   @override
+  String? get description;
+  @override
   SupportedLanguage get language;
   @override
   int get order;
@@ -327,6 +441,14 @@ abstract class _LessonIsland implements LessonIsland {
   double get progress;
   @override
   bool get isStarter;
+  @override
+  int get xpReward;
+  @override
+  int get earnedXp;
+  @override
+  LessonStatus get status;
+  @override
+  String get ctaLabel;
   @override
   String? get emoji;
 

@@ -5,17 +5,24 @@ part 'learning_content.g.dart';
 
 enum SupportedLanguage { english, japanese }
 
+enum LessonStatus { notStarted, inProgress, completed }
+
 @Freezed(fromJson: true, toJson: true)
 class LessonIsland with _$LessonIsland {
   const factory LessonIsland({
     required String lessonId,
     required String title,
     required String subtitle,
+    String? description,
     required SupportedLanguage language,
     @Default(1) int order,
     @Default(false) bool isLocked,
     @Default(0) double progress,
     @Default(false) bool isStarter,
+    @Default(0) int xpReward,
+    @Default(0) int earnedXp,
+    @Default(LessonStatus.notStarted) LessonStatus status,
+    @Default('Start') String ctaLabel,
     String? emoji,
   }) = _LessonIsland;
 

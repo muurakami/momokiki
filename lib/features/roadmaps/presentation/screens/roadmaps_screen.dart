@@ -97,6 +97,15 @@ class _RoadmapsScreenState extends ConsumerState<RoadmapsScreen> {
                               icon: const Icon(Icons.open_in_new),
                               label: const Text('Open interactive roadmap'),
                             ),
+                            const SizedBox(height: AppSpacing.sm),
+                            FilledButton.tonalIcon(
+                              onPressed: () => _openRoadmap(
+                                title: '${roadmap.title} (Text)',
+                                path: _fallbackMarkdownPathForLanguage(roadmap.language),
+                              ),
+                              icon: const Icon(Icons.article_outlined),
+                              label: const Text('Open text roadmap'),
+                            ),
                           ],
                           const SizedBox(height: AppSpacing.md),
                           ...roadmap.sections.take(2).map(
@@ -215,9 +224,42 @@ class _RoadmapsScreenState extends ConsumerState<RoadmapsScreen> {
       if (!mounted) {
         return;
       }
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to open roadmap: $error')),
+      await showDialog<void>(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Unable to open roadmap'),
+          content: Text('Failed to open roadmap: $error'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Close'),
+            ),
+            FilledButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+                _openRoadmap(
+                  title: '$title (Text)',
+                  path: _fallbackMarkdownPathForCurrentLanguage(),
+                );
+              },
+              child: const Text('Open text roadmap'),
+            ),
+          ],
+        ),
       );
     }
+  }
+
+  String _fallbackMarkdownPathForCurrentLanguage() {
+    final languageCode = ref.read(appPreferencesNotifierProvider).valueOrNull ?? 'en';
+    return languageCode == 'ja'
+        ? 'assets/roadmaps/JAPAN_Roadmap.md'
+        : 'assets/roadmaps/English_B1_C1_Roadmap.md';
+  }
+
+  String _fallbackMarkdownPathForLanguage(SupportedLanguage language) {
+    return language == SupportedLanguage.japanese
+        ? 'assets/roadmaps/JAPAN_Roadmap.md'
+        : 'assets/roadmaps/English_B1_C1_Roadmap.md';
   }
 }

@@ -7,7 +7,7 @@ part of 'learning_catalog_notifier.dart';
 // **************************************************************************
 
 String _$learningCatalogNotifierHash() =>
-    r'f201b62657af6a73182532f7ccbe07fcbab57bd0';
+    r'64d2a1fa94f55c2e2f0842cdbe80c80eaa25fba1';
 
 /// See also [LearningCatalogNotifier].
 @ProviderFor(LearningCatalogNotifier)
