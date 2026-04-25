@@ -1,4 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../../domain/models/user_profile.dart';
 import '../../domain/repositories/auth_repository.dart';
 import '../../../../core/di/injection.dart';
@@ -10,7 +11,17 @@ class AuthNotifier extends _$AuthNotifier {
   AuthRepository get _repo => getIt<AuthRepository>();
 
   @override
-  Future<UserProfile?> build() => _repo.getCurrentUser();
+  Future<UserProfile?> build() async {
+    final subscription = _repo.authStateChanges.listen(
+      (user) => state = AsyncData(user),
+      onError: (Object error, StackTrace stackTrace) {
+        state = AsyncError(error, stackTrace);
+      },
+    );
+    ref.onDispose(subscription.cancel);
+
+    return _repo.getCurrentUser();
+  }
 
   Future<void> signInWithEmail(String email, String password) async {
     state = const AsyncLoading();
@@ -38,8 +49,11 @@ class AuthNotifier extends _$AuthNotifier {
   }
 
   Future<void> signOut() async {
-    await _repo.signOut();
-    state = const AsyncData(null);
+    try {
+      await _repo.signOut();
+    } finally {
+      state = const AsyncData(null);
+    }
   }
 
   Future<void> saveOnboarding({

@@ -40,7 +40,6 @@ class AuthRepositoryImpl implements AuthRepository {
     required bool onboardingCompleted,
   }) {
     return _datasource.saveOnboardingProfile(
-      userId: _datasource.currentUserId, // ← см. ниже
       targetLanguage: targetLanguage,
       cefrLevel: cefrLevel,
       dailyGoalMinutes: dailyGoalMinutes,
@@ -51,7 +50,6 @@ class AuthRepositoryImpl implements AuthRepository {
   @override
   Future<UserProfile> updatePreferredLanguage(String targetLanguage) {
     return _datasource.updatePreferredLanguage(
-      userId: _datasource.currentUserId,
       targetLanguage: targetLanguage,
     );
   }

@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:momokiki/features/lessons/domain/models/lesson.dart';
 import 'package:momokiki/features/lessons/domain/models/lesson_progress.dart';
 import 'package:momokiki/features/lessons/domain/services/block_answer_evaluator.dart';
@@ -14,8 +13,6 @@ import 'test_helpers/test_theme.dart';
 
 void main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  GoogleFonts.config.allowRuntimeFetching = false;
-
   testWidgets('lesson flow from asset JSON reaches result screen', (tester) async {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMessageHandler('flutter/assets', (message) async {

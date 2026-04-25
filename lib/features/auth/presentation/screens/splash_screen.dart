@@ -28,13 +28,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
         return;
       }
 
-      if (user.isGuest) {
-        await ref.read(authNotifierProvider.notifier).signOut();
-        if (!mounted) return;
-        context.go('/auth');
-        return;
-      }
-
       if (!user.onboardingCompleted) {
         context.go('/onboarding/language');
       } else {

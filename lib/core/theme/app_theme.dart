@@ -1,9 +1,69 @@
 import 'app_spacing.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'app_colors.dart';
 
 abstract class AppTheme {
+  static TextTheme _buildTextTheme({
+    required Color primaryTextColor,
+    required Color secondaryTextColor,
+  }) {
+    return const TextTheme().copyWith(
+      displayLarge: TextStyle(
+        fontSize: 32,
+        fontWeight: FontWeight.w800,
+        letterSpacing: -0.5,
+      ),
+      displayMedium: TextStyle(
+        fontSize: 26,
+        fontWeight: FontWeight.w700,
+      ),
+      headlineLarge: TextStyle(
+        fontSize: 22,
+        fontWeight: FontWeight.w700,
+      ),
+      headlineMedium: TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+      ),
+      bodyLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
+        height: 1.5,
+      ),
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        height: 1.5,
+      ),
+      labelLarge: TextStyle(
+        fontSize: 16,
+        fontWeight: FontWeight.w700,
+        letterSpacing: 0.3,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        letterSpacing: 0.5,
+      ),
+    ).apply(
+      bodyColor: primaryTextColor,
+      displayColor: primaryTextColor,
+    ).copyWith(
+      bodyMedium: TextStyle(
+        fontSize: 14,
+        fontWeight: FontWeight.w400,
+        color: secondaryTextColor,
+        height: 1.5,
+      ),
+      labelSmall: TextStyle(
+        fontSize: 12,
+        fontWeight: FontWeight.w600,
+        color: secondaryTextColor,
+        letterSpacing: 0.5,
+      ),
+    );
+  }
+
   static ThemeData get light => ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
@@ -18,7 +78,10 @@ abstract class AppTheme {
           onSurface: AppColors.textPrimary,
         ),
         scaffoldBackgroundColor: AppColors.background,
-        textTheme: GoogleFonts.nunitoTextTheme(),
+        textTheme: _buildTextTheme(
+          primaryTextColor: AppColors.textPrimary,
+          secondaryTextColor: AppColors.textSecondary,
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.background,
           elevation: 0,
@@ -61,7 +124,10 @@ abstract class AppTheme {
           surface: AppColors.backgroundDark,
         ),
         scaffoldBackgroundColor: AppColors.backgroundDark,
-        textTheme: GoogleFonts.nunitoTextTheme(ThemeData.dark().textTheme),
+        textTheme: _buildTextTheme(
+          primaryTextColor: Colors.white,
+          secondaryTextColor: Colors.white70,
+        ),
         appBarTheme: const AppBarTheme(
           backgroundColor: AppColors.backgroundDark,
           elevation: 0,
