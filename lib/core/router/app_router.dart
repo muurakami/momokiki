@@ -17,14 +17,7 @@ import '../../features/practice/presentation/screens/practice_home_screen.dart';
 import '../../features/practice/presentation/screens/review_session_screen.dart';
 import '../../features/roadmaps/presentation/screens/roadmaps_screen.dart';
 import '../../features/settings/presentation/screens/profile_settings_screen.dart';
-
-class _PlaceholderScreen extends StatelessWidget {
-  final String title;
-  const _PlaceholderScreen(this.title);
-  @override
-  Widget build(BuildContext context) => Scaffold(
-      body: Center(child: Text(title, style: const TextStyle(fontSize: 24))));
-}
+import '../../features/stats/presentation/screens/stats_screen.dart';
 
 @singleton
 class AppRouter {
@@ -90,9 +83,7 @@ class AppRouter {
           GoRoute(
               path: '/app/roadmaps',
               builder: (_, __) => const RoadmapsScreen()),
-          GoRoute(
-              path: '/app/stats',
-              builder: (_, __) => const _PlaceholderScreen('Stats')),
+          GoRoute(path: '/app/stats', builder: (_, __) => const StatsScreen()),
           GoRoute(
               path: '/app/profile',
               builder: (_, __) => const ProfileSettingsScreen()),

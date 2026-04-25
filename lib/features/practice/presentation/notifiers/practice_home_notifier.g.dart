@@ -7,7 +7,7 @@ part of 'practice_home_notifier.dart';
 // **************************************************************************
 
 String _$practiceHomeNotifierHash() =>
-    r'25e37f5b99e8ede1693e1b893668d26e60feb5f2';
+    r'b3ef259e004c4f96abdc99f7fdab393402d284ac';
 
 /// See also [PracticeHomeNotifier].
 @ProviderFor(PracticeHomeNotifier)

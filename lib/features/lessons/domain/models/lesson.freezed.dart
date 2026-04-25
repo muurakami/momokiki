@@ -648,7 +648,7 @@ LessonBlock _$LessonBlockFromJson(Map<String, dynamic> json) {
       return _CodeBlock.fromJson(json);
     case 'choice':
       return _ChoiceBlock.fromJson(json);
-    case 'sentence_builder':
+    case 'sentenceBuilder':
       return _SentenceBuilderBlock.fromJson(json);
 
     default:
@@ -713,8 +713,8 @@ mixin _$LessonBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)
         sentenceBuilder,
@@ -770,8 +770,8 @@ mixin _$LessonBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -827,8 +827,8 @@ mixin _$LessonBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -1137,8 +1137,8 @@ class _$TextBlockImpl extends _TextBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)
         sentenceBuilder,
@@ -1197,8 +1197,8 @@ class _$TextBlockImpl extends _TextBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -1257,8 +1257,8 @@ class _$TextBlockImpl extends _TextBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -1575,8 +1575,8 @@ class _$QuizBlockImpl extends _QuizBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)
         sentenceBuilder,
@@ -1636,8 +1636,8 @@ class _$QuizBlockImpl extends _QuizBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -1697,8 +1697,8 @@ class _$QuizBlockImpl extends _QuizBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -2002,8 +2002,8 @@ class _$VideoBlockImpl extends _VideoBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)
         sentenceBuilder,
@@ -2062,8 +2062,8 @@ class _$VideoBlockImpl extends _VideoBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -2123,8 +2123,8 @@ class _$VideoBlockImpl extends _VideoBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -2454,8 +2454,8 @@ class _$CodeBlockImpl extends _CodeBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)
         sentenceBuilder,
@@ -2515,8 +2515,8 @@ class _$CodeBlockImpl extends _CodeBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -2576,8 +2576,8 @@ class _$CodeBlockImpl extends _CodeBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -2898,8 +2898,8 @@ class _$ChoiceBlockImpl extends _ChoiceBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)
         sentenceBuilder,
@@ -2958,8 +2958,8 @@ class _$ChoiceBlockImpl extends _ChoiceBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -3019,8 +3019,8 @@ class _$ChoiceBlockImpl extends _ChoiceBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -3303,20 +3303,39 @@ class _$SentenceBuilderBlockImpl extends _SentenceBuilderBlock {
   @override
   @pragma('vm:prefer-inline')
   _$$SentenceBuilderBlockImplCopyWith<_$SentenceBuilderBlockImpl>
-      get copyWith => __$$SentenceBuilderBlockImplCopyWithImpl<
-          _$SentenceBuilderBlockImpl>(this, _$identity);
+      get copyWith =>
+          __$$SentenceBuilderBlockImplCopyWithImpl<_$SentenceBuilderBlockImpl>(
+              this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(String id, String type, String title, String content,
-            bool skippable, List<String> bullets, Map<String, Object?> extras)
+    required TResult Function(
+            String id,
+            String type,
+            String title,
+            String content,
+            bool skippable,
+            List<String> bullets,
+            Map<String, Object?> extras)
         text,
-    required TResult Function(String id, String type, String question, List<String> options,
-            @JsonKey(name: 'correct_answer') String correctAnswer, String? explanation, Map<String, Object?> extras)
+    required TResult Function(
+            String id,
+            String type,
+            String question,
+            List<String> options,
+            @JsonKey(name: 'correct_answer') String correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)
         quiz,
-    required TResult Function(String id, String type, String title,
-            @JsonKey(name: 'video_url') String videoUrl, String? caption, int durationSeconds, Map<String, Object?> extras)
+    required TResult Function(
+            String id,
+            String type,
+            String title,
+            @JsonKey(name: 'video_url') String videoUrl,
+            String? caption,
+            int durationSeconds,
+            Map<String, Object?> extras)
         video,
     required TResult Function(
             String id,
@@ -3328,21 +3347,27 @@ class _$SentenceBuilderBlockImpl extends _SentenceBuilderBlock {
             List<String> hints,
             Map<String, Object?> extras)
         code,
-    required TResult Function(String id, String type, String prompt,
-            List<ChoiceOption> options, @JsonKey(name: 'correct_option_id') String correctOptionId, bool? multiple, Map<String, Object?> extras)
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<ChoiceOption> options,
+            @JsonKey(name: 'correct_option_id') String correctOptionId,
+            bool? multiple,
+            Map<String, Object?> extras)
         choice,
     required TResult Function(
             String id,
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)
         sentenceBuilder,
-    required TResult Function(
-            String id, String type, String title, String? rawType, Map<String, Object?> raw)
+    required TResult Function(String id, String type, String title,
+            String? rawType, Map<String, Object?> raw)
         unknown,
   }) {
     return sentenceBuilder(id, type, prompt, tokens, correctTokenIds,
@@ -3355,11 +3380,23 @@ class _$SentenceBuilderBlockImpl extends _SentenceBuilderBlock {
     TResult? Function(String id, String type, String title, String content,
             bool skippable, List<String> bullets, Map<String, Object?> extras)?
         text,
-    TResult? Function(String id, String type, String question, List<String> options,
-            @JsonKey(name: 'correct_answer') String correctAnswer, String? explanation, Map<String, Object?> extras)?
+    TResult? Function(
+            String id,
+            String type,
+            String question,
+            List<String> options,
+            @JsonKey(name: 'correct_answer') String correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
         quiz,
-    TResult? Function(String id, String type, String title,
-            @JsonKey(name: 'video_url') String videoUrl, String? caption, int durationSeconds, Map<String, Object?> extras)?
+    TResult? Function(
+            String id,
+            String type,
+            String title,
+            @JsonKey(name: 'video_url') String videoUrl,
+            String? caption,
+            int durationSeconds,
+            Map<String, Object?> extras)?
         video,
     TResult? Function(
             String id,
@@ -3371,16 +3408,22 @@ class _$SentenceBuilderBlockImpl extends _SentenceBuilderBlock {
             List<String> hints,
             Map<String, Object?> extras)?
         code,
-    TResult? Function(String id, String type, String prompt,
-            List<ChoiceOption> options, @JsonKey(name: 'correct_option_id') String correctOptionId, bool? multiple, Map<String, Object?> extras)?
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            List<ChoiceOption> options,
+            @JsonKey(name: 'correct_option_id') String correctOptionId,
+            bool? multiple,
+            Map<String, Object?> extras)?
         choice,
     TResult? Function(
             String id,
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -3398,11 +3441,23 @@ class _$SentenceBuilderBlockImpl extends _SentenceBuilderBlock {
     TResult Function(String id, String type, String title, String content,
             bool skippable, List<String> bullets, Map<String, Object?> extras)?
         text,
-    TResult Function(String id, String type, String question, List<String> options,
-            @JsonKey(name: 'correct_answer') String correctAnswer, String? explanation, Map<String, Object?> extras)?
+    TResult Function(
+            String id,
+            String type,
+            String question,
+            List<String> options,
+            @JsonKey(name: 'correct_answer') String correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
         quiz,
-    TResult Function(String id, String type, String title,
-            @JsonKey(name: 'video_url') String videoUrl, String? caption, int durationSeconds, Map<String, Object?> extras)?
+    TResult Function(
+            String id,
+            String type,
+            String title,
+            @JsonKey(name: 'video_url') String videoUrl,
+            String? caption,
+            int durationSeconds,
+            Map<String, Object?> extras)?
         video,
     TResult Function(
             String id,
@@ -3414,16 +3469,22 @@ class _$SentenceBuilderBlockImpl extends _SentenceBuilderBlock {
             List<String> hints,
             Map<String, Object?> extras)?
         code,
-    TResult Function(String id, String type, String prompt,
-            List<ChoiceOption> options, @JsonKey(name: 'correct_option_id') String correctOptionId, bool? multiple, Map<String, Object?> extras)?
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<ChoiceOption> options,
+            @JsonKey(name: 'correct_option_id') String correctOptionId,
+            bool? multiple,
+            Map<String, Object?> extras)?
         choice,
     TResult Function(
             String id,
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -3525,8 +3586,8 @@ abstract class _SentenceBuilderBlock extends LessonBlock {
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SentenceBuilderBlockImplCopyWith<_$SentenceBuilderBlockImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  _$$SentenceBuilderBlockImplCopyWith<_$SentenceBuilderBlockImpl>
+      get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -3708,8 +3769,8 @@ class _$UnknownLessonBlockImpl extends _UnknownLessonBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)
         sentenceBuilder,
@@ -3768,8 +3829,8 @@ class _$UnknownLessonBlockImpl extends _UnknownLessonBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,
@@ -3828,8 +3889,8 @@ class _$UnknownLessonBlockImpl extends _UnknownLessonBlock {
             String type,
             String prompt,
             List<SentenceToken> tokens,
-            List<String> correctTokenIds,
-            String? correctAnswer,
+            @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+            @JsonKey(name: 'correct_answer') String? correctAnswer,
             String? explanation,
             Map<String, Object?> extras)?
         sentenceBuilder,

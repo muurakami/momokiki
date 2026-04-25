@@ -7,7 +7,7 @@ part of 'card_editor_notifier.dart';
 // **************************************************************************
 
 String _$cardEditorNotifierHash() =>
-    r'2f22d6757eda9c11a57a236d51ccab66b41b3770';
+    r'd465f095be9920f97ec593206ae0a9f9b13ba1ea';
 
 /// See also [CardEditorNotifier].
 @ProviderFor(CardEditorNotifier)

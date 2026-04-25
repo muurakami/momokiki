@@ -7,7 +7,7 @@ part of 'deck_detail_notifier.dart';
 // **************************************************************************
 
 String _$deckDetailNotifierHash() =>
-    r'aa1956f675a95297848051d8154fed7f48b43e29';
+    r'455bb31840ad4effa5748ae7a1c40a8cf4731a12';
 
 /// Copied from Dart SDK
 class _SystemHash {
