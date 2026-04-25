@@ -6,7 +6,9 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../domain/models/learning_content.dart';
+import '../models/lesson_map_node.dart';
 import '../notifiers/learning_catalog_notifier.dart';
+import '../widgets/lesson_map_view.dart';
 import '../../../settings/presentation/notifiers/app_preferences_notifier.dart';
 
 class LessonsOverviewScreen extends ConsumerStatefulWidget {
@@ -27,100 +29,45 @@ class _LessonsOverviewScreenState extends ConsumerState<LessonsOverviewScreen> {
         .where((lesson) => lesson.language == selectedLanguage)
         .toList()
       ..sort((a, b) => a.order.compareTo(b.order));
+    final mapNodes = const LessonMapLayoutBuilder().build(lessons);
 
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        title: const Text('Learn'),
+        title: Semantics(
+          header: true,
+          child: const Text('Lessons'),
+        ),
       ),
       body: state.isLoading
           ? const Center(child: CircularProgressIndicator())
           : Padding(
-              padding: const EdgeInsets.all(AppSpacing.md),
+              padding: const EdgeInsets.only(
+                left: AppSpacing.md,
+                top: AppSpacing.md,
+                right: AppSpacing.md,
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [Color(0xFFE8F0E0), Colors.white],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Your progress', style: AppTypography.headlineMedium),
-                        const SizedBox(height: AppSpacing.sm),
-                        Text('XP ${state.totalXp} • Level ${state.level}',
-                            style: AppTypography.bodyLarge),
-                        const SizedBox(height: AppSpacing.sm),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(999),
-                          child: LinearProgressIndicator(
-                            value: state.levelProgress,
-                            minHeight: 12,
-                            backgroundColor: AppColors.camel.withValues(alpha: 0.2),
-                            color: AppColors.secondary,
-                          ),
-                        ),
-                      ],
-                    ),
+                  _ProgressHeader(
+                    totalXp: state.totalXp,
+                    level: state.level,
+                    levelProgress: state.levelProgress,
                   ),
                   const SizedBox(height: AppSpacing.md),
-                  Container(
-                    padding: const EdgeInsets.all(AppSpacing.md),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
-                    ),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text('Lessons', style: AppTypography.headlineMedium),
-                              const SizedBox(height: AppSpacing.xs),
-                              Text(
-                                selectedLanguage == SupportedLanguage.english
-                                    ? 'English mode is active. Change it in Settings.'
-                                    : 'Japanese mode is active. Start with Hiragana and Katakana.',
-                                style: AppTypography.bodyMedium,
-                              ),
-                            ],
-                          ),
-                        ),
-                        TextButton.icon(
-                          onPressed: () => context.go('/app/roadmaps'),
-                          icon: const Icon(Icons.map_outlined),
-                          label: const Text('Roadmap'),
-                        ),
-                      ],
-                    ),
+                  _MapIntroCard(
+                    selectedLanguage: selectedLanguage,
+                    lessonCount: lessons.length,
+                    onRoadmapTap: () => context.go('/app/roadmaps'),
                   ),
-                  const SizedBox(height: AppSpacing.lg),
+                  const SizedBox(height: AppSpacing.md),
                   Expanded(
-                    child: ListView(
-                      children: [
-                        Text('Lesson Islands', style: AppTypography.headlineMedium),
-                        const SizedBox(height: AppSpacing.md),
-                        Wrap(
-                          spacing: AppSpacing.md,
-                          runSpacing: AppSpacing.md,
-                          children: lessons
-                              .map(
-                                (lesson) => _LessonIslandCard(
-                                  lesson: lesson,
-                                  onTap: () => context.go('/app/lesson/${lesson.lessonId}'),
-                                ),
-                              )
-                              .toList(),
-                        ),
-                      ],
+                    child: LessonMapView(
+                      nodes: mapNodes,
+                      onLessonSelected: (node) {
+                        context.go('/app/lesson/${node.lesson.lessonId}');
+                      },
                     ),
                   ),
                 ],
@@ -131,101 +78,113 @@ class _LessonsOverviewScreenState extends ConsumerState<LessonsOverviewScreen> {
 
 }
 
-class _LessonIslandCard extends StatelessWidget {
-  const _LessonIslandCard({required this.lesson, required this.onTap});
+class _ProgressHeader extends StatelessWidget {
+  const _ProgressHeader({
+    required this.totalXp,
+    required this.level,
+    required this.levelProgress,
+  });
 
-  final LessonIsland lesson;
-  final VoidCallback onTap;
+  final int totalXp;
+  final int level;
+  final double levelProgress;
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
-      child: AnimatedContainer(
-        duration: const Duration(milliseconds: 250),
-        width: 280,
-        padding: const EdgeInsets.all(AppSpacing.md),
-        decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [Color(0xFFE8F0E0), Color(0xFFF8F2E3)],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF386641), Color(0xFF6A994E)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
+        boxShadow: const [
+          BoxShadow(
+            color: Color(0x24386641),
+            blurRadius: 18,
+            offset: Offset(0, 10),
           ),
-          borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
-          boxShadow: const [
-            BoxShadow(
-              color: Color(0x1A432818),
-              blurRadius: 10,
-              offset: Offset(0, 6),
-            ),
-          ],
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              children: [
-                Container(
-                  width: 52,
-                  height: 52,
-                  decoration: BoxDecoration(
-                    color: AppColors.primary,
-                    borderRadius: BorderRadius.circular(18),
-                  ),
-                  child: Center(
-                    child: Text(lesson.emoji ?? '📘', style: const TextStyle(fontSize: 24)),
-                  ),
-                ),
-                const Spacer(),
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                  decoration: BoxDecoration(
-                    color: AppColors.accent.withValues(alpha: 0.18),
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: Text(
-                    switch (lesson.status) {
-                      LessonStatus.completed => 'Completed',
-                      LessonStatus.inProgress => 'In progress',
-                      LessonStatus.notStarted => 'Not started',
-                    },
-                    style: AppTypography.labelSmall.copyWith(color: AppColors.primary),
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: AppSpacing.md),
-            Text(lesson.title, style: AppTypography.headlineMedium),
-            const SizedBox(height: AppSpacing.xs),
-            Text(lesson.subtitle, style: AppTypography.bodyMedium),
-            if (lesson.description != null) ...[
-              const SizedBox(height: AppSpacing.sm),
-              Text(lesson.description!, style: AppTypography.bodyMedium),
-            ],
-            const SizedBox(height: AppSpacing.md),
-            ClipRRect(
-              borderRadius: BorderRadius.circular(999),
-              child: LinearProgressIndicator(
-                value: lesson.progress,
-                minHeight: 10,
-                backgroundColor: AppColors.camel.withValues(alpha: 0.25),
-                color: AppColors.secondary,
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              const Icon(Icons.bolt_rounded, color: AppColors.xpGold),
+              const SizedBox(width: AppSpacing.sm),
+              Text(
+                'Level $level',
+                style: AppTypography.headlineMedium.copyWith(color: AppColors.textOnPrimary),
               ),
+              const Spacer(),
+              Text(
+                '$totalXp XP',
+                style: AppTypography.labelLarge.copyWith(color: AppColors.textOnPrimary),
+              ),
+            ],
+          ),
+          const SizedBox(height: AppSpacing.md),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(999),
+            child: LinearProgressIndicator(
+              value: levelProgress.clamp(0, 1).toDouble(),
+              minHeight: 12,
+              backgroundColor: Colors.white.withValues(alpha: 0.24),
+              color: AppColors.xpGold,
             ),
-            const SizedBox(height: AppSpacing.sm),
-            Row(
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class _MapIntroCard extends StatelessWidget {
+  const _MapIntroCard({
+    required this.selectedLanguage,
+    required this.lessonCount,
+    required this.onRoadmapTap,
+  });
+
+  final SupportedLanguage selectedLanguage;
+  final int lessonCount;
+  final VoidCallback onRoadmapTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(AppSpacing.md),
+      decoration: BoxDecoration(
+        color: Colors.white.withValues(alpha: 0.82),
+        borderRadius: BorderRadius.circular(AppDimensions.cardRadius),
+        border: Border.all(color: AppColors.camel.withValues(alpha: 0.18)),
+      ),
+      child: Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('${lesson.earnedXp}/${lesson.xpReward} XP', style: AppTypography.labelSmall),
-                const Spacer(),
-                FilledButton.tonal(
-                  onPressed: onTap,
-                  child: Text(lesson.ctaLabel),
+                Text('Lesson path', style: AppTypography.headlineMedium),
+                const SizedBox(height: AppSpacing.xs),
+                Text(
+                  selectedLanguage == SupportedLanguage.english
+                      ? '$lessonCount English lessons ready. Change language in Settings.'
+                      : '$lessonCount Japanese lessons ready. Start with Hiragana and Katakana.',
+                  style: AppTypography.bodyMedium,
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+          TextButton.icon(
+            onPressed: onRoadmapTap,
+            icon: const Icon(Icons.map_outlined),
+            label: const Text('Roadmap'),
+          ),
+        ],
       ),
     );
   }

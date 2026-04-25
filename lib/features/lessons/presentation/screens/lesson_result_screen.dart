@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../domain/models/lesson_progress.dart';
+import '../notifiers/learning_catalog_notifier.dart';
 
-class LessonResultScreen extends StatelessWidget {
+class LessonResultScreen extends ConsumerWidget {
   const LessonResultScreen({required this.summary, super.key});
 
   final LessonSummary summary;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(title: const Text('Lesson Result')),
       body: Center(
@@ -45,6 +47,7 @@ class LessonResultScreen extends StatelessWidget {
               const SizedBox(height: 24),
               FilledButton(
                 onPressed: () {
+                  ref.invalidate(learningCatalogNotifierProvider);
                   if (summary.nextLessonId != null) {
                     context.go('/app/lesson/${summary.nextLessonId}');
                     return;

@@ -2626,6 +2626,2713 @@ class LessonAttemptTableCompanion
   }
 }
 
+class $PracticeDeckTableTable extends PracticeDeckTable
+    with TableInfo<$PracticeDeckTableTable, PracticeDeckTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PracticeDeckTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _descriptionMeta =
+      const VerificationMeta('description');
+  @override
+  late final GeneratedColumn<String> description = GeneratedColumn<String>(
+      'description', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _sourceTypeMeta =
+      const VerificationMeta('sourceType');
+  @override
+  late final GeneratedColumn<String> sourceType = GeneratedColumn<String>(
+      'source_type', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('manual'));
+  static const VerificationMeta _ankiDeckIdMeta =
+      const VerificationMeta('ankiDeckId');
+  @override
+  late final GeneratedColumn<int> ankiDeckId = GeneratedColumn<int>(
+      'anki_deck_id', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _maxNewPerDayMeta =
+      const VerificationMeta('maxNewPerDay');
+  @override
+  late final GeneratedColumn<int> maxNewPerDay = GeneratedColumn<int>(
+      'max_new_per_day', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(20));
+  static const VerificationMeta _maxReviewsPerDayMeta =
+      const VerificationMeta('maxReviewsPerDay');
+  @override
+  late final GeneratedColumn<int> maxReviewsPerDay = GeneratedColumn<int>(
+      'max_reviews_per_day', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(200));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        name,
+        description,
+        sourceType,
+        ankiDeckId,
+        maxNewPerDay,
+        maxReviewsPerDay,
+        createdAt,
+        updatedAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'practice_deck_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<PracticeDeckTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    if (data.containsKey('description')) {
+      context.handle(
+          _descriptionMeta,
+          description.isAcceptableOrUnknown(
+              data['description']!, _descriptionMeta));
+    }
+    if (data.containsKey('source_type')) {
+      context.handle(
+          _sourceTypeMeta,
+          sourceType.isAcceptableOrUnknown(
+              data['source_type']!, _sourceTypeMeta));
+    }
+    if (data.containsKey('anki_deck_id')) {
+      context.handle(
+          _ankiDeckIdMeta,
+          ankiDeckId.isAcceptableOrUnknown(
+              data['anki_deck_id']!, _ankiDeckIdMeta));
+    }
+    if (data.containsKey('max_new_per_day')) {
+      context.handle(
+          _maxNewPerDayMeta,
+          maxNewPerDay.isAcceptableOrUnknown(
+              data['max_new_per_day']!, _maxNewPerDayMeta));
+    }
+    if (data.containsKey('max_reviews_per_day')) {
+      context.handle(
+          _maxReviewsPerDayMeta,
+          maxReviewsPerDay.isAcceptableOrUnknown(
+              data['max_reviews_per_day']!, _maxReviewsPerDayMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PracticeDeckTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PracticeDeckTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      description: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}description']),
+      sourceType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}source_type'])!,
+      ankiDeckId: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}anki_deck_id']),
+      maxNewPerDay: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}max_new_per_day'])!,
+      maxReviewsPerDay: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}max_reviews_per_day'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at']),
+    );
+  }
+
+  @override
+  $PracticeDeckTableTable createAlias(String alias) {
+    return $PracticeDeckTableTable(attachedDatabase, alias);
+  }
+}
+
+class PracticeDeckTableData extends DataClass
+    implements Insertable<PracticeDeckTableData> {
+  final String id;
+  final String name;
+  final String? description;
+  final String sourceType;
+  final int? ankiDeckId;
+  final int maxNewPerDay;
+  final int maxReviewsPerDay;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  const PracticeDeckTableData(
+      {required this.id,
+      required this.name,
+      this.description,
+      required this.sourceType,
+      this.ankiDeckId,
+      required this.maxNewPerDay,
+      required this.maxReviewsPerDay,
+      required this.createdAt,
+      this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    if (!nullToAbsent || description != null) {
+      map['description'] = Variable<String>(description);
+    }
+    map['source_type'] = Variable<String>(sourceType);
+    if (!nullToAbsent || ankiDeckId != null) {
+      map['anki_deck_id'] = Variable<int>(ankiDeckId);
+    }
+    map['max_new_per_day'] = Variable<int>(maxNewPerDay);
+    map['max_reviews_per_day'] = Variable<int>(maxReviewsPerDay);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || updatedAt != null) {
+      map['updated_at'] = Variable<DateTime>(updatedAt);
+    }
+    return map;
+  }
+
+  PracticeDeckTableCompanion toCompanion(bool nullToAbsent) {
+    return PracticeDeckTableCompanion(
+      id: Value(id),
+      name: Value(name),
+      description: description == null && nullToAbsent
+          ? const Value.absent()
+          : Value(description),
+      sourceType: Value(sourceType),
+      ankiDeckId: ankiDeckId == null && nullToAbsent
+          ? const Value.absent()
+          : Value(ankiDeckId),
+      maxNewPerDay: Value(maxNewPerDay),
+      maxReviewsPerDay: Value(maxReviewsPerDay),
+      createdAt: Value(createdAt),
+      updatedAt: updatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedAt),
+    );
+  }
+
+  factory PracticeDeckTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PracticeDeckTableData(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+      description: serializer.fromJson<String?>(json['description']),
+      sourceType: serializer.fromJson<String>(json['sourceType']),
+      ankiDeckId: serializer.fromJson<int?>(json['ankiDeckId']),
+      maxNewPerDay: serializer.fromJson<int>(json['maxNewPerDay']),
+      maxReviewsPerDay: serializer.fromJson<int>(json['maxReviewsPerDay']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime?>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+      'description': serializer.toJson<String?>(description),
+      'sourceType': serializer.toJson<String>(sourceType),
+      'ankiDeckId': serializer.toJson<int?>(ankiDeckId),
+      'maxNewPerDay': serializer.toJson<int>(maxNewPerDay),
+      'maxReviewsPerDay': serializer.toJson<int>(maxReviewsPerDay),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime?>(updatedAt),
+    };
+  }
+
+  PracticeDeckTableData copyWith(
+          {String? id,
+          String? name,
+          Value<String?> description = const Value.absent(),
+          String? sourceType,
+          Value<int?> ankiDeckId = const Value.absent(),
+          int? maxNewPerDay,
+          int? maxReviewsPerDay,
+          DateTime? createdAt,
+          Value<DateTime?> updatedAt = const Value.absent()}) =>
+      PracticeDeckTableData(
+        id: id ?? this.id,
+        name: name ?? this.name,
+        description: description.present ? description.value : this.description,
+        sourceType: sourceType ?? this.sourceType,
+        ankiDeckId: ankiDeckId.present ? ankiDeckId.value : this.ankiDeckId,
+        maxNewPerDay: maxNewPerDay ?? this.maxNewPerDay,
+        maxReviewsPerDay: maxReviewsPerDay ?? this.maxReviewsPerDay,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
+      );
+  PracticeDeckTableData copyWithCompanion(PracticeDeckTableCompanion data) {
+    return PracticeDeckTableData(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+      description:
+          data.description.present ? data.description.value : this.description,
+      sourceType:
+          data.sourceType.present ? data.sourceType.value : this.sourceType,
+      ankiDeckId:
+          data.ankiDeckId.present ? data.ankiDeckId.value : this.ankiDeckId,
+      maxNewPerDay: data.maxNewPerDay.present
+          ? data.maxNewPerDay.value
+          : this.maxNewPerDay,
+      maxReviewsPerDay: data.maxReviewsPerDay.present
+          ? data.maxReviewsPerDay.value
+          : this.maxReviewsPerDay,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeDeckTableData(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('sourceType: $sourceType, ')
+          ..write('ankiDeckId: $ankiDeckId, ')
+          ..write('maxNewPerDay: $maxNewPerDay, ')
+          ..write('maxReviewsPerDay: $maxReviewsPerDay, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name, description, sourceType, ankiDeckId,
+      maxNewPerDay, maxReviewsPerDay, createdAt, updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PracticeDeckTableData &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.description == this.description &&
+          other.sourceType == this.sourceType &&
+          other.ankiDeckId == this.ankiDeckId &&
+          other.maxNewPerDay == this.maxNewPerDay &&
+          other.maxReviewsPerDay == this.maxReviewsPerDay &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class PracticeDeckTableCompanion
+    extends UpdateCompanion<PracticeDeckTableData> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<String?> description;
+  final Value<String> sourceType;
+  final Value<int?> ankiDeckId;
+  final Value<int> maxNewPerDay;
+  final Value<int> maxReviewsPerDay;
+  final Value<DateTime> createdAt;
+  final Value<DateTime?> updatedAt;
+  final Value<int> rowid;
+  const PracticeDeckTableCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.description = const Value.absent(),
+    this.sourceType = const Value.absent(),
+    this.ankiDeckId = const Value.absent(),
+    this.maxNewPerDay = const Value.absent(),
+    this.maxReviewsPerDay = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PracticeDeckTableCompanion.insert({
+    required String id,
+    required String name,
+    this.description = const Value.absent(),
+    this.sourceType = const Value.absent(),
+    this.ankiDeckId = const Value.absent(),
+    this.maxNewPerDay = const Value.absent(),
+    this.maxReviewsPerDay = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        name = Value(name);
+  static Insertable<PracticeDeckTableData> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<String>? description,
+    Expression<String>? sourceType,
+    Expression<int>? ankiDeckId,
+    Expression<int>? maxNewPerDay,
+    Expression<int>? maxReviewsPerDay,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (description != null) 'description': description,
+      if (sourceType != null) 'source_type': sourceType,
+      if (ankiDeckId != null) 'anki_deck_id': ankiDeckId,
+      if (maxNewPerDay != null) 'max_new_per_day': maxNewPerDay,
+      if (maxReviewsPerDay != null) 'max_reviews_per_day': maxReviewsPerDay,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PracticeDeckTableCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? name,
+      Value<String?>? description,
+      Value<String>? sourceType,
+      Value<int?>? ankiDeckId,
+      Value<int>? maxNewPerDay,
+      Value<int>? maxReviewsPerDay,
+      Value<DateTime>? createdAt,
+      Value<DateTime?>? updatedAt,
+      Value<int>? rowid}) {
+    return PracticeDeckTableCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      description: description ?? this.description,
+      sourceType: sourceType ?? this.sourceType,
+      ankiDeckId: ankiDeckId ?? this.ankiDeckId,
+      maxNewPerDay: maxNewPerDay ?? this.maxNewPerDay,
+      maxReviewsPerDay: maxReviewsPerDay ?? this.maxReviewsPerDay,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (description.present) {
+      map['description'] = Variable<String>(description.value);
+    }
+    if (sourceType.present) {
+      map['source_type'] = Variable<String>(sourceType.value);
+    }
+    if (ankiDeckId.present) {
+      map['anki_deck_id'] = Variable<int>(ankiDeckId.value);
+    }
+    if (maxNewPerDay.present) {
+      map['max_new_per_day'] = Variable<int>(maxNewPerDay.value);
+    }
+    if (maxReviewsPerDay.present) {
+      map['max_reviews_per_day'] = Variable<int>(maxReviewsPerDay.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeDeckTableCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('description: $description, ')
+          ..write('sourceType: $sourceType, ')
+          ..write('ankiDeckId: $ankiDeckId, ')
+          ..write('maxNewPerDay: $maxNewPerDay, ')
+          ..write('maxReviewsPerDay: $maxReviewsPerDay, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PracticeCardTableTable extends PracticeCardTable
+    with TableInfo<$PracticeCardTableTable, PracticeCardTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PracticeCardTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _deckIdMeta = const VerificationMeta('deckId');
+  @override
+  late final GeneratedColumn<String> deckId = GeneratedColumn<String>(
+      'deck_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _frontHtmlMeta =
+      const VerificationMeta('frontHtml');
+  @override
+  late final GeneratedColumn<String> frontHtml = GeneratedColumn<String>(
+      'front_html', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _backHtmlMeta =
+      const VerificationMeta('backHtml');
+  @override
+  late final GeneratedColumn<String> backHtml = GeneratedColumn<String>(
+      'back_html', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _frontPlainMeta =
+      const VerificationMeta('frontPlain');
+  @override
+  late final GeneratedColumn<String> frontPlain = GeneratedColumn<String>(
+      'front_plain', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _backPlainMeta =
+      const VerificationMeta('backPlain');
+  @override
+  late final GeneratedColumn<String> backPlain = GeneratedColumn<String>(
+      'back_plain', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _queueMeta = const VerificationMeta('queue');
+  @override
+  late final GeneratedColumn<String> queue = GeneratedColumn<String>(
+      'queue', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('new'));
+  static const VerificationMeta _dueAtMeta = const VerificationMeta('dueAt');
+  @override
+  late final GeneratedColumn<DateTime> dueAt = GeneratedColumn<DateTime>(
+      'due_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _dueDayMeta = const VerificationMeta('dueDay');
+  @override
+  late final GeneratedColumn<int> dueDay = GeneratedColumn<int>(
+      'due_day', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  static const VerificationMeta _intervalDaysMeta =
+      const VerificationMeta('intervalDays');
+  @override
+  late final GeneratedColumn<int> intervalDays = GeneratedColumn<int>(
+      'interval_days', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _easeFactorMilliMeta =
+      const VerificationMeta('easeFactorMilli');
+  @override
+  late final GeneratedColumn<int> easeFactorMilli = GeneratedColumn<int>(
+      'ease_factor_milli', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(2500));
+  static const VerificationMeta _repsMeta = const VerificationMeta('reps');
+  @override
+  late final GeneratedColumn<int> reps = GeneratedColumn<int>(
+      'reps', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _lapsesMeta = const VerificationMeta('lapses');
+  @override
+  late final GeneratedColumn<int> lapses = GeneratedColumn<int>(
+      'lapses', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _remainingStepsMeta =
+      const VerificationMeta('remainingSteps');
+  @override
+  late final GeneratedColumn<int> remainingSteps = GeneratedColumn<int>(
+      'remaining_steps', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _learningStepIndexMeta =
+      const VerificationMeta('learningStepIndex');
+  @override
+  late final GeneratedColumn<int> learningStepIndex = GeneratedColumn<int>(
+      'learning_step_index', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _lastReviewedAtMeta =
+      const VerificationMeta('lastReviewedAt');
+  @override
+  late final GeneratedColumn<DateTime> lastReviewedAt =
+      GeneratedColumn<DateTime>('last_reviewed_at', aliasedName, true,
+          type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  static const VerificationMeta _isLeechMeta =
+      const VerificationMeta('isLeech');
+  @override
+  late final GeneratedColumn<bool> isLeech = GeneratedColumn<bool>(
+      'is_leech', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_leech" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _tagsJsonMeta =
+      const VerificationMeta('tagsJson');
+  @override
+  late final GeneratedColumn<String> tagsJson = GeneratedColumn<String>(
+      'tags_json', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant('[]'));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, true,
+      type: DriftSqlType.dateTime, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        deckId,
+        frontHtml,
+        backHtml,
+        frontPlain,
+        backPlain,
+        queue,
+        dueAt,
+        dueDay,
+        intervalDays,
+        easeFactorMilli,
+        reps,
+        lapses,
+        remainingSteps,
+        learningStepIndex,
+        lastReviewedAt,
+        isLeech,
+        tagsJson,
+        createdAt,
+        updatedAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'practice_card_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<PracticeCardTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('deck_id')) {
+      context.handle(_deckIdMeta,
+          deckId.isAcceptableOrUnknown(data['deck_id']!, _deckIdMeta));
+    } else if (isInserting) {
+      context.missing(_deckIdMeta);
+    }
+    if (data.containsKey('front_html')) {
+      context.handle(_frontHtmlMeta,
+          frontHtml.isAcceptableOrUnknown(data['front_html']!, _frontHtmlMeta));
+    } else if (isInserting) {
+      context.missing(_frontHtmlMeta);
+    }
+    if (data.containsKey('back_html')) {
+      context.handle(_backHtmlMeta,
+          backHtml.isAcceptableOrUnknown(data['back_html']!, _backHtmlMeta));
+    } else if (isInserting) {
+      context.missing(_backHtmlMeta);
+    }
+    if (data.containsKey('front_plain')) {
+      context.handle(
+          _frontPlainMeta,
+          frontPlain.isAcceptableOrUnknown(
+              data['front_plain']!, _frontPlainMeta));
+    } else if (isInserting) {
+      context.missing(_frontPlainMeta);
+    }
+    if (data.containsKey('back_plain')) {
+      context.handle(_backPlainMeta,
+          backPlain.isAcceptableOrUnknown(data['back_plain']!, _backPlainMeta));
+    } else if (isInserting) {
+      context.missing(_backPlainMeta);
+    }
+    if (data.containsKey('queue')) {
+      context.handle(
+          _queueMeta, queue.isAcceptableOrUnknown(data['queue']!, _queueMeta));
+    }
+    if (data.containsKey('due_at')) {
+      context.handle(
+          _dueAtMeta, dueAt.isAcceptableOrUnknown(data['due_at']!, _dueAtMeta));
+    }
+    if (data.containsKey('due_day')) {
+      context.handle(_dueDayMeta,
+          dueDay.isAcceptableOrUnknown(data['due_day']!, _dueDayMeta));
+    }
+    if (data.containsKey('interval_days')) {
+      context.handle(
+          _intervalDaysMeta,
+          intervalDays.isAcceptableOrUnknown(
+              data['interval_days']!, _intervalDaysMeta));
+    }
+    if (data.containsKey('ease_factor_milli')) {
+      context.handle(
+          _easeFactorMilliMeta,
+          easeFactorMilli.isAcceptableOrUnknown(
+              data['ease_factor_milli']!, _easeFactorMilliMeta));
+    }
+    if (data.containsKey('reps')) {
+      context.handle(
+          _repsMeta, reps.isAcceptableOrUnknown(data['reps']!, _repsMeta));
+    }
+    if (data.containsKey('lapses')) {
+      context.handle(_lapsesMeta,
+          lapses.isAcceptableOrUnknown(data['lapses']!, _lapsesMeta));
+    }
+    if (data.containsKey('remaining_steps')) {
+      context.handle(
+          _remainingStepsMeta,
+          remainingSteps.isAcceptableOrUnknown(
+              data['remaining_steps']!, _remainingStepsMeta));
+    }
+    if (data.containsKey('learning_step_index')) {
+      context.handle(
+          _learningStepIndexMeta,
+          learningStepIndex.isAcceptableOrUnknown(
+              data['learning_step_index']!, _learningStepIndexMeta));
+    }
+    if (data.containsKey('last_reviewed_at')) {
+      context.handle(
+          _lastReviewedAtMeta,
+          lastReviewedAt.isAcceptableOrUnknown(
+              data['last_reviewed_at']!, _lastReviewedAtMeta));
+    }
+    if (data.containsKey('is_leech')) {
+      context.handle(_isLeechMeta,
+          isLeech.isAcceptableOrUnknown(data['is_leech']!, _isLeechMeta));
+    }
+    if (data.containsKey('tags_json')) {
+      context.handle(_tagsJsonMeta,
+          tagsJson.isAcceptableOrUnknown(data['tags_json']!, _tagsJsonMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PracticeCardTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PracticeCardTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      deckId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}deck_id'])!,
+      frontHtml: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}front_html'])!,
+      backHtml: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}back_html'])!,
+      frontPlain: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}front_plain'])!,
+      backPlain: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}back_plain'])!,
+      queue: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}queue'])!,
+      dueAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}due_at']),
+      dueDay: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}due_day']),
+      intervalDays: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}interval_days'])!,
+      easeFactorMilli: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}ease_factor_milli'])!,
+      reps: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}reps'])!,
+      lapses: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}lapses'])!,
+      remainingSteps: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}remaining_steps'])!,
+      learningStepIndex: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}learning_step_index'])!,
+      lastReviewedAt: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}last_reviewed_at']),
+      isLeech: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_leech'])!,
+      tagsJson: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}tags_json'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at']),
+    );
+  }
+
+  @override
+  $PracticeCardTableTable createAlias(String alias) {
+    return $PracticeCardTableTable(attachedDatabase, alias);
+  }
+}
+
+class PracticeCardTableData extends DataClass
+    implements Insertable<PracticeCardTableData> {
+  final String id;
+  final String deckId;
+  final String frontHtml;
+  final String backHtml;
+  final String frontPlain;
+  final String backPlain;
+  final String queue;
+  final DateTime? dueAt;
+  final int? dueDay;
+  final int intervalDays;
+  final int easeFactorMilli;
+  final int reps;
+  final int lapses;
+  final int remainingSteps;
+  final int learningStepIndex;
+  final DateTime? lastReviewedAt;
+  final bool isLeech;
+  final String tagsJson;
+  final DateTime createdAt;
+  final DateTime? updatedAt;
+  const PracticeCardTableData(
+      {required this.id,
+      required this.deckId,
+      required this.frontHtml,
+      required this.backHtml,
+      required this.frontPlain,
+      required this.backPlain,
+      required this.queue,
+      this.dueAt,
+      this.dueDay,
+      required this.intervalDays,
+      required this.easeFactorMilli,
+      required this.reps,
+      required this.lapses,
+      required this.remainingSteps,
+      required this.learningStepIndex,
+      this.lastReviewedAt,
+      required this.isLeech,
+      required this.tagsJson,
+      required this.createdAt,
+      this.updatedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['deck_id'] = Variable<String>(deckId);
+    map['front_html'] = Variable<String>(frontHtml);
+    map['back_html'] = Variable<String>(backHtml);
+    map['front_plain'] = Variable<String>(frontPlain);
+    map['back_plain'] = Variable<String>(backPlain);
+    map['queue'] = Variable<String>(queue);
+    if (!nullToAbsent || dueAt != null) {
+      map['due_at'] = Variable<DateTime>(dueAt);
+    }
+    if (!nullToAbsent || dueDay != null) {
+      map['due_day'] = Variable<int>(dueDay);
+    }
+    map['interval_days'] = Variable<int>(intervalDays);
+    map['ease_factor_milli'] = Variable<int>(easeFactorMilli);
+    map['reps'] = Variable<int>(reps);
+    map['lapses'] = Variable<int>(lapses);
+    map['remaining_steps'] = Variable<int>(remainingSteps);
+    map['learning_step_index'] = Variable<int>(learningStepIndex);
+    if (!nullToAbsent || lastReviewedAt != null) {
+      map['last_reviewed_at'] = Variable<DateTime>(lastReviewedAt);
+    }
+    map['is_leech'] = Variable<bool>(isLeech);
+    map['tags_json'] = Variable<String>(tagsJson);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    if (!nullToAbsent || updatedAt != null) {
+      map['updated_at'] = Variable<DateTime>(updatedAt);
+    }
+    return map;
+  }
+
+  PracticeCardTableCompanion toCompanion(bool nullToAbsent) {
+    return PracticeCardTableCompanion(
+      id: Value(id),
+      deckId: Value(deckId),
+      frontHtml: Value(frontHtml),
+      backHtml: Value(backHtml),
+      frontPlain: Value(frontPlain),
+      backPlain: Value(backPlain),
+      queue: Value(queue),
+      dueAt:
+          dueAt == null && nullToAbsent ? const Value.absent() : Value(dueAt),
+      dueDay:
+          dueDay == null && nullToAbsent ? const Value.absent() : Value(dueDay),
+      intervalDays: Value(intervalDays),
+      easeFactorMilli: Value(easeFactorMilli),
+      reps: Value(reps),
+      lapses: Value(lapses),
+      remainingSteps: Value(remainingSteps),
+      learningStepIndex: Value(learningStepIndex),
+      lastReviewedAt: lastReviewedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(lastReviewedAt),
+      isLeech: Value(isLeech),
+      tagsJson: Value(tagsJson),
+      createdAt: Value(createdAt),
+      updatedAt: updatedAt == null && nullToAbsent
+          ? const Value.absent()
+          : Value(updatedAt),
+    );
+  }
+
+  factory PracticeCardTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PracticeCardTableData(
+      id: serializer.fromJson<String>(json['id']),
+      deckId: serializer.fromJson<String>(json['deckId']),
+      frontHtml: serializer.fromJson<String>(json['frontHtml']),
+      backHtml: serializer.fromJson<String>(json['backHtml']),
+      frontPlain: serializer.fromJson<String>(json['frontPlain']),
+      backPlain: serializer.fromJson<String>(json['backPlain']),
+      queue: serializer.fromJson<String>(json['queue']),
+      dueAt: serializer.fromJson<DateTime?>(json['dueAt']),
+      dueDay: serializer.fromJson<int?>(json['dueDay']),
+      intervalDays: serializer.fromJson<int>(json['intervalDays']),
+      easeFactorMilli: serializer.fromJson<int>(json['easeFactorMilli']),
+      reps: serializer.fromJson<int>(json['reps']),
+      lapses: serializer.fromJson<int>(json['lapses']),
+      remainingSteps: serializer.fromJson<int>(json['remainingSteps']),
+      learningStepIndex: serializer.fromJson<int>(json['learningStepIndex']),
+      lastReviewedAt: serializer.fromJson<DateTime?>(json['lastReviewedAt']),
+      isLeech: serializer.fromJson<bool>(json['isLeech']),
+      tagsJson: serializer.fromJson<String>(json['tagsJson']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+      updatedAt: serializer.fromJson<DateTime?>(json['updatedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'deckId': serializer.toJson<String>(deckId),
+      'frontHtml': serializer.toJson<String>(frontHtml),
+      'backHtml': serializer.toJson<String>(backHtml),
+      'frontPlain': serializer.toJson<String>(frontPlain),
+      'backPlain': serializer.toJson<String>(backPlain),
+      'queue': serializer.toJson<String>(queue),
+      'dueAt': serializer.toJson<DateTime?>(dueAt),
+      'dueDay': serializer.toJson<int?>(dueDay),
+      'intervalDays': serializer.toJson<int>(intervalDays),
+      'easeFactorMilli': serializer.toJson<int>(easeFactorMilli),
+      'reps': serializer.toJson<int>(reps),
+      'lapses': serializer.toJson<int>(lapses),
+      'remainingSteps': serializer.toJson<int>(remainingSteps),
+      'learningStepIndex': serializer.toJson<int>(learningStepIndex),
+      'lastReviewedAt': serializer.toJson<DateTime?>(lastReviewedAt),
+      'isLeech': serializer.toJson<bool>(isLeech),
+      'tagsJson': serializer.toJson<String>(tagsJson),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+      'updatedAt': serializer.toJson<DateTime?>(updatedAt),
+    };
+  }
+
+  PracticeCardTableData copyWith(
+          {String? id,
+          String? deckId,
+          String? frontHtml,
+          String? backHtml,
+          String? frontPlain,
+          String? backPlain,
+          String? queue,
+          Value<DateTime?> dueAt = const Value.absent(),
+          Value<int?> dueDay = const Value.absent(),
+          int? intervalDays,
+          int? easeFactorMilli,
+          int? reps,
+          int? lapses,
+          int? remainingSteps,
+          int? learningStepIndex,
+          Value<DateTime?> lastReviewedAt = const Value.absent(),
+          bool? isLeech,
+          String? tagsJson,
+          DateTime? createdAt,
+          Value<DateTime?> updatedAt = const Value.absent()}) =>
+      PracticeCardTableData(
+        id: id ?? this.id,
+        deckId: deckId ?? this.deckId,
+        frontHtml: frontHtml ?? this.frontHtml,
+        backHtml: backHtml ?? this.backHtml,
+        frontPlain: frontPlain ?? this.frontPlain,
+        backPlain: backPlain ?? this.backPlain,
+        queue: queue ?? this.queue,
+        dueAt: dueAt.present ? dueAt.value : this.dueAt,
+        dueDay: dueDay.present ? dueDay.value : this.dueDay,
+        intervalDays: intervalDays ?? this.intervalDays,
+        easeFactorMilli: easeFactorMilli ?? this.easeFactorMilli,
+        reps: reps ?? this.reps,
+        lapses: lapses ?? this.lapses,
+        remainingSteps: remainingSteps ?? this.remainingSteps,
+        learningStepIndex: learningStepIndex ?? this.learningStepIndex,
+        lastReviewedAt:
+            lastReviewedAt.present ? lastReviewedAt.value : this.lastReviewedAt,
+        isLeech: isLeech ?? this.isLeech,
+        tagsJson: tagsJson ?? this.tagsJson,
+        createdAt: createdAt ?? this.createdAt,
+        updatedAt: updatedAt.present ? updatedAt.value : this.updatedAt,
+      );
+  PracticeCardTableData copyWithCompanion(PracticeCardTableCompanion data) {
+    return PracticeCardTableData(
+      id: data.id.present ? data.id.value : this.id,
+      deckId: data.deckId.present ? data.deckId.value : this.deckId,
+      frontHtml: data.frontHtml.present ? data.frontHtml.value : this.frontHtml,
+      backHtml: data.backHtml.present ? data.backHtml.value : this.backHtml,
+      frontPlain:
+          data.frontPlain.present ? data.frontPlain.value : this.frontPlain,
+      backPlain: data.backPlain.present ? data.backPlain.value : this.backPlain,
+      queue: data.queue.present ? data.queue.value : this.queue,
+      dueAt: data.dueAt.present ? data.dueAt.value : this.dueAt,
+      dueDay: data.dueDay.present ? data.dueDay.value : this.dueDay,
+      intervalDays: data.intervalDays.present
+          ? data.intervalDays.value
+          : this.intervalDays,
+      easeFactorMilli: data.easeFactorMilli.present
+          ? data.easeFactorMilli.value
+          : this.easeFactorMilli,
+      reps: data.reps.present ? data.reps.value : this.reps,
+      lapses: data.lapses.present ? data.lapses.value : this.lapses,
+      remainingSteps: data.remainingSteps.present
+          ? data.remainingSteps.value
+          : this.remainingSteps,
+      learningStepIndex: data.learningStepIndex.present
+          ? data.learningStepIndex.value
+          : this.learningStepIndex,
+      lastReviewedAt: data.lastReviewedAt.present
+          ? data.lastReviewedAt.value
+          : this.lastReviewedAt,
+      isLeech: data.isLeech.present ? data.isLeech.value : this.isLeech,
+      tagsJson: data.tagsJson.present ? data.tagsJson.value : this.tagsJson,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeCardTableData(')
+          ..write('id: $id, ')
+          ..write('deckId: $deckId, ')
+          ..write('frontHtml: $frontHtml, ')
+          ..write('backHtml: $backHtml, ')
+          ..write('frontPlain: $frontPlain, ')
+          ..write('backPlain: $backPlain, ')
+          ..write('queue: $queue, ')
+          ..write('dueAt: $dueAt, ')
+          ..write('dueDay: $dueDay, ')
+          ..write('intervalDays: $intervalDays, ')
+          ..write('easeFactorMilli: $easeFactorMilli, ')
+          ..write('reps: $reps, ')
+          ..write('lapses: $lapses, ')
+          ..write('remainingSteps: $remainingSteps, ')
+          ..write('learningStepIndex: $learningStepIndex, ')
+          ..write('lastReviewedAt: $lastReviewedAt, ')
+          ..write('isLeech: $isLeech, ')
+          ..write('tagsJson: $tagsJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      deckId,
+      frontHtml,
+      backHtml,
+      frontPlain,
+      backPlain,
+      queue,
+      dueAt,
+      dueDay,
+      intervalDays,
+      easeFactorMilli,
+      reps,
+      lapses,
+      remainingSteps,
+      learningStepIndex,
+      lastReviewedAt,
+      isLeech,
+      tagsJson,
+      createdAt,
+      updatedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PracticeCardTableData &&
+          other.id == this.id &&
+          other.deckId == this.deckId &&
+          other.frontHtml == this.frontHtml &&
+          other.backHtml == this.backHtml &&
+          other.frontPlain == this.frontPlain &&
+          other.backPlain == this.backPlain &&
+          other.queue == this.queue &&
+          other.dueAt == this.dueAt &&
+          other.dueDay == this.dueDay &&
+          other.intervalDays == this.intervalDays &&
+          other.easeFactorMilli == this.easeFactorMilli &&
+          other.reps == this.reps &&
+          other.lapses == this.lapses &&
+          other.remainingSteps == this.remainingSteps &&
+          other.learningStepIndex == this.learningStepIndex &&
+          other.lastReviewedAt == this.lastReviewedAt &&
+          other.isLeech == this.isLeech &&
+          other.tagsJson == this.tagsJson &&
+          other.createdAt == this.createdAt &&
+          other.updatedAt == this.updatedAt);
+}
+
+class PracticeCardTableCompanion
+    extends UpdateCompanion<PracticeCardTableData> {
+  final Value<String> id;
+  final Value<String> deckId;
+  final Value<String> frontHtml;
+  final Value<String> backHtml;
+  final Value<String> frontPlain;
+  final Value<String> backPlain;
+  final Value<String> queue;
+  final Value<DateTime?> dueAt;
+  final Value<int?> dueDay;
+  final Value<int> intervalDays;
+  final Value<int> easeFactorMilli;
+  final Value<int> reps;
+  final Value<int> lapses;
+  final Value<int> remainingSteps;
+  final Value<int> learningStepIndex;
+  final Value<DateTime?> lastReviewedAt;
+  final Value<bool> isLeech;
+  final Value<String> tagsJson;
+  final Value<DateTime> createdAt;
+  final Value<DateTime?> updatedAt;
+  final Value<int> rowid;
+  const PracticeCardTableCompanion({
+    this.id = const Value.absent(),
+    this.deckId = const Value.absent(),
+    this.frontHtml = const Value.absent(),
+    this.backHtml = const Value.absent(),
+    this.frontPlain = const Value.absent(),
+    this.backPlain = const Value.absent(),
+    this.queue = const Value.absent(),
+    this.dueAt = const Value.absent(),
+    this.dueDay = const Value.absent(),
+    this.intervalDays = const Value.absent(),
+    this.easeFactorMilli = const Value.absent(),
+    this.reps = const Value.absent(),
+    this.lapses = const Value.absent(),
+    this.remainingSteps = const Value.absent(),
+    this.learningStepIndex = const Value.absent(),
+    this.lastReviewedAt = const Value.absent(),
+    this.isLeech = const Value.absent(),
+    this.tagsJson = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PracticeCardTableCompanion.insert({
+    required String id,
+    required String deckId,
+    required String frontHtml,
+    required String backHtml,
+    required String frontPlain,
+    required String backPlain,
+    this.queue = const Value.absent(),
+    this.dueAt = const Value.absent(),
+    this.dueDay = const Value.absent(),
+    this.intervalDays = const Value.absent(),
+    this.easeFactorMilli = const Value.absent(),
+    this.reps = const Value.absent(),
+    this.lapses = const Value.absent(),
+    this.remainingSteps = const Value.absent(),
+    this.learningStepIndex = const Value.absent(),
+    this.lastReviewedAt = const Value.absent(),
+    this.isLeech = const Value.absent(),
+    this.tagsJson = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        deckId = Value(deckId),
+        frontHtml = Value(frontHtml),
+        backHtml = Value(backHtml),
+        frontPlain = Value(frontPlain),
+        backPlain = Value(backPlain);
+  static Insertable<PracticeCardTableData> custom({
+    Expression<String>? id,
+    Expression<String>? deckId,
+    Expression<String>? frontHtml,
+    Expression<String>? backHtml,
+    Expression<String>? frontPlain,
+    Expression<String>? backPlain,
+    Expression<String>? queue,
+    Expression<DateTime>? dueAt,
+    Expression<int>? dueDay,
+    Expression<int>? intervalDays,
+    Expression<int>? easeFactorMilli,
+    Expression<int>? reps,
+    Expression<int>? lapses,
+    Expression<int>? remainingSteps,
+    Expression<int>? learningStepIndex,
+    Expression<DateTime>? lastReviewedAt,
+    Expression<bool>? isLeech,
+    Expression<String>? tagsJson,
+    Expression<DateTime>? createdAt,
+    Expression<DateTime>? updatedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (deckId != null) 'deck_id': deckId,
+      if (frontHtml != null) 'front_html': frontHtml,
+      if (backHtml != null) 'back_html': backHtml,
+      if (frontPlain != null) 'front_plain': frontPlain,
+      if (backPlain != null) 'back_plain': backPlain,
+      if (queue != null) 'queue': queue,
+      if (dueAt != null) 'due_at': dueAt,
+      if (dueDay != null) 'due_day': dueDay,
+      if (intervalDays != null) 'interval_days': intervalDays,
+      if (easeFactorMilli != null) 'ease_factor_milli': easeFactorMilli,
+      if (reps != null) 'reps': reps,
+      if (lapses != null) 'lapses': lapses,
+      if (remainingSteps != null) 'remaining_steps': remainingSteps,
+      if (learningStepIndex != null) 'learning_step_index': learningStepIndex,
+      if (lastReviewedAt != null) 'last_reviewed_at': lastReviewedAt,
+      if (isLeech != null) 'is_leech': isLeech,
+      if (tagsJson != null) 'tags_json': tagsJson,
+      if (createdAt != null) 'created_at': createdAt,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PracticeCardTableCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? deckId,
+      Value<String>? frontHtml,
+      Value<String>? backHtml,
+      Value<String>? frontPlain,
+      Value<String>? backPlain,
+      Value<String>? queue,
+      Value<DateTime?>? dueAt,
+      Value<int?>? dueDay,
+      Value<int>? intervalDays,
+      Value<int>? easeFactorMilli,
+      Value<int>? reps,
+      Value<int>? lapses,
+      Value<int>? remainingSteps,
+      Value<int>? learningStepIndex,
+      Value<DateTime?>? lastReviewedAt,
+      Value<bool>? isLeech,
+      Value<String>? tagsJson,
+      Value<DateTime>? createdAt,
+      Value<DateTime?>? updatedAt,
+      Value<int>? rowid}) {
+    return PracticeCardTableCompanion(
+      id: id ?? this.id,
+      deckId: deckId ?? this.deckId,
+      frontHtml: frontHtml ?? this.frontHtml,
+      backHtml: backHtml ?? this.backHtml,
+      frontPlain: frontPlain ?? this.frontPlain,
+      backPlain: backPlain ?? this.backPlain,
+      queue: queue ?? this.queue,
+      dueAt: dueAt ?? this.dueAt,
+      dueDay: dueDay ?? this.dueDay,
+      intervalDays: intervalDays ?? this.intervalDays,
+      easeFactorMilli: easeFactorMilli ?? this.easeFactorMilli,
+      reps: reps ?? this.reps,
+      lapses: lapses ?? this.lapses,
+      remainingSteps: remainingSteps ?? this.remainingSteps,
+      learningStepIndex: learningStepIndex ?? this.learningStepIndex,
+      lastReviewedAt: lastReviewedAt ?? this.lastReviewedAt,
+      isLeech: isLeech ?? this.isLeech,
+      tagsJson: tagsJson ?? this.tagsJson,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (deckId.present) {
+      map['deck_id'] = Variable<String>(deckId.value);
+    }
+    if (frontHtml.present) {
+      map['front_html'] = Variable<String>(frontHtml.value);
+    }
+    if (backHtml.present) {
+      map['back_html'] = Variable<String>(backHtml.value);
+    }
+    if (frontPlain.present) {
+      map['front_plain'] = Variable<String>(frontPlain.value);
+    }
+    if (backPlain.present) {
+      map['back_plain'] = Variable<String>(backPlain.value);
+    }
+    if (queue.present) {
+      map['queue'] = Variable<String>(queue.value);
+    }
+    if (dueAt.present) {
+      map['due_at'] = Variable<DateTime>(dueAt.value);
+    }
+    if (dueDay.present) {
+      map['due_day'] = Variable<int>(dueDay.value);
+    }
+    if (intervalDays.present) {
+      map['interval_days'] = Variable<int>(intervalDays.value);
+    }
+    if (easeFactorMilli.present) {
+      map['ease_factor_milli'] = Variable<int>(easeFactorMilli.value);
+    }
+    if (reps.present) {
+      map['reps'] = Variable<int>(reps.value);
+    }
+    if (lapses.present) {
+      map['lapses'] = Variable<int>(lapses.value);
+    }
+    if (remainingSteps.present) {
+      map['remaining_steps'] = Variable<int>(remainingSteps.value);
+    }
+    if (learningStepIndex.present) {
+      map['learning_step_index'] = Variable<int>(learningStepIndex.value);
+    }
+    if (lastReviewedAt.present) {
+      map['last_reviewed_at'] = Variable<DateTime>(lastReviewedAt.value);
+    }
+    if (isLeech.present) {
+      map['is_leech'] = Variable<bool>(isLeech.value);
+    }
+    if (tagsJson.present) {
+      map['tags_json'] = Variable<String>(tagsJson.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeCardTableCompanion(')
+          ..write('id: $id, ')
+          ..write('deckId: $deckId, ')
+          ..write('frontHtml: $frontHtml, ')
+          ..write('backHtml: $backHtml, ')
+          ..write('frontPlain: $frontPlain, ')
+          ..write('backPlain: $backPlain, ')
+          ..write('queue: $queue, ')
+          ..write('dueAt: $dueAt, ')
+          ..write('dueDay: $dueDay, ')
+          ..write('intervalDays: $intervalDays, ')
+          ..write('easeFactorMilli: $easeFactorMilli, ')
+          ..write('reps: $reps, ')
+          ..write('lapses: $lapses, ')
+          ..write('remainingSteps: $remainingSteps, ')
+          ..write('learningStepIndex: $learningStepIndex, ')
+          ..write('lastReviewedAt: $lastReviewedAt, ')
+          ..write('isLeech: $isLeech, ')
+          ..write('tagsJson: $tagsJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PracticeReviewTableTable extends PracticeReviewTable
+    with TableInfo<$PracticeReviewTableTable, PracticeReviewTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PracticeReviewTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  @override
+  late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
+      'card_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _reviewedAtMeta =
+      const VerificationMeta('reviewedAt');
+  @override
+  late final GeneratedColumn<DateTime> reviewedAt = GeneratedColumn<DateTime>(
+      'reviewed_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _ratingMeta = const VerificationMeta('rating');
+  @override
+  late final GeneratedColumn<String> rating = GeneratedColumn<String>(
+      'rating', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _queueBeforeMeta =
+      const VerificationMeta('queueBefore');
+  @override
+  late final GeneratedColumn<String> queueBefore = GeneratedColumn<String>(
+      'queue_before', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _queueAfterMeta =
+      const VerificationMeta('queueAfter');
+  @override
+  late final GeneratedColumn<String> queueAfter = GeneratedColumn<String>(
+      'queue_after', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _intervalBeforeDaysMeta =
+      const VerificationMeta('intervalBeforeDays');
+  @override
+  late final GeneratedColumn<int> intervalBeforeDays = GeneratedColumn<int>(
+      'interval_before_days', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _intervalAfterDaysMeta =
+      const VerificationMeta('intervalAfterDays');
+  @override
+  late final GeneratedColumn<int> intervalAfterDays = GeneratedColumn<int>(
+      'interval_after_days', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _easeBeforeMilliMeta =
+      const VerificationMeta('easeBeforeMilli');
+  @override
+  late final GeneratedColumn<int> easeBeforeMilli = GeneratedColumn<int>(
+      'ease_before_milli', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(2500));
+  static const VerificationMeta _easeAfterMilliMeta =
+      const VerificationMeta('easeAfterMilli');
+  @override
+  late final GeneratedColumn<int> easeAfterMilli = GeneratedColumn<int>(
+      'ease_after_milli', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(2500));
+  static const VerificationMeta _elapsedMsMeta =
+      const VerificationMeta('elapsedMs');
+  @override
+  late final GeneratedColumn<int> elapsedMs = GeneratedColumn<int>(
+      'elapsed_ms', aliasedName, true,
+      type: DriftSqlType.int, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        cardId,
+        reviewedAt,
+        rating,
+        queueBefore,
+        queueAfter,
+        intervalBeforeDays,
+        intervalAfterDays,
+        easeBeforeMilli,
+        easeAfterMilli,
+        elapsedMs
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'practice_review_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<PracticeReviewTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('card_id')) {
+      context.handle(_cardIdMeta,
+          cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta));
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    if (data.containsKey('reviewed_at')) {
+      context.handle(
+          _reviewedAtMeta,
+          reviewedAt.isAcceptableOrUnknown(
+              data['reviewed_at']!, _reviewedAtMeta));
+    } else if (isInserting) {
+      context.missing(_reviewedAtMeta);
+    }
+    if (data.containsKey('rating')) {
+      context.handle(_ratingMeta,
+          rating.isAcceptableOrUnknown(data['rating']!, _ratingMeta));
+    } else if (isInserting) {
+      context.missing(_ratingMeta);
+    }
+    if (data.containsKey('queue_before')) {
+      context.handle(
+          _queueBeforeMeta,
+          queueBefore.isAcceptableOrUnknown(
+              data['queue_before']!, _queueBeforeMeta));
+    } else if (isInserting) {
+      context.missing(_queueBeforeMeta);
+    }
+    if (data.containsKey('queue_after')) {
+      context.handle(
+          _queueAfterMeta,
+          queueAfter.isAcceptableOrUnknown(
+              data['queue_after']!, _queueAfterMeta));
+    } else if (isInserting) {
+      context.missing(_queueAfterMeta);
+    }
+    if (data.containsKey('interval_before_days')) {
+      context.handle(
+          _intervalBeforeDaysMeta,
+          intervalBeforeDays.isAcceptableOrUnknown(
+              data['interval_before_days']!, _intervalBeforeDaysMeta));
+    }
+    if (data.containsKey('interval_after_days')) {
+      context.handle(
+          _intervalAfterDaysMeta,
+          intervalAfterDays.isAcceptableOrUnknown(
+              data['interval_after_days']!, _intervalAfterDaysMeta));
+    }
+    if (data.containsKey('ease_before_milli')) {
+      context.handle(
+          _easeBeforeMilliMeta,
+          easeBeforeMilli.isAcceptableOrUnknown(
+              data['ease_before_milli']!, _easeBeforeMilliMeta));
+    }
+    if (data.containsKey('ease_after_milli')) {
+      context.handle(
+          _easeAfterMilliMeta,
+          easeAfterMilli.isAcceptableOrUnknown(
+              data['ease_after_milli']!, _easeAfterMilliMeta));
+    }
+    if (data.containsKey('elapsed_ms')) {
+      context.handle(_elapsedMsMeta,
+          elapsedMs.isAcceptableOrUnknown(data['elapsed_ms']!, _elapsedMsMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PracticeReviewTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PracticeReviewTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      cardId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}card_id'])!,
+      reviewedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}reviewed_at'])!,
+      rating: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}rating'])!,
+      queueBefore: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}queue_before'])!,
+      queueAfter: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}queue_after'])!,
+      intervalBeforeDays: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}interval_before_days'])!,
+      intervalAfterDays: attachedDatabase.typeMapping.read(
+          DriftSqlType.int, data['${effectivePrefix}interval_after_days'])!,
+      easeBeforeMilli: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}ease_before_milli'])!,
+      easeAfterMilli: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}ease_after_milli'])!,
+      elapsedMs: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}elapsed_ms']),
+    );
+  }
+
+  @override
+  $PracticeReviewTableTable createAlias(String alias) {
+    return $PracticeReviewTableTable(attachedDatabase, alias);
+  }
+}
+
+class PracticeReviewTableData extends DataClass
+    implements Insertable<PracticeReviewTableData> {
+  final String id;
+  final String cardId;
+  final DateTime reviewedAt;
+  final String rating;
+  final String queueBefore;
+  final String queueAfter;
+  final int intervalBeforeDays;
+  final int intervalAfterDays;
+  final int easeBeforeMilli;
+  final int easeAfterMilli;
+  final int? elapsedMs;
+  const PracticeReviewTableData(
+      {required this.id,
+      required this.cardId,
+      required this.reviewedAt,
+      required this.rating,
+      required this.queueBefore,
+      required this.queueAfter,
+      required this.intervalBeforeDays,
+      required this.intervalAfterDays,
+      required this.easeBeforeMilli,
+      required this.easeAfterMilli,
+      this.elapsedMs});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['card_id'] = Variable<String>(cardId);
+    map['reviewed_at'] = Variable<DateTime>(reviewedAt);
+    map['rating'] = Variable<String>(rating);
+    map['queue_before'] = Variable<String>(queueBefore);
+    map['queue_after'] = Variable<String>(queueAfter);
+    map['interval_before_days'] = Variable<int>(intervalBeforeDays);
+    map['interval_after_days'] = Variable<int>(intervalAfterDays);
+    map['ease_before_milli'] = Variable<int>(easeBeforeMilli);
+    map['ease_after_milli'] = Variable<int>(easeAfterMilli);
+    if (!nullToAbsent || elapsedMs != null) {
+      map['elapsed_ms'] = Variable<int>(elapsedMs);
+    }
+    return map;
+  }
+
+  PracticeReviewTableCompanion toCompanion(bool nullToAbsent) {
+    return PracticeReviewTableCompanion(
+      id: Value(id),
+      cardId: Value(cardId),
+      reviewedAt: Value(reviewedAt),
+      rating: Value(rating),
+      queueBefore: Value(queueBefore),
+      queueAfter: Value(queueAfter),
+      intervalBeforeDays: Value(intervalBeforeDays),
+      intervalAfterDays: Value(intervalAfterDays),
+      easeBeforeMilli: Value(easeBeforeMilli),
+      easeAfterMilli: Value(easeAfterMilli),
+      elapsedMs: elapsedMs == null && nullToAbsent
+          ? const Value.absent()
+          : Value(elapsedMs),
+    );
+  }
+
+  factory PracticeReviewTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PracticeReviewTableData(
+      id: serializer.fromJson<String>(json['id']),
+      cardId: serializer.fromJson<String>(json['cardId']),
+      reviewedAt: serializer.fromJson<DateTime>(json['reviewedAt']),
+      rating: serializer.fromJson<String>(json['rating']),
+      queueBefore: serializer.fromJson<String>(json['queueBefore']),
+      queueAfter: serializer.fromJson<String>(json['queueAfter']),
+      intervalBeforeDays: serializer.fromJson<int>(json['intervalBeforeDays']),
+      intervalAfterDays: serializer.fromJson<int>(json['intervalAfterDays']),
+      easeBeforeMilli: serializer.fromJson<int>(json['easeBeforeMilli']),
+      easeAfterMilli: serializer.fromJson<int>(json['easeAfterMilli']),
+      elapsedMs: serializer.fromJson<int?>(json['elapsedMs']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'cardId': serializer.toJson<String>(cardId),
+      'reviewedAt': serializer.toJson<DateTime>(reviewedAt),
+      'rating': serializer.toJson<String>(rating),
+      'queueBefore': serializer.toJson<String>(queueBefore),
+      'queueAfter': serializer.toJson<String>(queueAfter),
+      'intervalBeforeDays': serializer.toJson<int>(intervalBeforeDays),
+      'intervalAfterDays': serializer.toJson<int>(intervalAfterDays),
+      'easeBeforeMilli': serializer.toJson<int>(easeBeforeMilli),
+      'easeAfterMilli': serializer.toJson<int>(easeAfterMilli),
+      'elapsedMs': serializer.toJson<int?>(elapsedMs),
+    };
+  }
+
+  PracticeReviewTableData copyWith(
+          {String? id,
+          String? cardId,
+          DateTime? reviewedAt,
+          String? rating,
+          String? queueBefore,
+          String? queueAfter,
+          int? intervalBeforeDays,
+          int? intervalAfterDays,
+          int? easeBeforeMilli,
+          int? easeAfterMilli,
+          Value<int?> elapsedMs = const Value.absent()}) =>
+      PracticeReviewTableData(
+        id: id ?? this.id,
+        cardId: cardId ?? this.cardId,
+        reviewedAt: reviewedAt ?? this.reviewedAt,
+        rating: rating ?? this.rating,
+        queueBefore: queueBefore ?? this.queueBefore,
+        queueAfter: queueAfter ?? this.queueAfter,
+        intervalBeforeDays: intervalBeforeDays ?? this.intervalBeforeDays,
+        intervalAfterDays: intervalAfterDays ?? this.intervalAfterDays,
+        easeBeforeMilli: easeBeforeMilli ?? this.easeBeforeMilli,
+        easeAfterMilli: easeAfterMilli ?? this.easeAfterMilli,
+        elapsedMs: elapsedMs.present ? elapsedMs.value : this.elapsedMs,
+      );
+  PracticeReviewTableData copyWithCompanion(PracticeReviewTableCompanion data) {
+    return PracticeReviewTableData(
+      id: data.id.present ? data.id.value : this.id,
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+      reviewedAt:
+          data.reviewedAt.present ? data.reviewedAt.value : this.reviewedAt,
+      rating: data.rating.present ? data.rating.value : this.rating,
+      queueBefore:
+          data.queueBefore.present ? data.queueBefore.value : this.queueBefore,
+      queueAfter:
+          data.queueAfter.present ? data.queueAfter.value : this.queueAfter,
+      intervalBeforeDays: data.intervalBeforeDays.present
+          ? data.intervalBeforeDays.value
+          : this.intervalBeforeDays,
+      intervalAfterDays: data.intervalAfterDays.present
+          ? data.intervalAfterDays.value
+          : this.intervalAfterDays,
+      easeBeforeMilli: data.easeBeforeMilli.present
+          ? data.easeBeforeMilli.value
+          : this.easeBeforeMilli,
+      easeAfterMilli: data.easeAfterMilli.present
+          ? data.easeAfterMilli.value
+          : this.easeAfterMilli,
+      elapsedMs: data.elapsedMs.present ? data.elapsedMs.value : this.elapsedMs,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeReviewTableData(')
+          ..write('id: $id, ')
+          ..write('cardId: $cardId, ')
+          ..write('reviewedAt: $reviewedAt, ')
+          ..write('rating: $rating, ')
+          ..write('queueBefore: $queueBefore, ')
+          ..write('queueAfter: $queueAfter, ')
+          ..write('intervalBeforeDays: $intervalBeforeDays, ')
+          ..write('intervalAfterDays: $intervalAfterDays, ')
+          ..write('easeBeforeMilli: $easeBeforeMilli, ')
+          ..write('easeAfterMilli: $easeAfterMilli, ')
+          ..write('elapsedMs: $elapsedMs')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id,
+      cardId,
+      reviewedAt,
+      rating,
+      queueBefore,
+      queueAfter,
+      intervalBeforeDays,
+      intervalAfterDays,
+      easeBeforeMilli,
+      easeAfterMilli,
+      elapsedMs);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PracticeReviewTableData &&
+          other.id == this.id &&
+          other.cardId == this.cardId &&
+          other.reviewedAt == this.reviewedAt &&
+          other.rating == this.rating &&
+          other.queueBefore == this.queueBefore &&
+          other.queueAfter == this.queueAfter &&
+          other.intervalBeforeDays == this.intervalBeforeDays &&
+          other.intervalAfterDays == this.intervalAfterDays &&
+          other.easeBeforeMilli == this.easeBeforeMilli &&
+          other.easeAfterMilli == this.easeAfterMilli &&
+          other.elapsedMs == this.elapsedMs);
+}
+
+class PracticeReviewTableCompanion
+    extends UpdateCompanion<PracticeReviewTableData> {
+  final Value<String> id;
+  final Value<String> cardId;
+  final Value<DateTime> reviewedAt;
+  final Value<String> rating;
+  final Value<String> queueBefore;
+  final Value<String> queueAfter;
+  final Value<int> intervalBeforeDays;
+  final Value<int> intervalAfterDays;
+  final Value<int> easeBeforeMilli;
+  final Value<int> easeAfterMilli;
+  final Value<int?> elapsedMs;
+  final Value<int> rowid;
+  const PracticeReviewTableCompanion({
+    this.id = const Value.absent(),
+    this.cardId = const Value.absent(),
+    this.reviewedAt = const Value.absent(),
+    this.rating = const Value.absent(),
+    this.queueBefore = const Value.absent(),
+    this.queueAfter = const Value.absent(),
+    this.intervalBeforeDays = const Value.absent(),
+    this.intervalAfterDays = const Value.absent(),
+    this.easeBeforeMilli = const Value.absent(),
+    this.easeAfterMilli = const Value.absent(),
+    this.elapsedMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PracticeReviewTableCompanion.insert({
+    required String id,
+    required String cardId,
+    required DateTime reviewedAt,
+    required String rating,
+    required String queueBefore,
+    required String queueAfter,
+    this.intervalBeforeDays = const Value.absent(),
+    this.intervalAfterDays = const Value.absent(),
+    this.easeBeforeMilli = const Value.absent(),
+    this.easeAfterMilli = const Value.absent(),
+    this.elapsedMs = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        cardId = Value(cardId),
+        reviewedAt = Value(reviewedAt),
+        rating = Value(rating),
+        queueBefore = Value(queueBefore),
+        queueAfter = Value(queueAfter);
+  static Insertable<PracticeReviewTableData> custom({
+    Expression<String>? id,
+    Expression<String>? cardId,
+    Expression<DateTime>? reviewedAt,
+    Expression<String>? rating,
+    Expression<String>? queueBefore,
+    Expression<String>? queueAfter,
+    Expression<int>? intervalBeforeDays,
+    Expression<int>? intervalAfterDays,
+    Expression<int>? easeBeforeMilli,
+    Expression<int>? easeAfterMilli,
+    Expression<int>? elapsedMs,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (cardId != null) 'card_id': cardId,
+      if (reviewedAt != null) 'reviewed_at': reviewedAt,
+      if (rating != null) 'rating': rating,
+      if (queueBefore != null) 'queue_before': queueBefore,
+      if (queueAfter != null) 'queue_after': queueAfter,
+      if (intervalBeforeDays != null)
+        'interval_before_days': intervalBeforeDays,
+      if (intervalAfterDays != null) 'interval_after_days': intervalAfterDays,
+      if (easeBeforeMilli != null) 'ease_before_milli': easeBeforeMilli,
+      if (easeAfterMilli != null) 'ease_after_milli': easeAfterMilli,
+      if (elapsedMs != null) 'elapsed_ms': elapsedMs,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PracticeReviewTableCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? cardId,
+      Value<DateTime>? reviewedAt,
+      Value<String>? rating,
+      Value<String>? queueBefore,
+      Value<String>? queueAfter,
+      Value<int>? intervalBeforeDays,
+      Value<int>? intervalAfterDays,
+      Value<int>? easeBeforeMilli,
+      Value<int>? easeAfterMilli,
+      Value<int?>? elapsedMs,
+      Value<int>? rowid}) {
+    return PracticeReviewTableCompanion(
+      id: id ?? this.id,
+      cardId: cardId ?? this.cardId,
+      reviewedAt: reviewedAt ?? this.reviewedAt,
+      rating: rating ?? this.rating,
+      queueBefore: queueBefore ?? this.queueBefore,
+      queueAfter: queueAfter ?? this.queueAfter,
+      intervalBeforeDays: intervalBeforeDays ?? this.intervalBeforeDays,
+      intervalAfterDays: intervalAfterDays ?? this.intervalAfterDays,
+      easeBeforeMilli: easeBeforeMilli ?? this.easeBeforeMilli,
+      easeAfterMilli: easeAfterMilli ?? this.easeAfterMilli,
+      elapsedMs: elapsedMs ?? this.elapsedMs,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (cardId.present) {
+      map['card_id'] = Variable<String>(cardId.value);
+    }
+    if (reviewedAt.present) {
+      map['reviewed_at'] = Variable<DateTime>(reviewedAt.value);
+    }
+    if (rating.present) {
+      map['rating'] = Variable<String>(rating.value);
+    }
+    if (queueBefore.present) {
+      map['queue_before'] = Variable<String>(queueBefore.value);
+    }
+    if (queueAfter.present) {
+      map['queue_after'] = Variable<String>(queueAfter.value);
+    }
+    if (intervalBeforeDays.present) {
+      map['interval_before_days'] = Variable<int>(intervalBeforeDays.value);
+    }
+    if (intervalAfterDays.present) {
+      map['interval_after_days'] = Variable<int>(intervalAfterDays.value);
+    }
+    if (easeBeforeMilli.present) {
+      map['ease_before_milli'] = Variable<int>(easeBeforeMilli.value);
+    }
+    if (easeAfterMilli.present) {
+      map['ease_after_milli'] = Variable<int>(easeAfterMilli.value);
+    }
+    if (elapsedMs.present) {
+      map['elapsed_ms'] = Variable<int>(elapsedMs.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeReviewTableCompanion(')
+          ..write('id: $id, ')
+          ..write('cardId: $cardId, ')
+          ..write('reviewedAt: $reviewedAt, ')
+          ..write('rating: $rating, ')
+          ..write('queueBefore: $queueBefore, ')
+          ..write('queueAfter: $queueAfter, ')
+          ..write('intervalBeforeDays: $intervalBeforeDays, ')
+          ..write('intervalAfterDays: $intervalAfterDays, ')
+          ..write('easeBeforeMilli: $easeBeforeMilli, ')
+          ..write('easeAfterMilli: $easeAfterMilli, ')
+          ..write('elapsedMs: $elapsedMs, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PracticeMediaTableTable extends PracticeMediaTable
+    with TableInfo<$PracticeMediaTableTable, PracticeMediaTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PracticeMediaTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _checksumSha1Meta =
+      const VerificationMeta('checksumSha1');
+  @override
+  late final GeneratedColumn<String> checksumSha1 = GeneratedColumn<String>(
+      'checksum_sha1', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints: GeneratedColumn.constraintIsAlways('UNIQUE'));
+  static const VerificationMeta _originalNameMeta =
+      const VerificationMeta('originalName');
+  @override
+  late final GeneratedColumn<String> originalName = GeneratedColumn<String>(
+      'original_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _storedNameMeta =
+      const VerificationMeta('storedName');
+  @override
+  late final GeneratedColumn<String> storedName = GeneratedColumn<String>(
+      'stored_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _mimeTypeMeta =
+      const VerificationMeta('mimeType');
+  @override
+  late final GeneratedColumn<String> mimeType = GeneratedColumn<String>(
+      'mime_type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _localPathMeta =
+      const VerificationMeta('localPath');
+  @override
+  late final GeneratedColumn<String> localPath = GeneratedColumn<String>(
+      'local_path', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _sizeBytesMeta =
+      const VerificationMeta('sizeBytes');
+  @override
+  late final GeneratedColumn<int> sizeBytes = GeneratedColumn<int>(
+      'size_bytes', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  @override
+  List<GeneratedColumn> get $columns => [
+        id,
+        checksumSha1,
+        originalName,
+        storedName,
+        mimeType,
+        localPath,
+        sizeBytes,
+        createdAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'practice_media_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<PracticeMediaTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('checksum_sha1')) {
+      context.handle(
+          _checksumSha1Meta,
+          checksumSha1.isAcceptableOrUnknown(
+              data['checksum_sha1']!, _checksumSha1Meta));
+    } else if (isInserting) {
+      context.missing(_checksumSha1Meta);
+    }
+    if (data.containsKey('original_name')) {
+      context.handle(
+          _originalNameMeta,
+          originalName.isAcceptableOrUnknown(
+              data['original_name']!, _originalNameMeta));
+    } else if (isInserting) {
+      context.missing(_originalNameMeta);
+    }
+    if (data.containsKey('stored_name')) {
+      context.handle(
+          _storedNameMeta,
+          storedName.isAcceptableOrUnknown(
+              data['stored_name']!, _storedNameMeta));
+    } else if (isInserting) {
+      context.missing(_storedNameMeta);
+    }
+    if (data.containsKey('mime_type')) {
+      context.handle(_mimeTypeMeta,
+          mimeType.isAcceptableOrUnknown(data['mime_type']!, _mimeTypeMeta));
+    } else if (isInserting) {
+      context.missing(_mimeTypeMeta);
+    }
+    if (data.containsKey('local_path')) {
+      context.handle(_localPathMeta,
+          localPath.isAcceptableOrUnknown(data['local_path']!, _localPathMeta));
+    } else if (isInserting) {
+      context.missing(_localPathMeta);
+    }
+    if (data.containsKey('size_bytes')) {
+      context.handle(_sizeBytesMeta,
+          sizeBytes.isAcceptableOrUnknown(data['size_bytes']!, _sizeBytesMeta));
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  PracticeMediaTableData map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PracticeMediaTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      checksumSha1: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}checksum_sha1'])!,
+      originalName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}original_name'])!,
+      storedName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}stored_name'])!,
+      mimeType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}mime_type'])!,
+      localPath: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}local_path'])!,
+      sizeBytes: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}size_bytes'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $PracticeMediaTableTable createAlias(String alias) {
+    return $PracticeMediaTableTable(attachedDatabase, alias);
+  }
+}
+
+class PracticeMediaTableData extends DataClass
+    implements Insertable<PracticeMediaTableData> {
+  final String id;
+  final String checksumSha1;
+  final String originalName;
+  final String storedName;
+  final String mimeType;
+  final String localPath;
+  final int sizeBytes;
+  final DateTime createdAt;
+  const PracticeMediaTableData(
+      {required this.id,
+      required this.checksumSha1,
+      required this.originalName,
+      required this.storedName,
+      required this.mimeType,
+      required this.localPath,
+      required this.sizeBytes,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['checksum_sha1'] = Variable<String>(checksumSha1);
+    map['original_name'] = Variable<String>(originalName);
+    map['stored_name'] = Variable<String>(storedName);
+    map['mime_type'] = Variable<String>(mimeType);
+    map['local_path'] = Variable<String>(localPath);
+    map['size_bytes'] = Variable<int>(sizeBytes);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  PracticeMediaTableCompanion toCompanion(bool nullToAbsent) {
+    return PracticeMediaTableCompanion(
+      id: Value(id),
+      checksumSha1: Value(checksumSha1),
+      originalName: Value(originalName),
+      storedName: Value(storedName),
+      mimeType: Value(mimeType),
+      localPath: Value(localPath),
+      sizeBytes: Value(sizeBytes),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory PracticeMediaTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PracticeMediaTableData(
+      id: serializer.fromJson<String>(json['id']),
+      checksumSha1: serializer.fromJson<String>(json['checksumSha1']),
+      originalName: serializer.fromJson<String>(json['originalName']),
+      storedName: serializer.fromJson<String>(json['storedName']),
+      mimeType: serializer.fromJson<String>(json['mimeType']),
+      localPath: serializer.fromJson<String>(json['localPath']),
+      sizeBytes: serializer.fromJson<int>(json['sizeBytes']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'checksumSha1': serializer.toJson<String>(checksumSha1),
+      'originalName': serializer.toJson<String>(originalName),
+      'storedName': serializer.toJson<String>(storedName),
+      'mimeType': serializer.toJson<String>(mimeType),
+      'localPath': serializer.toJson<String>(localPath),
+      'sizeBytes': serializer.toJson<int>(sizeBytes),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  PracticeMediaTableData copyWith(
+          {String? id,
+          String? checksumSha1,
+          String? originalName,
+          String? storedName,
+          String? mimeType,
+          String? localPath,
+          int? sizeBytes,
+          DateTime? createdAt}) =>
+      PracticeMediaTableData(
+        id: id ?? this.id,
+        checksumSha1: checksumSha1 ?? this.checksumSha1,
+        originalName: originalName ?? this.originalName,
+        storedName: storedName ?? this.storedName,
+        mimeType: mimeType ?? this.mimeType,
+        localPath: localPath ?? this.localPath,
+        sizeBytes: sizeBytes ?? this.sizeBytes,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  PracticeMediaTableData copyWithCompanion(PracticeMediaTableCompanion data) {
+    return PracticeMediaTableData(
+      id: data.id.present ? data.id.value : this.id,
+      checksumSha1: data.checksumSha1.present
+          ? data.checksumSha1.value
+          : this.checksumSha1,
+      originalName: data.originalName.present
+          ? data.originalName.value
+          : this.originalName,
+      storedName:
+          data.storedName.present ? data.storedName.value : this.storedName,
+      mimeType: data.mimeType.present ? data.mimeType.value : this.mimeType,
+      localPath: data.localPath.present ? data.localPath.value : this.localPath,
+      sizeBytes: data.sizeBytes.present ? data.sizeBytes.value : this.sizeBytes,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeMediaTableData(')
+          ..write('id: $id, ')
+          ..write('checksumSha1: $checksumSha1, ')
+          ..write('originalName: $originalName, ')
+          ..write('storedName: $storedName, ')
+          ..write('mimeType: $mimeType, ')
+          ..write('localPath: $localPath, ')
+          ..write('sizeBytes: $sizeBytes, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, checksumSha1, originalName, storedName,
+      mimeType, localPath, sizeBytes, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PracticeMediaTableData &&
+          other.id == this.id &&
+          other.checksumSha1 == this.checksumSha1 &&
+          other.originalName == this.originalName &&
+          other.storedName == this.storedName &&
+          other.mimeType == this.mimeType &&
+          other.localPath == this.localPath &&
+          other.sizeBytes == this.sizeBytes &&
+          other.createdAt == this.createdAt);
+}
+
+class PracticeMediaTableCompanion
+    extends UpdateCompanion<PracticeMediaTableData> {
+  final Value<String> id;
+  final Value<String> checksumSha1;
+  final Value<String> originalName;
+  final Value<String> storedName;
+  final Value<String> mimeType;
+  final Value<String> localPath;
+  final Value<int> sizeBytes;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const PracticeMediaTableCompanion({
+    this.id = const Value.absent(),
+    this.checksumSha1 = const Value.absent(),
+    this.originalName = const Value.absent(),
+    this.storedName = const Value.absent(),
+    this.mimeType = const Value.absent(),
+    this.localPath = const Value.absent(),
+    this.sizeBytes = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PracticeMediaTableCompanion.insert({
+    required String id,
+    required String checksumSha1,
+    required String originalName,
+    required String storedName,
+    required String mimeType,
+    required String localPath,
+    this.sizeBytes = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        checksumSha1 = Value(checksumSha1),
+        originalName = Value(originalName),
+        storedName = Value(storedName),
+        mimeType = Value(mimeType),
+        localPath = Value(localPath);
+  static Insertable<PracticeMediaTableData> custom({
+    Expression<String>? id,
+    Expression<String>? checksumSha1,
+    Expression<String>? originalName,
+    Expression<String>? storedName,
+    Expression<String>? mimeType,
+    Expression<String>? localPath,
+    Expression<int>? sizeBytes,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (checksumSha1 != null) 'checksum_sha1': checksumSha1,
+      if (originalName != null) 'original_name': originalName,
+      if (storedName != null) 'stored_name': storedName,
+      if (mimeType != null) 'mime_type': mimeType,
+      if (localPath != null) 'local_path': localPath,
+      if (sizeBytes != null) 'size_bytes': sizeBytes,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PracticeMediaTableCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? checksumSha1,
+      Value<String>? originalName,
+      Value<String>? storedName,
+      Value<String>? mimeType,
+      Value<String>? localPath,
+      Value<int>? sizeBytes,
+      Value<DateTime>? createdAt,
+      Value<int>? rowid}) {
+    return PracticeMediaTableCompanion(
+      id: id ?? this.id,
+      checksumSha1: checksumSha1 ?? this.checksumSha1,
+      originalName: originalName ?? this.originalName,
+      storedName: storedName ?? this.storedName,
+      mimeType: mimeType ?? this.mimeType,
+      localPath: localPath ?? this.localPath,
+      sizeBytes: sizeBytes ?? this.sizeBytes,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (checksumSha1.present) {
+      map['checksum_sha1'] = Variable<String>(checksumSha1.value);
+    }
+    if (originalName.present) {
+      map['original_name'] = Variable<String>(originalName.value);
+    }
+    if (storedName.present) {
+      map['stored_name'] = Variable<String>(storedName.value);
+    }
+    if (mimeType.present) {
+      map['mime_type'] = Variable<String>(mimeType.value);
+    }
+    if (localPath.present) {
+      map['local_path'] = Variable<String>(localPath.value);
+    }
+    if (sizeBytes.present) {
+      map['size_bytes'] = Variable<int>(sizeBytes.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeMediaTableCompanion(')
+          ..write('id: $id, ')
+          ..write('checksumSha1: $checksumSha1, ')
+          ..write('originalName: $originalName, ')
+          ..write('storedName: $storedName, ')
+          ..write('mimeType: $mimeType, ')
+          ..write('localPath: $localPath, ')
+          ..write('sizeBytes: $sizeBytes, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $PracticeCardMediaTableTable extends PracticeCardMediaTable
+    with TableInfo<$PracticeCardMediaTableTable, PracticeCardMediaTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $PracticeCardMediaTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _cardIdMeta = const VerificationMeta('cardId');
+  @override
+  late final GeneratedColumn<String> cardId = GeneratedColumn<String>(
+      'card_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _mediaIdMeta =
+      const VerificationMeta('mediaId');
+  @override
+  late final GeneratedColumn<String> mediaId = GeneratedColumn<String>(
+      'media_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _usageTypeMeta =
+      const VerificationMeta('usageType');
+  @override
+  late final GeneratedColumn<String> usageType = GeneratedColumn<String>(
+      'usage_type', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _originalTokenMeta =
+      const VerificationMeta('originalToken');
+  @override
+  late final GeneratedColumn<String> originalToken = GeneratedColumn<String>(
+      'original_token', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [cardId, mediaId, usageType, originalToken];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'practice_card_media_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<PracticeCardMediaTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('card_id')) {
+      context.handle(_cardIdMeta,
+          cardId.isAcceptableOrUnknown(data['card_id']!, _cardIdMeta));
+    } else if (isInserting) {
+      context.missing(_cardIdMeta);
+    }
+    if (data.containsKey('media_id')) {
+      context.handle(_mediaIdMeta,
+          mediaId.isAcceptableOrUnknown(data['media_id']!, _mediaIdMeta));
+    } else if (isInserting) {
+      context.missing(_mediaIdMeta);
+    }
+    if (data.containsKey('usage_type')) {
+      context.handle(_usageTypeMeta,
+          usageType.isAcceptableOrUnknown(data['usage_type']!, _usageTypeMeta));
+    } else if (isInserting) {
+      context.missing(_usageTypeMeta);
+    }
+    if (data.containsKey('original_token')) {
+      context.handle(
+          _originalTokenMeta,
+          originalToken.isAcceptableOrUnknown(
+              data['original_token']!, _originalTokenMeta));
+    } else if (isInserting) {
+      context.missing(_originalTokenMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {cardId, mediaId, usageType};
+  @override
+  PracticeCardMediaTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return PracticeCardMediaTableData(
+      cardId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}card_id'])!,
+      mediaId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}media_id'])!,
+      usageType: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}usage_type'])!,
+      originalToken: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}original_token'])!,
+    );
+  }
+
+  @override
+  $PracticeCardMediaTableTable createAlias(String alias) {
+    return $PracticeCardMediaTableTable(attachedDatabase, alias);
+  }
+}
+
+class PracticeCardMediaTableData extends DataClass
+    implements Insertable<PracticeCardMediaTableData> {
+  final String cardId;
+  final String mediaId;
+  final String usageType;
+  final String originalToken;
+  const PracticeCardMediaTableData(
+      {required this.cardId,
+      required this.mediaId,
+      required this.usageType,
+      required this.originalToken});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['card_id'] = Variable<String>(cardId);
+    map['media_id'] = Variable<String>(mediaId);
+    map['usage_type'] = Variable<String>(usageType);
+    map['original_token'] = Variable<String>(originalToken);
+    return map;
+  }
+
+  PracticeCardMediaTableCompanion toCompanion(bool nullToAbsent) {
+    return PracticeCardMediaTableCompanion(
+      cardId: Value(cardId),
+      mediaId: Value(mediaId),
+      usageType: Value(usageType),
+      originalToken: Value(originalToken),
+    );
+  }
+
+  factory PracticeCardMediaTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return PracticeCardMediaTableData(
+      cardId: serializer.fromJson<String>(json['cardId']),
+      mediaId: serializer.fromJson<String>(json['mediaId']),
+      usageType: serializer.fromJson<String>(json['usageType']),
+      originalToken: serializer.fromJson<String>(json['originalToken']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'cardId': serializer.toJson<String>(cardId),
+      'mediaId': serializer.toJson<String>(mediaId),
+      'usageType': serializer.toJson<String>(usageType),
+      'originalToken': serializer.toJson<String>(originalToken),
+    };
+  }
+
+  PracticeCardMediaTableData copyWith(
+          {String? cardId,
+          String? mediaId,
+          String? usageType,
+          String? originalToken}) =>
+      PracticeCardMediaTableData(
+        cardId: cardId ?? this.cardId,
+        mediaId: mediaId ?? this.mediaId,
+        usageType: usageType ?? this.usageType,
+        originalToken: originalToken ?? this.originalToken,
+      );
+  PracticeCardMediaTableData copyWithCompanion(
+      PracticeCardMediaTableCompanion data) {
+    return PracticeCardMediaTableData(
+      cardId: data.cardId.present ? data.cardId.value : this.cardId,
+      mediaId: data.mediaId.present ? data.mediaId.value : this.mediaId,
+      usageType: data.usageType.present ? data.usageType.value : this.usageType,
+      originalToken: data.originalToken.present
+          ? data.originalToken.value
+          : this.originalToken,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeCardMediaTableData(')
+          ..write('cardId: $cardId, ')
+          ..write('mediaId: $mediaId, ')
+          ..write('usageType: $usageType, ')
+          ..write('originalToken: $originalToken')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(cardId, mediaId, usageType, originalToken);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is PracticeCardMediaTableData &&
+          other.cardId == this.cardId &&
+          other.mediaId == this.mediaId &&
+          other.usageType == this.usageType &&
+          other.originalToken == this.originalToken);
+}
+
+class PracticeCardMediaTableCompanion
+    extends UpdateCompanion<PracticeCardMediaTableData> {
+  final Value<String> cardId;
+  final Value<String> mediaId;
+  final Value<String> usageType;
+  final Value<String> originalToken;
+  final Value<int> rowid;
+  const PracticeCardMediaTableCompanion({
+    this.cardId = const Value.absent(),
+    this.mediaId = const Value.absent(),
+    this.usageType = const Value.absent(),
+    this.originalToken = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  PracticeCardMediaTableCompanion.insert({
+    required String cardId,
+    required String mediaId,
+    required String usageType,
+    required String originalToken,
+    this.rowid = const Value.absent(),
+  })  : cardId = Value(cardId),
+        mediaId = Value(mediaId),
+        usageType = Value(usageType),
+        originalToken = Value(originalToken);
+  static Insertable<PracticeCardMediaTableData> custom({
+    Expression<String>? cardId,
+    Expression<String>? mediaId,
+    Expression<String>? usageType,
+    Expression<String>? originalToken,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (cardId != null) 'card_id': cardId,
+      if (mediaId != null) 'media_id': mediaId,
+      if (usageType != null) 'usage_type': usageType,
+      if (originalToken != null) 'original_token': originalToken,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  PracticeCardMediaTableCompanion copyWith(
+      {Value<String>? cardId,
+      Value<String>? mediaId,
+      Value<String>? usageType,
+      Value<String>? originalToken,
+      Value<int>? rowid}) {
+    return PracticeCardMediaTableCompanion(
+      cardId: cardId ?? this.cardId,
+      mediaId: mediaId ?? this.mediaId,
+      usageType: usageType ?? this.usageType,
+      originalToken: originalToken ?? this.originalToken,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (cardId.present) {
+      map['card_id'] = Variable<String>(cardId.value);
+    }
+    if (mediaId.present) {
+      map['media_id'] = Variable<String>(mediaId.value);
+    }
+    if (usageType.present) {
+      map['usage_type'] = Variable<String>(usageType.value);
+    }
+    if (originalToken.present) {
+      map['original_token'] = Variable<String>(originalToken.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('PracticeCardMediaTableCompanion(')
+          ..write('cardId: $cardId, ')
+          ..write('mediaId: $mediaId, ')
+          ..write('usageType: $usageType, ')
+          ..write('originalToken: $originalToken, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $DictionaryCacheTableTable extends DictionaryCacheTable
     with TableInfo<$DictionaryCacheTableTable, DictionaryCacheTableData> {
   @override
@@ -3268,6 +5975,16 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $LessonSyncQueueTableTable(this);
   late final $LessonAttemptTableTable lessonAttemptTable =
       $LessonAttemptTableTable(this);
+  late final $PracticeDeckTableTable practiceDeckTable =
+      $PracticeDeckTableTable(this);
+  late final $PracticeCardTableTable practiceCardTable =
+      $PracticeCardTableTable(this);
+  late final $PracticeReviewTableTable practiceReviewTable =
+      $PracticeReviewTableTable(this);
+  late final $PracticeMediaTableTable practiceMediaTable =
+      $PracticeMediaTableTable(this);
+  late final $PracticeCardMediaTableTable practiceCardMediaTable =
+      $PracticeCardMediaTableTable(this);
   late final $DictionaryCacheTableTable dictionaryCacheTable =
       $DictionaryCacheTableTable(this);
   late final $AnswerHistoryLocalTableTable answerHistoryLocalTable =
@@ -3283,6 +6000,11 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         userStatsTable,
         lessonSyncQueueTable,
         lessonAttemptTable,
+        practiceDeckTable,
+        practiceCardTable,
+        practiceReviewTable,
+        practiceMediaTable,
+        practiceCardMediaTable,
         dictionaryCacheTable,
         answerHistoryLocalTable
       ];
@@ -4605,6 +7327,1323 @@ typedef $$LessonAttemptTableTableProcessedTableManager = ProcessedTableManager<
     ),
     LessonAttemptTableData,
     PrefetchHooks Function()>;
+typedef $$PracticeDeckTableTableCreateCompanionBuilder
+    = PracticeDeckTableCompanion Function({
+  required String id,
+  required String name,
+  Value<String?> description,
+  Value<String> sourceType,
+  Value<int?> ankiDeckId,
+  Value<int> maxNewPerDay,
+  Value<int> maxReviewsPerDay,
+  Value<DateTime> createdAt,
+  Value<DateTime?> updatedAt,
+  Value<int> rowid,
+});
+typedef $$PracticeDeckTableTableUpdateCompanionBuilder
+    = PracticeDeckTableCompanion Function({
+  Value<String> id,
+  Value<String> name,
+  Value<String?> description,
+  Value<String> sourceType,
+  Value<int?> ankiDeckId,
+  Value<int> maxNewPerDay,
+  Value<int> maxReviewsPerDay,
+  Value<DateTime> createdAt,
+  Value<DateTime?> updatedAt,
+  Value<int> rowid,
+});
+
+class $$PracticeDeckTableTableFilterComposer
+    extends Composer<_$AppDatabase, $PracticeDeckTableTable> {
+  $$PracticeDeckTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get sourceType => $composableBuilder(
+      column: $table.sourceType, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get ankiDeckId => $composableBuilder(
+      column: $table.ankiDeckId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get maxNewPerDay => $composableBuilder(
+      column: $table.maxNewPerDay, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get maxReviewsPerDay => $composableBuilder(
+      column: $table.maxReviewsPerDay,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$PracticeDeckTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $PracticeDeckTableTable> {
+  $$PracticeDeckTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get sourceType => $composableBuilder(
+      column: $table.sourceType, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get ankiDeckId => $composableBuilder(
+      column: $table.ankiDeckId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get maxNewPerDay => $composableBuilder(
+      column: $table.maxNewPerDay,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get maxReviewsPerDay => $composableBuilder(
+      column: $table.maxReviewsPerDay,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$PracticeDeckTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PracticeDeckTableTable> {
+  $$PracticeDeckTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<String> get description => $composableBuilder(
+      column: $table.description, builder: (column) => column);
+
+  GeneratedColumn<String> get sourceType => $composableBuilder(
+      column: $table.sourceType, builder: (column) => column);
+
+  GeneratedColumn<int> get ankiDeckId => $composableBuilder(
+      column: $table.ankiDeckId, builder: (column) => column);
+
+  GeneratedColumn<int> get maxNewPerDay => $composableBuilder(
+      column: $table.maxNewPerDay, builder: (column) => column);
+
+  GeneratedColumn<int> get maxReviewsPerDay => $composableBuilder(
+      column: $table.maxReviewsPerDay, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$PracticeDeckTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PracticeDeckTableTable,
+    PracticeDeckTableData,
+    $$PracticeDeckTableTableFilterComposer,
+    $$PracticeDeckTableTableOrderingComposer,
+    $$PracticeDeckTableTableAnnotationComposer,
+    $$PracticeDeckTableTableCreateCompanionBuilder,
+    $$PracticeDeckTableTableUpdateCompanionBuilder,
+    (
+      PracticeDeckTableData,
+      BaseReferences<_$AppDatabase, $PracticeDeckTableTable,
+          PracticeDeckTableData>
+    ),
+    PracticeDeckTableData,
+    PrefetchHooks Function()> {
+  $$PracticeDeckTableTableTableManager(
+      _$AppDatabase db, $PracticeDeckTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PracticeDeckTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PracticeDeckTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PracticeDeckTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<String?> description = const Value.absent(),
+            Value<String> sourceType = const Value.absent(),
+            Value<int?> ankiDeckId = const Value.absent(),
+            Value<int> maxNewPerDay = const Value.absent(),
+            Value<int> maxReviewsPerDay = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeDeckTableCompanion(
+            id: id,
+            name: name,
+            description: description,
+            sourceType: sourceType,
+            ankiDeckId: ankiDeckId,
+            maxNewPerDay: maxNewPerDay,
+            maxReviewsPerDay: maxReviewsPerDay,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String name,
+            Value<String?> description = const Value.absent(),
+            Value<String> sourceType = const Value.absent(),
+            Value<int?> ankiDeckId = const Value.absent(),
+            Value<int> maxNewPerDay = const Value.absent(),
+            Value<int> maxReviewsPerDay = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeDeckTableCompanion.insert(
+            id: id,
+            name: name,
+            description: description,
+            sourceType: sourceType,
+            ankiDeckId: ankiDeckId,
+            maxNewPerDay: maxNewPerDay,
+            maxReviewsPerDay: maxReviewsPerDay,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$PracticeDeckTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $PracticeDeckTableTable,
+    PracticeDeckTableData,
+    $$PracticeDeckTableTableFilterComposer,
+    $$PracticeDeckTableTableOrderingComposer,
+    $$PracticeDeckTableTableAnnotationComposer,
+    $$PracticeDeckTableTableCreateCompanionBuilder,
+    $$PracticeDeckTableTableUpdateCompanionBuilder,
+    (
+      PracticeDeckTableData,
+      BaseReferences<_$AppDatabase, $PracticeDeckTableTable,
+          PracticeDeckTableData>
+    ),
+    PracticeDeckTableData,
+    PrefetchHooks Function()>;
+typedef $$PracticeCardTableTableCreateCompanionBuilder
+    = PracticeCardTableCompanion Function({
+  required String id,
+  required String deckId,
+  required String frontHtml,
+  required String backHtml,
+  required String frontPlain,
+  required String backPlain,
+  Value<String> queue,
+  Value<DateTime?> dueAt,
+  Value<int?> dueDay,
+  Value<int> intervalDays,
+  Value<int> easeFactorMilli,
+  Value<int> reps,
+  Value<int> lapses,
+  Value<int> remainingSteps,
+  Value<int> learningStepIndex,
+  Value<DateTime?> lastReviewedAt,
+  Value<bool> isLeech,
+  Value<String> tagsJson,
+  Value<DateTime> createdAt,
+  Value<DateTime?> updatedAt,
+  Value<int> rowid,
+});
+typedef $$PracticeCardTableTableUpdateCompanionBuilder
+    = PracticeCardTableCompanion Function({
+  Value<String> id,
+  Value<String> deckId,
+  Value<String> frontHtml,
+  Value<String> backHtml,
+  Value<String> frontPlain,
+  Value<String> backPlain,
+  Value<String> queue,
+  Value<DateTime?> dueAt,
+  Value<int?> dueDay,
+  Value<int> intervalDays,
+  Value<int> easeFactorMilli,
+  Value<int> reps,
+  Value<int> lapses,
+  Value<int> remainingSteps,
+  Value<int> learningStepIndex,
+  Value<DateTime?> lastReviewedAt,
+  Value<bool> isLeech,
+  Value<String> tagsJson,
+  Value<DateTime> createdAt,
+  Value<DateTime?> updatedAt,
+  Value<int> rowid,
+});
+
+class $$PracticeCardTableTableFilterComposer
+    extends Composer<_$AppDatabase, $PracticeCardTableTable> {
+  $$PracticeCardTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get deckId => $composableBuilder(
+      column: $table.deckId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get frontHtml => $composableBuilder(
+      column: $table.frontHtml, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get backHtml => $composableBuilder(
+      column: $table.backHtml, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get frontPlain => $composableBuilder(
+      column: $table.frontPlain, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get backPlain => $composableBuilder(
+      column: $table.backPlain, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get queue => $composableBuilder(
+      column: $table.queue, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get dueAt => $composableBuilder(
+      column: $table.dueAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get dueDay => $composableBuilder(
+      column: $table.dueDay, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get intervalDays => $composableBuilder(
+      column: $table.intervalDays, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get easeFactorMilli => $composableBuilder(
+      column: $table.easeFactorMilli,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get reps => $composableBuilder(
+      column: $table.reps, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get lapses => $composableBuilder(
+      column: $table.lapses, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get remainingSteps => $composableBuilder(
+      column: $table.remainingSteps,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get learningStepIndex => $composableBuilder(
+      column: $table.learningStepIndex,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get lastReviewedAt => $composableBuilder(
+      column: $table.lastReviewedAt,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isLeech => $composableBuilder(
+      column: $table.isLeech, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get tagsJson => $composableBuilder(
+      column: $table.tagsJson, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$PracticeCardTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $PracticeCardTableTable> {
+  $$PracticeCardTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get deckId => $composableBuilder(
+      column: $table.deckId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get frontHtml => $composableBuilder(
+      column: $table.frontHtml, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get backHtml => $composableBuilder(
+      column: $table.backHtml, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get frontPlain => $composableBuilder(
+      column: $table.frontPlain, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get backPlain => $composableBuilder(
+      column: $table.backPlain, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get queue => $composableBuilder(
+      column: $table.queue, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get dueAt => $composableBuilder(
+      column: $table.dueAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get dueDay => $composableBuilder(
+      column: $table.dueDay, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get intervalDays => $composableBuilder(
+      column: $table.intervalDays,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get easeFactorMilli => $composableBuilder(
+      column: $table.easeFactorMilli,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get reps => $composableBuilder(
+      column: $table.reps, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get lapses => $composableBuilder(
+      column: $table.lapses, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get remainingSteps => $composableBuilder(
+      column: $table.remainingSteps,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get learningStepIndex => $composableBuilder(
+      column: $table.learningStepIndex,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get lastReviewedAt => $composableBuilder(
+      column: $table.lastReviewedAt,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isLeech => $composableBuilder(
+      column: $table.isLeech, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get tagsJson => $composableBuilder(
+      column: $table.tagsJson, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$PracticeCardTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PracticeCardTableTable> {
+  $$PracticeCardTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get deckId =>
+      $composableBuilder(column: $table.deckId, builder: (column) => column);
+
+  GeneratedColumn<String> get frontHtml =>
+      $composableBuilder(column: $table.frontHtml, builder: (column) => column);
+
+  GeneratedColumn<String> get backHtml =>
+      $composableBuilder(column: $table.backHtml, builder: (column) => column);
+
+  GeneratedColumn<String> get frontPlain => $composableBuilder(
+      column: $table.frontPlain, builder: (column) => column);
+
+  GeneratedColumn<String> get backPlain =>
+      $composableBuilder(column: $table.backPlain, builder: (column) => column);
+
+  GeneratedColumn<String> get queue =>
+      $composableBuilder(column: $table.queue, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get dueAt =>
+      $composableBuilder(column: $table.dueAt, builder: (column) => column);
+
+  GeneratedColumn<int> get dueDay =>
+      $composableBuilder(column: $table.dueDay, builder: (column) => column);
+
+  GeneratedColumn<int> get intervalDays => $composableBuilder(
+      column: $table.intervalDays, builder: (column) => column);
+
+  GeneratedColumn<int> get easeFactorMilli => $composableBuilder(
+      column: $table.easeFactorMilli, builder: (column) => column);
+
+  GeneratedColumn<int> get reps =>
+      $composableBuilder(column: $table.reps, builder: (column) => column);
+
+  GeneratedColumn<int> get lapses =>
+      $composableBuilder(column: $table.lapses, builder: (column) => column);
+
+  GeneratedColumn<int> get remainingSteps => $composableBuilder(
+      column: $table.remainingSteps, builder: (column) => column);
+
+  GeneratedColumn<int> get learningStepIndex => $composableBuilder(
+      column: $table.learningStepIndex, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get lastReviewedAt => $composableBuilder(
+      column: $table.lastReviewedAt, builder: (column) => column);
+
+  GeneratedColumn<bool> get isLeech =>
+      $composableBuilder(column: $table.isLeech, builder: (column) => column);
+
+  GeneratedColumn<String> get tagsJson =>
+      $composableBuilder(column: $table.tagsJson, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+}
+
+class $$PracticeCardTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PracticeCardTableTable,
+    PracticeCardTableData,
+    $$PracticeCardTableTableFilterComposer,
+    $$PracticeCardTableTableOrderingComposer,
+    $$PracticeCardTableTableAnnotationComposer,
+    $$PracticeCardTableTableCreateCompanionBuilder,
+    $$PracticeCardTableTableUpdateCompanionBuilder,
+    (
+      PracticeCardTableData,
+      BaseReferences<_$AppDatabase, $PracticeCardTableTable,
+          PracticeCardTableData>
+    ),
+    PracticeCardTableData,
+    PrefetchHooks Function()> {
+  $$PracticeCardTableTableTableManager(
+      _$AppDatabase db, $PracticeCardTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PracticeCardTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PracticeCardTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PracticeCardTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> deckId = const Value.absent(),
+            Value<String> frontHtml = const Value.absent(),
+            Value<String> backHtml = const Value.absent(),
+            Value<String> frontPlain = const Value.absent(),
+            Value<String> backPlain = const Value.absent(),
+            Value<String> queue = const Value.absent(),
+            Value<DateTime?> dueAt = const Value.absent(),
+            Value<int?> dueDay = const Value.absent(),
+            Value<int> intervalDays = const Value.absent(),
+            Value<int> easeFactorMilli = const Value.absent(),
+            Value<int> reps = const Value.absent(),
+            Value<int> lapses = const Value.absent(),
+            Value<int> remainingSteps = const Value.absent(),
+            Value<int> learningStepIndex = const Value.absent(),
+            Value<DateTime?> lastReviewedAt = const Value.absent(),
+            Value<bool> isLeech = const Value.absent(),
+            Value<String> tagsJson = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeCardTableCompanion(
+            id: id,
+            deckId: deckId,
+            frontHtml: frontHtml,
+            backHtml: backHtml,
+            frontPlain: frontPlain,
+            backPlain: backPlain,
+            queue: queue,
+            dueAt: dueAt,
+            dueDay: dueDay,
+            intervalDays: intervalDays,
+            easeFactorMilli: easeFactorMilli,
+            reps: reps,
+            lapses: lapses,
+            remainingSteps: remainingSteps,
+            learningStepIndex: learningStepIndex,
+            lastReviewedAt: lastReviewedAt,
+            isLeech: isLeech,
+            tagsJson: tagsJson,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String deckId,
+            required String frontHtml,
+            required String backHtml,
+            required String frontPlain,
+            required String backPlain,
+            Value<String> queue = const Value.absent(),
+            Value<DateTime?> dueAt = const Value.absent(),
+            Value<int?> dueDay = const Value.absent(),
+            Value<int> intervalDays = const Value.absent(),
+            Value<int> easeFactorMilli = const Value.absent(),
+            Value<int> reps = const Value.absent(),
+            Value<int> lapses = const Value.absent(),
+            Value<int> remainingSteps = const Value.absent(),
+            Value<int> learningStepIndex = const Value.absent(),
+            Value<DateTime?> lastReviewedAt = const Value.absent(),
+            Value<bool> isLeech = const Value.absent(),
+            Value<String> tagsJson = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<DateTime?> updatedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeCardTableCompanion.insert(
+            id: id,
+            deckId: deckId,
+            frontHtml: frontHtml,
+            backHtml: backHtml,
+            frontPlain: frontPlain,
+            backPlain: backPlain,
+            queue: queue,
+            dueAt: dueAt,
+            dueDay: dueDay,
+            intervalDays: intervalDays,
+            easeFactorMilli: easeFactorMilli,
+            reps: reps,
+            lapses: lapses,
+            remainingSteps: remainingSteps,
+            learningStepIndex: learningStepIndex,
+            lastReviewedAt: lastReviewedAt,
+            isLeech: isLeech,
+            tagsJson: tagsJson,
+            createdAt: createdAt,
+            updatedAt: updatedAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$PracticeCardTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $PracticeCardTableTable,
+    PracticeCardTableData,
+    $$PracticeCardTableTableFilterComposer,
+    $$PracticeCardTableTableOrderingComposer,
+    $$PracticeCardTableTableAnnotationComposer,
+    $$PracticeCardTableTableCreateCompanionBuilder,
+    $$PracticeCardTableTableUpdateCompanionBuilder,
+    (
+      PracticeCardTableData,
+      BaseReferences<_$AppDatabase, $PracticeCardTableTable,
+          PracticeCardTableData>
+    ),
+    PracticeCardTableData,
+    PrefetchHooks Function()>;
+typedef $$PracticeReviewTableTableCreateCompanionBuilder
+    = PracticeReviewTableCompanion Function({
+  required String id,
+  required String cardId,
+  required DateTime reviewedAt,
+  required String rating,
+  required String queueBefore,
+  required String queueAfter,
+  Value<int> intervalBeforeDays,
+  Value<int> intervalAfterDays,
+  Value<int> easeBeforeMilli,
+  Value<int> easeAfterMilli,
+  Value<int?> elapsedMs,
+  Value<int> rowid,
+});
+typedef $$PracticeReviewTableTableUpdateCompanionBuilder
+    = PracticeReviewTableCompanion Function({
+  Value<String> id,
+  Value<String> cardId,
+  Value<DateTime> reviewedAt,
+  Value<String> rating,
+  Value<String> queueBefore,
+  Value<String> queueAfter,
+  Value<int> intervalBeforeDays,
+  Value<int> intervalAfterDays,
+  Value<int> easeBeforeMilli,
+  Value<int> easeAfterMilli,
+  Value<int?> elapsedMs,
+  Value<int> rowid,
+});
+
+class $$PracticeReviewTableTableFilterComposer
+    extends Composer<_$AppDatabase, $PracticeReviewTableTable> {
+  $$PracticeReviewTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get cardId => $composableBuilder(
+      column: $table.cardId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get reviewedAt => $composableBuilder(
+      column: $table.reviewedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get rating => $composableBuilder(
+      column: $table.rating, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get queueBefore => $composableBuilder(
+      column: $table.queueBefore, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get queueAfter => $composableBuilder(
+      column: $table.queueAfter, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get intervalBeforeDays => $composableBuilder(
+      column: $table.intervalBeforeDays,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get intervalAfterDays => $composableBuilder(
+      column: $table.intervalAfterDays,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get easeBeforeMilli => $composableBuilder(
+      column: $table.easeBeforeMilli,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get easeAfterMilli => $composableBuilder(
+      column: $table.easeAfterMilli,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get elapsedMs => $composableBuilder(
+      column: $table.elapsedMs, builder: (column) => ColumnFilters(column));
+}
+
+class $$PracticeReviewTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $PracticeReviewTableTable> {
+  $$PracticeReviewTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get cardId => $composableBuilder(
+      column: $table.cardId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get reviewedAt => $composableBuilder(
+      column: $table.reviewedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get rating => $composableBuilder(
+      column: $table.rating, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get queueBefore => $composableBuilder(
+      column: $table.queueBefore, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get queueAfter => $composableBuilder(
+      column: $table.queueAfter, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get intervalBeforeDays => $composableBuilder(
+      column: $table.intervalBeforeDays,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get intervalAfterDays => $composableBuilder(
+      column: $table.intervalAfterDays,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get easeBeforeMilli => $composableBuilder(
+      column: $table.easeBeforeMilli,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get easeAfterMilli => $composableBuilder(
+      column: $table.easeAfterMilli,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get elapsedMs => $composableBuilder(
+      column: $table.elapsedMs, builder: (column) => ColumnOrderings(column));
+}
+
+class $$PracticeReviewTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PracticeReviewTableTable> {
+  $$PracticeReviewTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get cardId =>
+      $composableBuilder(column: $table.cardId, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get reviewedAt => $composableBuilder(
+      column: $table.reviewedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get rating =>
+      $composableBuilder(column: $table.rating, builder: (column) => column);
+
+  GeneratedColumn<String> get queueBefore => $composableBuilder(
+      column: $table.queueBefore, builder: (column) => column);
+
+  GeneratedColumn<String> get queueAfter => $composableBuilder(
+      column: $table.queueAfter, builder: (column) => column);
+
+  GeneratedColumn<int> get intervalBeforeDays => $composableBuilder(
+      column: $table.intervalBeforeDays, builder: (column) => column);
+
+  GeneratedColumn<int> get intervalAfterDays => $composableBuilder(
+      column: $table.intervalAfterDays, builder: (column) => column);
+
+  GeneratedColumn<int> get easeBeforeMilli => $composableBuilder(
+      column: $table.easeBeforeMilli, builder: (column) => column);
+
+  GeneratedColumn<int> get easeAfterMilli => $composableBuilder(
+      column: $table.easeAfterMilli, builder: (column) => column);
+
+  GeneratedColumn<int> get elapsedMs =>
+      $composableBuilder(column: $table.elapsedMs, builder: (column) => column);
+}
+
+class $$PracticeReviewTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PracticeReviewTableTable,
+    PracticeReviewTableData,
+    $$PracticeReviewTableTableFilterComposer,
+    $$PracticeReviewTableTableOrderingComposer,
+    $$PracticeReviewTableTableAnnotationComposer,
+    $$PracticeReviewTableTableCreateCompanionBuilder,
+    $$PracticeReviewTableTableUpdateCompanionBuilder,
+    (
+      PracticeReviewTableData,
+      BaseReferences<_$AppDatabase, $PracticeReviewTableTable,
+          PracticeReviewTableData>
+    ),
+    PracticeReviewTableData,
+    PrefetchHooks Function()> {
+  $$PracticeReviewTableTableTableManager(
+      _$AppDatabase db, $PracticeReviewTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PracticeReviewTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PracticeReviewTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PracticeReviewTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> cardId = const Value.absent(),
+            Value<DateTime> reviewedAt = const Value.absent(),
+            Value<String> rating = const Value.absent(),
+            Value<String> queueBefore = const Value.absent(),
+            Value<String> queueAfter = const Value.absent(),
+            Value<int> intervalBeforeDays = const Value.absent(),
+            Value<int> intervalAfterDays = const Value.absent(),
+            Value<int> easeBeforeMilli = const Value.absent(),
+            Value<int> easeAfterMilli = const Value.absent(),
+            Value<int?> elapsedMs = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeReviewTableCompanion(
+            id: id,
+            cardId: cardId,
+            reviewedAt: reviewedAt,
+            rating: rating,
+            queueBefore: queueBefore,
+            queueAfter: queueAfter,
+            intervalBeforeDays: intervalBeforeDays,
+            intervalAfterDays: intervalAfterDays,
+            easeBeforeMilli: easeBeforeMilli,
+            easeAfterMilli: easeAfterMilli,
+            elapsedMs: elapsedMs,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String cardId,
+            required DateTime reviewedAt,
+            required String rating,
+            required String queueBefore,
+            required String queueAfter,
+            Value<int> intervalBeforeDays = const Value.absent(),
+            Value<int> intervalAfterDays = const Value.absent(),
+            Value<int> easeBeforeMilli = const Value.absent(),
+            Value<int> easeAfterMilli = const Value.absent(),
+            Value<int?> elapsedMs = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeReviewTableCompanion.insert(
+            id: id,
+            cardId: cardId,
+            reviewedAt: reviewedAt,
+            rating: rating,
+            queueBefore: queueBefore,
+            queueAfter: queueAfter,
+            intervalBeforeDays: intervalBeforeDays,
+            intervalAfterDays: intervalAfterDays,
+            easeBeforeMilli: easeBeforeMilli,
+            easeAfterMilli: easeAfterMilli,
+            elapsedMs: elapsedMs,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$PracticeReviewTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $PracticeReviewTableTable,
+    PracticeReviewTableData,
+    $$PracticeReviewTableTableFilterComposer,
+    $$PracticeReviewTableTableOrderingComposer,
+    $$PracticeReviewTableTableAnnotationComposer,
+    $$PracticeReviewTableTableCreateCompanionBuilder,
+    $$PracticeReviewTableTableUpdateCompanionBuilder,
+    (
+      PracticeReviewTableData,
+      BaseReferences<_$AppDatabase, $PracticeReviewTableTable,
+          PracticeReviewTableData>
+    ),
+    PracticeReviewTableData,
+    PrefetchHooks Function()>;
+typedef $$PracticeMediaTableTableCreateCompanionBuilder
+    = PracticeMediaTableCompanion Function({
+  required String id,
+  required String checksumSha1,
+  required String originalName,
+  required String storedName,
+  required String mimeType,
+  required String localPath,
+  Value<int> sizeBytes,
+  Value<DateTime> createdAt,
+  Value<int> rowid,
+});
+typedef $$PracticeMediaTableTableUpdateCompanionBuilder
+    = PracticeMediaTableCompanion Function({
+  Value<String> id,
+  Value<String> checksumSha1,
+  Value<String> originalName,
+  Value<String> storedName,
+  Value<String> mimeType,
+  Value<String> localPath,
+  Value<int> sizeBytes,
+  Value<DateTime> createdAt,
+  Value<int> rowid,
+});
+
+class $$PracticeMediaTableTableFilterComposer
+    extends Composer<_$AppDatabase, $PracticeMediaTableTable> {
+  $$PracticeMediaTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get checksumSha1 => $composableBuilder(
+      column: $table.checksumSha1, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get originalName => $composableBuilder(
+      column: $table.originalName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get storedName => $composableBuilder(
+      column: $table.storedName, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get mimeType => $composableBuilder(
+      column: $table.mimeType, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get localPath => $composableBuilder(
+      column: $table.localPath, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get sizeBytes => $composableBuilder(
+      column: $table.sizeBytes, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$PracticeMediaTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $PracticeMediaTableTable> {
+  $$PracticeMediaTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get checksumSha1 => $composableBuilder(
+      column: $table.checksumSha1,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get originalName => $composableBuilder(
+      column: $table.originalName,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get storedName => $composableBuilder(
+      column: $table.storedName, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get mimeType => $composableBuilder(
+      column: $table.mimeType, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get localPath => $composableBuilder(
+      column: $table.localPath, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get sizeBytes => $composableBuilder(
+      column: $table.sizeBytes, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$PracticeMediaTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PracticeMediaTableTable> {
+  $$PracticeMediaTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get checksumSha1 => $composableBuilder(
+      column: $table.checksumSha1, builder: (column) => column);
+
+  GeneratedColumn<String> get originalName => $composableBuilder(
+      column: $table.originalName, builder: (column) => column);
+
+  GeneratedColumn<String> get storedName => $composableBuilder(
+      column: $table.storedName, builder: (column) => column);
+
+  GeneratedColumn<String> get mimeType =>
+      $composableBuilder(column: $table.mimeType, builder: (column) => column);
+
+  GeneratedColumn<String> get localPath =>
+      $composableBuilder(column: $table.localPath, builder: (column) => column);
+
+  GeneratedColumn<int> get sizeBytes =>
+      $composableBuilder(column: $table.sizeBytes, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$PracticeMediaTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PracticeMediaTableTable,
+    PracticeMediaTableData,
+    $$PracticeMediaTableTableFilterComposer,
+    $$PracticeMediaTableTableOrderingComposer,
+    $$PracticeMediaTableTableAnnotationComposer,
+    $$PracticeMediaTableTableCreateCompanionBuilder,
+    $$PracticeMediaTableTableUpdateCompanionBuilder,
+    (
+      PracticeMediaTableData,
+      BaseReferences<_$AppDatabase, $PracticeMediaTableTable,
+          PracticeMediaTableData>
+    ),
+    PracticeMediaTableData,
+    PrefetchHooks Function()> {
+  $$PracticeMediaTableTableTableManager(
+      _$AppDatabase db, $PracticeMediaTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PracticeMediaTableTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PracticeMediaTableTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PracticeMediaTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> checksumSha1 = const Value.absent(),
+            Value<String> originalName = const Value.absent(),
+            Value<String> storedName = const Value.absent(),
+            Value<String> mimeType = const Value.absent(),
+            Value<String> localPath = const Value.absent(),
+            Value<int> sizeBytes = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeMediaTableCompanion(
+            id: id,
+            checksumSha1: checksumSha1,
+            originalName: originalName,
+            storedName: storedName,
+            mimeType: mimeType,
+            localPath: localPath,
+            sizeBytes: sizeBytes,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String checksumSha1,
+            required String originalName,
+            required String storedName,
+            required String mimeType,
+            required String localPath,
+            Value<int> sizeBytes = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeMediaTableCompanion.insert(
+            id: id,
+            checksumSha1: checksumSha1,
+            originalName: originalName,
+            storedName: storedName,
+            mimeType: mimeType,
+            localPath: localPath,
+            sizeBytes: sizeBytes,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$PracticeMediaTableTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $PracticeMediaTableTable,
+    PracticeMediaTableData,
+    $$PracticeMediaTableTableFilterComposer,
+    $$PracticeMediaTableTableOrderingComposer,
+    $$PracticeMediaTableTableAnnotationComposer,
+    $$PracticeMediaTableTableCreateCompanionBuilder,
+    $$PracticeMediaTableTableUpdateCompanionBuilder,
+    (
+      PracticeMediaTableData,
+      BaseReferences<_$AppDatabase, $PracticeMediaTableTable,
+          PracticeMediaTableData>
+    ),
+    PracticeMediaTableData,
+    PrefetchHooks Function()>;
+typedef $$PracticeCardMediaTableTableCreateCompanionBuilder
+    = PracticeCardMediaTableCompanion Function({
+  required String cardId,
+  required String mediaId,
+  required String usageType,
+  required String originalToken,
+  Value<int> rowid,
+});
+typedef $$PracticeCardMediaTableTableUpdateCompanionBuilder
+    = PracticeCardMediaTableCompanion Function({
+  Value<String> cardId,
+  Value<String> mediaId,
+  Value<String> usageType,
+  Value<String> originalToken,
+  Value<int> rowid,
+});
+
+class $$PracticeCardMediaTableTableFilterComposer
+    extends Composer<_$AppDatabase, $PracticeCardMediaTableTable> {
+  $$PracticeCardMediaTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get cardId => $composableBuilder(
+      column: $table.cardId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get mediaId => $composableBuilder(
+      column: $table.mediaId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get usageType => $composableBuilder(
+      column: $table.usageType, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get originalToken => $composableBuilder(
+      column: $table.originalToken, builder: (column) => ColumnFilters(column));
+}
+
+class $$PracticeCardMediaTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $PracticeCardMediaTableTable> {
+  $$PracticeCardMediaTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get cardId => $composableBuilder(
+      column: $table.cardId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get mediaId => $composableBuilder(
+      column: $table.mediaId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get usageType => $composableBuilder(
+      column: $table.usageType, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get originalToken => $composableBuilder(
+      column: $table.originalToken,
+      builder: (column) => ColumnOrderings(column));
+}
+
+class $$PracticeCardMediaTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $PracticeCardMediaTableTable> {
+  $$PracticeCardMediaTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get cardId =>
+      $composableBuilder(column: $table.cardId, builder: (column) => column);
+
+  GeneratedColumn<String> get mediaId =>
+      $composableBuilder(column: $table.mediaId, builder: (column) => column);
+
+  GeneratedColumn<String> get usageType =>
+      $composableBuilder(column: $table.usageType, builder: (column) => column);
+
+  GeneratedColumn<String> get originalToken => $composableBuilder(
+      column: $table.originalToken, builder: (column) => column);
+}
+
+class $$PracticeCardMediaTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $PracticeCardMediaTableTable,
+    PracticeCardMediaTableData,
+    $$PracticeCardMediaTableTableFilterComposer,
+    $$PracticeCardMediaTableTableOrderingComposer,
+    $$PracticeCardMediaTableTableAnnotationComposer,
+    $$PracticeCardMediaTableTableCreateCompanionBuilder,
+    $$PracticeCardMediaTableTableUpdateCompanionBuilder,
+    (
+      PracticeCardMediaTableData,
+      BaseReferences<_$AppDatabase, $PracticeCardMediaTableTable,
+          PracticeCardMediaTableData>
+    ),
+    PracticeCardMediaTableData,
+    PrefetchHooks Function()> {
+  $$PracticeCardMediaTableTableTableManager(
+      _$AppDatabase db, $PracticeCardMediaTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$PracticeCardMediaTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$PracticeCardMediaTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$PracticeCardMediaTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> cardId = const Value.absent(),
+            Value<String> mediaId = const Value.absent(),
+            Value<String> usageType = const Value.absent(),
+            Value<String> originalToken = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeCardMediaTableCompanion(
+            cardId: cardId,
+            mediaId: mediaId,
+            usageType: usageType,
+            originalToken: originalToken,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String cardId,
+            required String mediaId,
+            required String usageType,
+            required String originalToken,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              PracticeCardMediaTableCompanion.insert(
+            cardId: cardId,
+            mediaId: mediaId,
+            usageType: usageType,
+            originalToken: originalToken,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$PracticeCardMediaTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$AppDatabase,
+        $PracticeCardMediaTableTable,
+        PracticeCardMediaTableData,
+        $$PracticeCardMediaTableTableFilterComposer,
+        $$PracticeCardMediaTableTableOrderingComposer,
+        $$PracticeCardMediaTableTableAnnotationComposer,
+        $$PracticeCardMediaTableTableCreateCompanionBuilder,
+        $$PracticeCardMediaTableTableUpdateCompanionBuilder,
+        (
+          PracticeCardMediaTableData,
+          BaseReferences<_$AppDatabase, $PracticeCardMediaTableTable,
+              PracticeCardMediaTableData>
+        ),
+        PracticeCardMediaTableData,
+        PrefetchHooks Function()>;
 typedef $$DictionaryCacheTableTableCreateCompanionBuilder
     = DictionaryCacheTableCompanion Function({
   required String word,
@@ -4976,6 +9015,17 @@ class $AppDatabaseManager {
       $$LessonSyncQueueTableTableTableManager(_db, _db.lessonSyncQueueTable);
   $$LessonAttemptTableTableTableManager get lessonAttemptTable =>
       $$LessonAttemptTableTableTableManager(_db, _db.lessonAttemptTable);
+  $$PracticeDeckTableTableTableManager get practiceDeckTable =>
+      $$PracticeDeckTableTableTableManager(_db, _db.practiceDeckTable);
+  $$PracticeCardTableTableTableManager get practiceCardTable =>
+      $$PracticeCardTableTableTableManager(_db, _db.practiceCardTable);
+  $$PracticeReviewTableTableTableManager get practiceReviewTable =>
+      $$PracticeReviewTableTableTableManager(_db, _db.practiceReviewTable);
+  $$PracticeMediaTableTableTableManager get practiceMediaTable =>
+      $$PracticeMediaTableTableTableManager(_db, _db.practiceMediaTable);
+  $$PracticeCardMediaTableTableTableManager get practiceCardMediaTable =>
+      $$PracticeCardMediaTableTableTableManager(
+          _db, _db.practiceCardMediaTable);
   $$DictionaryCacheTableTableTableManager get dictionaryCacheTable =>
       $$DictionaryCacheTableTableTableManager(_db, _db.dictionaryCacheTable);
   $$AnswerHistoryLocalTableTableTableManager get answerHistoryLocalTable =>

@@ -10,6 +10,11 @@ import '../../features/lessons/presentation/screens/lesson_result_screen.dart';
 import '../../features/lessons/presentation/screens/lesson_screen.dart';
 import '../../features/lessons/presentation/screens/lessons_overview_screen.dart';
 import '../../features/lessons/domain/models/lesson_progress.dart';
+import '../../features/practice/presentation/screens/card_editor_screen.dart';
+import '../../features/practice/presentation/screens/deck_detail_screen.dart';
+import '../../features/practice/presentation/screens/deck_editor_screen.dart';
+import '../../features/practice/presentation/screens/practice_home_screen.dart';
+import '../../features/practice/presentation/screens/review_session_screen.dart';
 import '../../features/roadmaps/presentation/screens/roadmaps_screen.dart';
 import '../../features/settings/presentation/screens/profile_settings_screen.dart';
 
@@ -46,7 +51,42 @@ class AppRouter {
               builder: (_, __) => const LessonsOverviewScreen()),
           GoRoute(
               path: '/app/practice',
-              builder: (_, __) => const _PlaceholderScreen('Practice')),
+              builder: (_, __) => const PracticeHomeScreen()),
+          GoRoute(
+            path: '/app/practice/decks/new',
+            builder: (_, __) => const DeckEditorScreen(),
+          ),
+          GoRoute(
+            path: '/app/practice/decks/:deckId/edit',
+            builder: (_, state) => DeckEditorScreen(
+              deckId: state.pathParameters['deckId']!,
+            ),
+          ),
+          GoRoute(
+            path: '/app/practice/decks/:deckId',
+            builder: (_, state) => DeckDetailScreen(
+              deckId: state.pathParameters['deckId']!,
+            ),
+          ),
+          GoRoute(
+            path: '/app/practice/decks/:deckId/cards/new',
+            builder: (_, state) => CardEditorScreen(
+              deckId: state.pathParameters['deckId']!,
+            ),
+          ),
+          GoRoute(
+            path: '/app/practice/cards/:cardId/edit',
+            builder: (_, state) => CardEditorScreen(
+              deckId: state.uri.queryParameters['deckId'],
+              cardId: state.pathParameters['cardId']!,
+            ),
+          ),
+          GoRoute(
+            path: '/app/practice/decks/:deckId/review',
+            builder: (_, state) => ReviewSessionScreen(
+              deckId: state.pathParameters['deckId']!,
+            ),
+          ),
           GoRoute(
               path: '/app/roadmaps',
               builder: (_, __) => const RoadmapsScreen()),
@@ -64,9 +104,14 @@ class AppRouter {
           ),
           GoRoute(
             path: '/app/lesson/:lessonId/result',
-            builder: (_, state) => LessonResultScreen(
-              summary: state.extra! as LessonSummary,
-            ),
+            builder: (_, state) {
+              final extra = state.extra;
+              if (extra is LessonSummary) {
+                return LessonResultScreen(summary: extra);
+              }
+
+              return const LessonsOverviewScreen();
+            },
           ),
         ],
       ),

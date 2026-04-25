@@ -151,6 +151,19 @@ sealed class LessonBlock with _$LessonBlock {
     @Default(<String, Object?>{}) Map<String, Object?> extras,
   }) = _ChoiceBlock;
 
+  const factory LessonBlock.sentenceBuilder({
+    required String id,
+    @Default('sentence_builder') String type,
+    required String prompt,
+    @Default(<SentenceToken>[]) List<SentenceToken> tokens,
+    @JsonKey(name: 'correct_token_ids')
+    @Default(<String>[])
+    List<String> correctTokenIds,
+    @JsonKey(name: 'correct_answer') String? correctAnswer,
+    String? explanation,
+    @Default(<String, Object?>{}) Map<String, Object?> extras,
+  }) = _SentenceBuilderBlock;
+
   const factory LessonBlock.unknown({
     required String id,
     @Default('unknown') String type,
@@ -159,14 +172,15 @@ sealed class LessonBlock with _$LessonBlock {
     @Default(<String, Object?>{}) Map<String, Object?> raw,
   }) = _UnknownLessonBlock;
 
-  String get blockType => map(
-        text: (_) => 'text',
-        quiz: (_) => 'quiz',
-        video: (_) => 'video',
-        code: (_) => 'code',
-        choice: (_) => 'choice',
-        unknown: (block) => block.rawType ?? 'unknown',
-      );
+  String get blockType => switch (this) {
+        TextBlock() => 'text',
+        QuizBlock() => 'quiz',
+        VideoBlock() => 'video',
+        CodeBlock() => 'code',
+        ChoiceBlock() => 'choice',
+        SentenceBuilderBlock() => 'sentence_builder',
+        UnknownLessonBlock(:final rawType) => rawType ?? 'unknown',
+      };
 
   factory LessonBlock.fromJson(Map<String, Object?> json) {
     final normalized = Map<String, Object?>.from(json);
@@ -201,14 +215,52 @@ class ChoiceOption with _$ChoiceOption {
       _$ChoiceOptionFromJson(json);
 }
 
+class SentenceToken {
+  const SentenceToken({
+    required this.id,
+    required this.label,
+  });
+
+  factory SentenceToken.fromJson(Map<String, Object?> json) {
+    return SentenceToken(
+      id: json['id']?.toString() ?? '',
+      label: json['label']?.toString() ?? '',
+    );
+  }
+
+  final String id;
+  final String label;
+
+  Map<String, Object?> toJson() => <String, Object?>{
+        'id': id,
+        'label': label,
+      };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SentenceToken && other.id == id && other.label == label;
+
+  @override
+  int get hashCode => Object.hash(id, label);
+}
+
 typedef TextBlock = _TextBlock;
 typedef QuizBlock = _QuizBlock;
 typedef VideoBlock = _VideoBlock;
 typedef CodeBlock = _CodeBlock;
 typedef ChoiceBlock = _ChoiceBlock;
+typedef SentenceBuilderBlock = _SentenceBuilderBlock;
 typedef UnknownLessonBlock = _UnknownLessonBlock;
 
-const Set<String> _supportedBlockTypes = {'text', 'quiz', 'video', 'code', 'choice'};
+const Set<String> _supportedBlockTypes = {
+  'text',
+  'quiz',
+  'video',
+  'code',
+  'choice',
+  'sentence_builder',
+};
 
 Map<String, Object?> _extractBlockExtras(
   Map<String, Object?> json,
@@ -252,6 +304,16 @@ Map<String, Object?> _extractBlockExtras(
         'options',
         'correct_option_id',
         'multiple',
+        'extras',
+      },
+    'sentence_builder' => {
+        'id',
+        'type',
+        'prompt',
+        'tokens',
+        'correct_token_ids',
+        'correct_answer',
+        'explanation',
         'extras',
       },
     _ => {'id', 'type', 'extras'},

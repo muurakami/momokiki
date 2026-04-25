@@ -29,11 +29,17 @@
     },
     {
       "id": "b3",
-      "type": "code",
-      "prompt": "Type the polite full form.",
-      "code_snippet": "// polite gratitude phrase",
-      "expected_answer": "arigato gozaimasu",
-      "language": "text"
+      "type": "sentence_builder",
+      "prompt": "Build the polite full form.",
+      "tokens": [
+        {"id": "t1", "label": "arigato"},
+        {"id": "t2", "label": "gozaimasu"},
+        {"id": "t3", "label": "ohayo"},
+        {"id": "t4", "label": "konnichiwa"}
+      ],
+      "correct_token_ids": ["t1", "t2"],
+      "correct_answer": "arigato gozaimasu",
+      "explanation": "The polite gratitude phrase is arigato gozaimasu."
     }
   ]
 }

@@ -16,18 +16,26 @@ void main() {
           {"id": "2", "type": "quiz", "question": "Q", "options": ["A"], "correct_answer": "A"},
           {"id": "3", "type": "video", "title": "V", "video_url": "https://example.com"},
           {"id": "4", "type": "code", "prompt": "P", "code_snippet": "print()", "expected_answer": "ok"},
-          {"id": "5", "type": "choice", "prompt": "Pick", "correct_option_id": "o1", "options": [{"id": "o1", "label": "One"}]}
+          {"id": "5", "type": "choice", "prompt": "Pick", "correct_option_id": "o1", "options": [{"id": "o1", "label": "One"}]},
+          {"id": "6", "type": "sentence_builder", "prompt": "Build", "tokens": [{"id": "t1", "label": "I"}], "correct_token_ids": ["t1"], "correct_answer": "I"}
         ]
       }
       ''') as Map<String, Object?>,
     );
 
-    expect(lesson.blocks.length, 5);
+    expect(lesson.blocks.length, 6);
     expect(lesson.blocks.first.blockType, 'text');
     expect(lesson.blocks[1].blockType, 'quiz');
     expect(lesson.blocks[2].blockType, 'video');
     expect(lesson.blocks[3].blockType, 'code');
     expect(lesson.blocks[4].blockType, 'choice');
+    expect(lesson.blocks[5].blockType, 'sentence_builder');
+    expect(
+      lesson.blocks[5],
+      isA<SentenceBuilderBlock>()
+          .having((block) => block.tokens.single.label, 'token label', 'I')
+          .having((block) => block.correctTokenIds, 'correct token ids', ['t1']),
+    );
   });
 
   test('Lesson.fromJson falls back to unknown block', () {

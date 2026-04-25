@@ -31,4 +31,21 @@ void main() {
     expect(evaluator.evaluate(block: block, selectedOptionIds: ['o2']), isTrue);
     expect(evaluator.evaluate(block: block, selectedOptionIds: ['o1']), isFalse);
   });
+
+  test('sentence builder validates ordered token ids', () {
+    const block = LessonBlock.sentenceBuilder(
+      id: 'sentence',
+      prompt: 'Build',
+      tokens: [
+        SentenceToken(id: 't1', label: 'I'),
+        SentenceToken(id: 't2', label: 'study'),
+        SentenceToken(id: 't3', label: 'English'),
+      ],
+      correctTokenIds: ['t1', 't2', 't3'],
+    );
+
+    expect(evaluator.evaluate(block: block, selectedOptionIds: ['t1', 't2', 't3']), isTrue);
+    expect(evaluator.evaluate(block: block, selectedOptionIds: ['t2', 't1', 't3']), isFalse);
+    expect(evaluator.evaluate(block: block, selectedOptionIds: ['t1', 't2']), isFalse);
+  });
 }

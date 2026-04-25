@@ -31,17 +31,19 @@ class LessonBlockRouter extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        block.map(
-          text: (value) => _TextBlockView(block: value, onSubmitted: onSubmitted),
-          quiz: (value) => _QuizBlockView(block: value, onSubmitted: onSubmitted),
-          video: (value) => _VideoBlockView(block: value, onSubmitted: onSubmitted),
-          code: (value) => _CodeBlockView(block: value, onSubmitted: onSubmitted),
-          choice: (value) => _ChoiceBlockView(block: value, onSubmitted: onSubmitted),
-          unknown: (value) => Center(
+        switch (block) {
+          TextBlock textBlock => _TextBlockView(block: textBlock, onSubmitted: onSubmitted),
+          QuizBlock quizBlock => _QuizBlockView(block: quizBlock, onSubmitted: onSubmitted),
+          VideoBlock videoBlock => _VideoBlockView(block: videoBlock, onSubmitted: onSubmitted),
+          CodeBlock codeBlock => _CodeBlockView(block: codeBlock, onSubmitted: onSubmitted),
+          ChoiceBlock choiceBlock => _ChoiceBlockView(block: choiceBlock, onSubmitted: onSubmitted),
+          SentenceBuilderBlock sentenceBuilderBlock =>
+            _SentenceBuilderBlockView(block: sentenceBuilderBlock, onSubmitted: onSubmitted),
+          UnknownLessonBlock(:final rawType) => Center(
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('Unsupported block: ${value.rawType ?? 'unknown'}'),
+                Text('Unsupported block: ${rawType ?? 'unknown'}'),
                 const SizedBox(height: 12),
                 FilledButton(
                   onPressed: () => onSubmitted(selectedOptionIds: const <String>[]),
@@ -50,7 +52,7 @@ class LessonBlockRouter extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        },
         if (result != null || showRetryPrompt) ...[
           const SizedBox(height: 20),
           _FeedbackPanel(
@@ -330,6 +332,105 @@ class _ChoiceBlockViewState extends State<_ChoiceBlockView> {
                     selectedOptionIds: [selectedId!],
                   ),
           child: const Text('Submit'),
+        ),
+      ],
+    );
+  }
+}
+
+class _SentenceBuilderBlockView extends StatefulWidget {
+  const _SentenceBuilderBlockView({required this.block, required this.onSubmitted});
+
+  final SentenceBuilderBlock block;
+  final Future<void> Function({
+    String? submittedAnswer,
+    List<String> selectedOptionIds,
+  }) onSubmitted;
+
+  @override
+  State<_SentenceBuilderBlockView> createState() => _SentenceBuilderBlockViewState();
+}
+
+class _SentenceBuilderBlockViewState extends State<_SentenceBuilderBlockView> {
+  final List<SentenceToken> selectedTokens = <SentenceToken>[];
+
+  @override
+  Widget build(BuildContext context) {
+    final selectedIds = selectedTokens.map((token) => token.id).toSet();
+    final availableTokens = widget.block.tokens
+        .where((token) => !selectedIds.contains(token.id))
+        .toList(growable: false);
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(widget.block.prompt, style: Theme.of(context).textTheme.headlineSmall),
+        const SizedBox(height: 18),
+        Container(
+          width: double.infinity,
+          constraints: const BoxConstraints(minHeight: 88),
+          padding: const EdgeInsets.all(14),
+          decoration: BoxDecoration(
+            color: Theme.of(context).colorScheme.surfaceContainerHighest,
+            borderRadius: BorderRadius.circular(18),
+            border: Border.all(color: Theme.of(context).colorScheme.outlineVariant),
+          ),
+          child: selectedTokens.isEmpty
+              ? Text(
+                  'Tap words below to build the sentence',
+                  style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                        color: Theme.of(context).colorScheme.onSurfaceVariant,
+                      ),
+                )
+              : Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: selectedTokens
+                      .map(
+                        (token) => InputChip(
+                          label: Text(token.label),
+                          onDeleted: () => setState(() => selectedTokens.remove(token)),
+                          onPressed: () => setState(() => selectedTokens.remove(token)),
+                        ),
+                      )
+                      .toList(growable: false),
+                ),
+        ),
+        const SizedBox(height: 16),
+        Text('Word bank', style: Theme.of(context).textTheme.titleSmall),
+        const SizedBox(height: 10),
+        Wrap(
+          spacing: 10,
+          runSpacing: 10,
+          children: availableTokens
+              .map(
+                (token) => ActionChip(
+                  label: Text(token.label),
+                  avatar: const Icon(Icons.add, size: 18),
+                  onPressed: () => setState(() => selectedTokens.add(token)),
+                ),
+              )
+              .toList(growable: false),
+        ),
+        const SizedBox(height: 22),
+        Row(
+          children: [
+            FilledButton(
+              onPressed: selectedTokens.isEmpty
+                  ? null
+                  : () => widget.onSubmitted(
+                        submittedAnswer: selectedTokens.map((token) => token.label).join(' '),
+                        selectedOptionIds: selectedTokens.map((token) => token.id).toList(),
+                      ),
+              child: const Text('Submit'),
+            ),
+            const SizedBox(width: 12),
+            TextButton.icon(
+              onPressed: selectedTokens.isEmpty ? null : () => setState(selectedTokens.clear),
+              icon: const Icon(Icons.refresh),
+              label: const Text('Clear'),
+            ),
+          ],
         ),
       ],
     );

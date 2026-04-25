@@ -192,6 +192,39 @@ Map<String, dynamic> _$$ChoiceBlockImplToJson(_$ChoiceBlockImpl instance) =>
       'extras': instance.extras,
     };
 
+_$SentenceBuilderBlockImpl _$$SentenceBuilderBlockImplFromJson(
+        Map<String, dynamic> json) =>
+    _$SentenceBuilderBlockImpl(
+      id: json['id'] as String,
+      type: json['type'] as String? ?? 'sentence_builder',
+      prompt: json['prompt'] as String,
+      tokens: (json['tokens'] as List<dynamic>?)
+              ?.map((e) => SentenceToken.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const <SentenceToken>[],
+      correctTokenIds: (json['correct_token_ids'] as List<dynamic>?)
+              ?.map((e) => e as String)
+              .toList() ??
+          const <String>[],
+      correctAnswer: json['correct_answer'] as String?,
+      explanation: json['explanation'] as String?,
+      extras:
+          json['extras'] as Map<String, dynamic>? ?? const <String, Object?>{},
+    );
+
+Map<String, dynamic> _$$SentenceBuilderBlockImplToJson(
+        _$SentenceBuilderBlockImpl instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'type': instance.type,
+      'prompt': instance.prompt,
+      'tokens': instance.tokens,
+      'correct_token_ids': instance.correctTokenIds,
+      'correct_answer': instance.correctAnswer,
+      'explanation': instance.explanation,
+      'extras': instance.extras,
+    };
+
 _$UnknownLessonBlockImpl _$$UnknownLessonBlockImplFromJson(
         Map<String, dynamic> json) =>
     _$UnknownLessonBlockImpl(

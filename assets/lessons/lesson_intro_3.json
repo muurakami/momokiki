@@ -33,11 +33,16 @@
     },
     {
       "id": "b3",
-      "type": "code",
-      "prompt": "Type the romaji for the morning greeting.",
-      "code_snippet": "// Write the romaji here",
-      "expected_answer": "ohayo",
-      "language": "text"
+      "type": "sentence_builder",
+      "prompt": "Build the romaji for the morning greeting.",
+      "tokens": [
+        {"id": "t1", "label": "o"},
+        {"id": "t2", "label": "ha"},
+        {"id": "t3", "label": "yo"}
+      ],
+      "correct_token_ids": ["t1", "t2", "t3"],
+      "correct_answer": "ohayo",
+      "explanation": "Ohayo is built from o + ha + yo in this exercise."
     }
   ]
 }

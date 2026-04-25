@@ -30,11 +30,20 @@
     },
     {
       "id": "b3",
-      "type": "code",
-      "prompt": "Write a present simple sentence about your routine.",
-      "code_snippet": "// Example: I drink tea every morning.",
-      "expected_answer": "i study english every day",
-      "language": "text"
+      "type": "sentence_builder",
+      "prompt": "Build a present simple sentence about your routine.",
+      "tokens": [
+        {"id": "t1", "label": "I"},
+        {"id": "t2", "label": "study"},
+        {"id": "t3", "label": "English"},
+        {"id": "t4", "label": "every"},
+        {"id": "t5", "label": "day"},
+        {"id": "t6", "label": "am"},
+        {"id": "t7", "label": "studying"}
+      ],
+      "correct_token_ids": ["t1", "t2", "t3", "t4", "t5"],
+      "correct_answer": "I study English every day",
+      "explanation": "Present simple uses the base verb for habits and routines."
     }
   ]
 }

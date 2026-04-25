@@ -32,6 +32,15 @@ import '../../features/lessons/data/repositories/lesson_repository_impl.dart'
 import '../../features/lessons/domain/repositories/lesson_repository.dart'
     as _i408;
 import '../../features/lessons/domain/services/roadmap_parser.dart' as _i937;
+import '../../features/practice/data/datasources/apkg_import_datasource.dart'
+    as _i444;
+import '../../features/practice/data/datasources/drift_practice_datasource.dart'
+    as _i512;
+import '../../features/practice/data/repositories/practice_repository_impl.dart'
+    as _i862;
+import '../../features/practice/domain/repositories/practice_repository.dart'
+    as _i980;
+import '../../features/practice/domain/services/anki_scheduler.dart' as _i33;
 import '../../features/roadmaps/domain/services/roadmap_local_file_service.dart'
     as _i856;
 import '../config/app_config.dart' as _i650;
@@ -59,12 +68,17 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i963.SupabaseLessonDataSource>(
         () => _i963.SupabaseLessonDataSource());
     gh.lazySingleton<_i937.RoadmapParser>(() => const _i937.RoadmapParser());
+    gh.lazySingleton<_i444.ApkgImportDataSource>(
+        () => _i444.ApkgImportDataSource());
+    gh.lazySingleton<_i33.AnkiScheduler>(() => const _i33.AnkiScheduler());
     gh.lazySingleton<_i856.RoadmapLocalFileService>(
         () => _i856.RoadmapLocalFileService());
     gh.lazySingleton<_i565.DriftLessonCache>(
         () => _i565.DriftLessonCache(gh<_i982.AppDatabase>()));
     gh.lazySingleton<_i858.DriftLessonProgressDataSource>(
         () => _i858.DriftLessonProgressDataSource(gh<_i982.AppDatabase>()));
+    gh.lazySingleton<_i512.DriftPracticeDataSource>(
+        () => _i512.DriftPracticeDataSource(gh<_i982.AppDatabase>()));
     gh.lazySingleton<_i787.AuthRepository>(
         () => _i153.AuthRepositoryImpl(gh<_i76.SupabaseAuthDatasource>()));
     gh.lazySingleton<_i79.RoadmapAssetDataSource>(
@@ -75,6 +89,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i328.AssetLessonDataSource>(),
           gh<_i858.DriftLessonProgressDataSource>(),
         ));
+    gh.lazySingleton<_i980.PracticeRepository>(
+        () => _i862.PracticeRepositoryImpl(
+              gh<_i512.DriftPracticeDataSource>(),
+              gh<_i444.ApkgImportDataSource>(),
+              gh<_i33.AnkiScheduler>(),
+            ));
     return this;
   }
 }

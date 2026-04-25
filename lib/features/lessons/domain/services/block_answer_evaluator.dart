@@ -8,21 +8,39 @@ class BlockAnswerEvaluator {
     String? submittedAnswer,
     List<String> selectedOptionIds = const <String>[],
   }) {
-    return block.when(
-      text: (_, __, ___, ____, _____, ______, _______) => true,
-      quiz: (_, __, ___, ____, correctAnswer, _____, ______) =>
-          _normalize(submittedAnswer) == _normalize(correctAnswer),
-      video: (_, __, ___, ____, _____, ______, _______) => true,
-      code: (_, __, ___, ____, _____, expectedAnswer, ______, _______) =>
-          expectedAnswer == null || expectedAnswer.isEmpty
-              ? true
-              : _normalize(submittedAnswer) == _normalize(expectedAnswer),
-      choice: (_, __, ___, ____, correctOptionId, multiple, ______) => multiple == true
-          ? selectedOptionIds.length == 1 && selectedOptionIds.first == correctOptionId
-          : selectedOptionIds.length == 1 && selectedOptionIds.first == correctOptionId,
-      unknown: (_, __, ___, ____, _____) => false,
-    );
+    return switch (block) {
+      TextBlock() => true,
+      QuizBlock(:final correctAnswer) => _normalize(submittedAnswer) == _normalize(correctAnswer),
+      VideoBlock() => true,
+      CodeBlock(:final expectedAnswer) => expectedAnswer == null || expectedAnswer.isEmpty
+          ? true
+          : _normalize(submittedAnswer) == _normalize(expectedAnswer),
+      ChoiceBlock(:final correctOptionId) =>
+        selectedOptionIds.length == 1 && selectedOptionIds.first == correctOptionId,
+      SentenceBuilderBlock(:final correctTokenIds) => _matchesOrderedTokens(
+          selectedOptionIds: selectedOptionIds,
+          correctTokenIds: correctTokenIds,
+        ),
+      UnknownLessonBlock() => false,
+    };
   }
 
   String _normalize(String? value) => value?.trim().toLowerCase() ?? '';
+
+  bool _matchesOrderedTokens({
+    required List<String> selectedOptionIds,
+    required List<String> correctTokenIds,
+  }) {
+    if (selectedOptionIds.length != correctTokenIds.length) {
+      return false;
+    }
+
+    for (var index = 0; index < correctTokenIds.length; index += 1) {
+      if (selectedOptionIds[index] != correctTokenIds[index]) {
+        return false;
+      }
+    }
+
+    return true;
+  }
 }

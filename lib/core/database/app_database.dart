@@ -79,6 +79,88 @@ class LessonAttemptTable extends Table {
   DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
 }
 
+class PracticeDeckTable extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+  TextColumn get description => text().nullable()();
+  TextColumn get sourceType => text().withDefault(const Constant('manual'))();
+  IntColumn get ankiDeckId => integer().nullable()();
+  IntColumn get maxNewPerDay => integer().withDefault(const Constant(20))();
+  IntColumn get maxReviewsPerDay => integer().withDefault(const Constant(200))();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class PracticeCardTable extends Table {
+  TextColumn get id => text()();
+  TextColumn get deckId => text()();
+  TextColumn get frontHtml => text()();
+  TextColumn get backHtml => text()();
+  TextColumn get frontPlain => text()();
+  TextColumn get backPlain => text()();
+  TextColumn get queue => text().withDefault(const Constant('new'))();
+  DateTimeColumn get dueAt => dateTime().nullable()();
+  IntColumn get dueDay => integer().nullable()();
+  IntColumn get intervalDays => integer().withDefault(const Constant(0))();
+  IntColumn get easeFactorMilli => integer().withDefault(const Constant(2500))();
+  IntColumn get reps => integer().withDefault(const Constant(0))();
+  IntColumn get lapses => integer().withDefault(const Constant(0))();
+  IntColumn get remainingSteps => integer().withDefault(const Constant(0))();
+  IntColumn get learningStepIndex => integer().withDefault(const Constant(0))();
+  DateTimeColumn get lastReviewedAt => dateTime().nullable()();
+  BoolColumn get isLeech => boolean().withDefault(const Constant(false))();
+  TextColumn get tagsJson => text().withDefault(const Constant('[]'))();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+  DateTimeColumn get updatedAt => dateTime().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class PracticeReviewTable extends Table {
+  TextColumn get id => text()();
+  TextColumn get cardId => text()();
+  DateTimeColumn get reviewedAt => dateTime()();
+  TextColumn get rating => text()();
+  TextColumn get queueBefore => text()();
+  TextColumn get queueAfter => text()();
+  IntColumn get intervalBeforeDays => integer().withDefault(const Constant(0))();
+  IntColumn get intervalAfterDays => integer().withDefault(const Constant(0))();
+  IntColumn get easeBeforeMilli => integer().withDefault(const Constant(2500))();
+  IntColumn get easeAfterMilli => integer().withDefault(const Constant(2500))();
+  IntColumn get elapsedMs => integer().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class PracticeMediaTable extends Table {
+  TextColumn get id => text()();
+  TextColumn get checksumSha1 => text().unique()();
+  TextColumn get originalName => text()();
+  TextColumn get storedName => text()();
+  TextColumn get mimeType => text()();
+  TextColumn get localPath => text()();
+  IntColumn get sizeBytes => integer().withDefault(const Constant(0))();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class PracticeCardMediaTable extends Table {
+  TextColumn get cardId => text()();
+  TextColumn get mediaId => text()();
+  TextColumn get usageType => text()();
+  TextColumn get originalToken => text()();
+
+  @override
+  Set<Column> get primaryKey => {cardId, mediaId, usageType};
+}
+
 class DictionaryCacheTable extends Table {
   TextColumn get word => text()();
   TextColumn get language => text()();
@@ -106,6 +188,11 @@ class AnswerHistoryLocalTable extends Table {
   UserStatsTable,
   LessonSyncQueueTable,
   LessonAttemptTable,
+  PracticeDeckTable,
+  PracticeCardTable,
+  PracticeReviewTable,
+  PracticeMediaTable,
+  PracticeCardMediaTable,
   DictionaryCacheTable,
   AnswerHistoryLocalTable,
 ])
@@ -113,7 +200,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(driftDatabase(name: 'momokiki.db'));
 
   @override
-  int get schemaVersion => 3;
+  int get schemaVersion => 4;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -132,6 +219,14 @@ class AppDatabase extends _$AppDatabase {
 
           if (from < 3) {
             await _ensureLessonAttemptTableExists();
+          }
+
+          if (from < 4) {
+            await migrator.createTable(practiceDeckTable);
+            await migrator.createTable(practiceCardTable);
+            await migrator.createTable(practiceReviewTable);
+            await migrator.createTable(practiceMediaTable);
+            await migrator.createTable(practiceCardMediaTable);
           }
         },
       );

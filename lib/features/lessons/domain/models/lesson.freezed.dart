@@ -648,6 +648,8 @@ LessonBlock _$LessonBlockFromJson(Map<String, dynamic> json) {
       return _CodeBlock.fromJson(json);
     case 'choice':
       return _ChoiceBlock.fromJson(json);
+    case 'sentence_builder':
+      return _SentenceBuilderBlock.fromJson(json);
 
     default:
       return _UnknownLessonBlock.fromJson(json);
@@ -706,6 +708,16 @@ mixin _$LessonBlock {
             bool? multiple,
             Map<String, Object?> extras)
         choice,
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)
+        sentenceBuilder,
     required TResult Function(String id, String type, String title,
             String? rawType, Map<String, Object?> raw)
         unknown,
@@ -753,6 +765,16 @@ mixin _$LessonBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult? Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -800,6 +822,16 @@ mixin _$LessonBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -813,6 +845,7 @@ mixin _$LessonBlock {
     required TResult Function(_VideoBlock value) video,
     required TResult Function(_CodeBlock value) code,
     required TResult Function(_ChoiceBlock value) choice,
+    required TResult Function(_SentenceBuilderBlock value) sentenceBuilder,
     required TResult Function(_UnknownLessonBlock value) unknown,
   }) =>
       throw _privateConstructorUsedError;
@@ -823,6 +856,7 @@ mixin _$LessonBlock {
     TResult? Function(_VideoBlock value)? video,
     TResult? Function(_CodeBlock value)? code,
     TResult? Function(_ChoiceBlock value)? choice,
+    TResult? Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult? Function(_UnknownLessonBlock value)? unknown,
   }) =>
       throw _privateConstructorUsedError;
@@ -833,6 +867,7 @@ mixin _$LessonBlock {
     TResult Function(_VideoBlock value)? video,
     TResult Function(_CodeBlock value)? code,
     TResult Function(_ChoiceBlock value)? choice,
+    TResult Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult Function(_UnknownLessonBlock value)? unknown,
     required TResult orElse(),
   }) =>
@@ -1097,6 +1132,16 @@ class _$TextBlockImpl extends _TextBlock {
             bool? multiple,
             Map<String, Object?> extras)
         choice,
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)
+        sentenceBuilder,
     required TResult Function(String id, String type, String title,
             String? rawType, Map<String, Object?> raw)
         unknown,
@@ -1147,6 +1192,16 @@ class _$TextBlockImpl extends _TextBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult? Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -1197,6 +1252,16 @@ class _$TextBlockImpl extends _TextBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -1216,6 +1281,7 @@ class _$TextBlockImpl extends _TextBlock {
     required TResult Function(_VideoBlock value) video,
     required TResult Function(_CodeBlock value) code,
     required TResult Function(_ChoiceBlock value) choice,
+    required TResult Function(_SentenceBuilderBlock value) sentenceBuilder,
     required TResult Function(_UnknownLessonBlock value) unknown,
   }) {
     return text(this);
@@ -1229,6 +1295,7 @@ class _$TextBlockImpl extends _TextBlock {
     TResult? Function(_VideoBlock value)? video,
     TResult? Function(_CodeBlock value)? code,
     TResult? Function(_ChoiceBlock value)? choice,
+    TResult? Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult? Function(_UnknownLessonBlock value)? unknown,
   }) {
     return text?.call(this);
@@ -1242,6 +1309,7 @@ class _$TextBlockImpl extends _TextBlock {
     TResult Function(_VideoBlock value)? video,
     TResult Function(_CodeBlock value)? code,
     TResult Function(_ChoiceBlock value)? choice,
+    TResult Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult Function(_UnknownLessonBlock value)? unknown,
     required TResult orElse(),
   }) {
@@ -1502,6 +1570,16 @@ class _$QuizBlockImpl extends _QuizBlock {
             bool? multiple,
             Map<String, Object?> extras)
         choice,
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)
+        sentenceBuilder,
     required TResult Function(String id, String type, String title,
             String? rawType, Map<String, Object?> raw)
         unknown,
@@ -1553,6 +1631,16 @@ class _$QuizBlockImpl extends _QuizBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult? Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -1604,6 +1692,16 @@ class _$QuizBlockImpl extends _QuizBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -1624,6 +1722,7 @@ class _$QuizBlockImpl extends _QuizBlock {
     required TResult Function(_VideoBlock value) video,
     required TResult Function(_CodeBlock value) code,
     required TResult Function(_ChoiceBlock value) choice,
+    required TResult Function(_SentenceBuilderBlock value) sentenceBuilder,
     required TResult Function(_UnknownLessonBlock value) unknown,
   }) {
     return quiz(this);
@@ -1637,6 +1736,7 @@ class _$QuizBlockImpl extends _QuizBlock {
     TResult? Function(_VideoBlock value)? video,
     TResult? Function(_CodeBlock value)? code,
     TResult? Function(_ChoiceBlock value)? choice,
+    TResult? Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult? Function(_UnknownLessonBlock value)? unknown,
   }) {
     return quiz?.call(this);
@@ -1650,6 +1750,7 @@ class _$QuizBlockImpl extends _QuizBlock {
     TResult Function(_VideoBlock value)? video,
     TResult Function(_CodeBlock value)? code,
     TResult Function(_ChoiceBlock value)? choice,
+    TResult Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult Function(_UnknownLessonBlock value)? unknown,
     required TResult orElse(),
   }) {
@@ -1896,6 +1997,16 @@ class _$VideoBlockImpl extends _VideoBlock {
             bool? multiple,
             Map<String, Object?> extras)
         choice,
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)
+        sentenceBuilder,
     required TResult Function(String id, String type, String title,
             String? rawType, Map<String, Object?> raw)
         unknown,
@@ -1946,6 +2057,16 @@ class _$VideoBlockImpl extends _VideoBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult? Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -1997,6 +2118,16 @@ class _$VideoBlockImpl extends _VideoBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -2016,6 +2147,7 @@ class _$VideoBlockImpl extends _VideoBlock {
     required TResult Function(_VideoBlock value) video,
     required TResult Function(_CodeBlock value) code,
     required TResult Function(_ChoiceBlock value) choice,
+    required TResult Function(_SentenceBuilderBlock value) sentenceBuilder,
     required TResult Function(_UnknownLessonBlock value) unknown,
   }) {
     return video(this);
@@ -2029,6 +2161,7 @@ class _$VideoBlockImpl extends _VideoBlock {
     TResult? Function(_VideoBlock value)? video,
     TResult? Function(_CodeBlock value)? code,
     TResult? Function(_ChoiceBlock value)? choice,
+    TResult? Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult? Function(_UnknownLessonBlock value)? unknown,
   }) {
     return video?.call(this);
@@ -2042,6 +2175,7 @@ class _$VideoBlockImpl extends _VideoBlock {
     TResult Function(_VideoBlock value)? video,
     TResult Function(_CodeBlock value)? code,
     TResult Function(_ChoiceBlock value)? choice,
+    TResult Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult Function(_UnknownLessonBlock value)? unknown,
     required TResult orElse(),
   }) {
@@ -2315,6 +2449,16 @@ class _$CodeBlockImpl extends _CodeBlock {
             bool? multiple,
             Map<String, Object?> extras)
         choice,
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)
+        sentenceBuilder,
     required TResult Function(String id, String type, String title,
             String? rawType, Map<String, Object?> raw)
         unknown,
@@ -2366,6 +2510,16 @@ class _$CodeBlockImpl extends _CodeBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult? Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -2417,6 +2571,16 @@ class _$CodeBlockImpl extends _CodeBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -2437,6 +2601,7 @@ class _$CodeBlockImpl extends _CodeBlock {
     required TResult Function(_VideoBlock value) video,
     required TResult Function(_CodeBlock value) code,
     required TResult Function(_ChoiceBlock value) choice,
+    required TResult Function(_SentenceBuilderBlock value) sentenceBuilder,
     required TResult Function(_UnknownLessonBlock value) unknown,
   }) {
     return code(this);
@@ -2450,6 +2615,7 @@ class _$CodeBlockImpl extends _CodeBlock {
     TResult? Function(_VideoBlock value)? video,
     TResult? Function(_CodeBlock value)? code,
     TResult? Function(_ChoiceBlock value)? choice,
+    TResult? Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult? Function(_UnknownLessonBlock value)? unknown,
   }) {
     return code?.call(this);
@@ -2463,6 +2629,7 @@ class _$CodeBlockImpl extends _CodeBlock {
     TResult Function(_VideoBlock value)? video,
     TResult Function(_CodeBlock value)? code,
     TResult Function(_ChoiceBlock value)? choice,
+    TResult Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult Function(_UnknownLessonBlock value)? unknown,
     required TResult orElse(),
   }) {
@@ -2726,6 +2893,16 @@ class _$ChoiceBlockImpl extends _ChoiceBlock {
             bool? multiple,
             Map<String, Object?> extras)
         choice,
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)
+        sentenceBuilder,
     required TResult Function(String id, String type, String title,
             String? rawType, Map<String, Object?> raw)
         unknown,
@@ -2776,6 +2953,16 @@ class _$ChoiceBlockImpl extends _ChoiceBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult? Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -2827,6 +3014,16 @@ class _$ChoiceBlockImpl extends _ChoiceBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -2847,6 +3044,7 @@ class _$ChoiceBlockImpl extends _ChoiceBlock {
     required TResult Function(_VideoBlock value) video,
     required TResult Function(_CodeBlock value) code,
     required TResult Function(_ChoiceBlock value) choice,
+    required TResult Function(_SentenceBuilderBlock value) sentenceBuilder,
     required TResult Function(_UnknownLessonBlock value) unknown,
   }) {
     return choice(this);
@@ -2860,6 +3058,7 @@ class _$ChoiceBlockImpl extends _ChoiceBlock {
     TResult? Function(_VideoBlock value)? video,
     TResult? Function(_CodeBlock value)? code,
     TResult? Function(_ChoiceBlock value)? choice,
+    TResult? Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult? Function(_UnknownLessonBlock value)? unknown,
   }) {
     return choice?.call(this);
@@ -2873,6 +3072,7 @@ class _$ChoiceBlockImpl extends _ChoiceBlock {
     TResult Function(_VideoBlock value)? video,
     TResult Function(_CodeBlock value)? code,
     TResult Function(_ChoiceBlock value)? choice,
+    TResult Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult Function(_UnknownLessonBlock value)? unknown,
     required TResult orElse(),
   }) {
@@ -2920,6 +3120,412 @@ abstract class _ChoiceBlock extends LessonBlock {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ChoiceBlockImplCopyWith<_$ChoiceBlockImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$SentenceBuilderBlockImplCopyWith<$Res>
+    implements $LessonBlockCopyWith<$Res> {
+  factory _$$SentenceBuilderBlockImplCopyWith(_$SentenceBuilderBlockImpl value,
+          $Res Function(_$SentenceBuilderBlockImpl) then) =
+      __$$SentenceBuilderBlockImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String type,
+      String prompt,
+      List<SentenceToken> tokens,
+      @JsonKey(name: 'correct_token_ids') List<String> correctTokenIds,
+      @JsonKey(name: 'correct_answer') String? correctAnswer,
+      String? explanation,
+      Map<String, Object?> extras});
+}
+
+/// @nodoc
+class __$$SentenceBuilderBlockImplCopyWithImpl<$Res>
+    extends _$LessonBlockCopyWithImpl<$Res, _$SentenceBuilderBlockImpl>
+    implements _$$SentenceBuilderBlockImplCopyWith<$Res> {
+  __$$SentenceBuilderBlockImplCopyWithImpl(_$SentenceBuilderBlockImpl _value,
+      $Res Function(_$SentenceBuilderBlockImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of LessonBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? type = null,
+    Object? prompt = null,
+    Object? tokens = null,
+    Object? correctTokenIds = null,
+    Object? correctAnswer = freezed,
+    Object? explanation = freezed,
+    Object? extras = null,
+  }) {
+    return _then(_$SentenceBuilderBlockImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      type: null == type
+          ? _value.type
+          : type // ignore: cast_nullable_to_non_nullable
+              as String,
+      prompt: null == prompt
+          ? _value.prompt
+          : prompt // ignore: cast_nullable_to_non_nullable
+              as String,
+      tokens: null == tokens
+          ? _value._tokens
+          : tokens // ignore: cast_nullable_to_non_nullable
+              as List<SentenceToken>,
+      correctTokenIds: null == correctTokenIds
+          ? _value._correctTokenIds
+          : correctTokenIds // ignore: cast_nullable_to_non_nullable
+              as List<String>,
+      correctAnswer: freezed == correctAnswer
+          ? _value.correctAnswer
+          : correctAnswer // ignore: cast_nullable_to_non_nullable
+              as String?,
+      explanation: freezed == explanation
+          ? _value.explanation
+          : explanation // ignore: cast_nullable_to_non_nullable
+              as String?,
+      extras: null == extras
+          ? _value._extras
+          : extras // ignore: cast_nullable_to_non_nullable
+              as Map<String, Object?>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$SentenceBuilderBlockImpl extends _SentenceBuilderBlock {
+  const _$SentenceBuilderBlockImpl(
+      {required this.id,
+      this.type = 'sentence_builder',
+      required this.prompt,
+      final List<SentenceToken> tokens = const <SentenceToken>[],
+      @JsonKey(name: 'correct_token_ids')
+      final List<String> correctTokenIds = const <String>[],
+      @JsonKey(name: 'correct_answer') this.correctAnswer,
+      this.explanation,
+      final Map<String, Object?> extras = const <String, Object?>{}})
+      : _tokens = tokens,
+        _correctTokenIds = correctTokenIds,
+        _extras = extras,
+        super._();
+
+  factory _$SentenceBuilderBlockImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SentenceBuilderBlockImplFromJson(json);
+
+  @override
+  final String id;
+  @override
+  @JsonKey()
+  final String type;
+  @override
+  final String prompt;
+  final List<SentenceToken> _tokens;
+  @override
+  @JsonKey()
+  List<SentenceToken> get tokens {
+    if (_tokens is EqualUnmodifiableListView) return _tokens;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tokens);
+  }
+
+  final List<String> _correctTokenIds;
+  @override
+  @JsonKey(name: 'correct_token_ids')
+  List<String> get correctTokenIds {
+    if (_correctTokenIds is EqualUnmodifiableListView) return _correctTokenIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_correctTokenIds);
+  }
+
+  @override
+  @JsonKey(name: 'correct_answer')
+  final String? correctAnswer;
+  @override
+  final String? explanation;
+  final Map<String, Object?> _extras;
+  @override
+  @JsonKey()
+  Map<String, Object?> get extras {
+    if (_extras is EqualUnmodifiableMapView) return _extras;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_extras);
+  }
+
+  @override
+  String toString() {
+    return 'LessonBlock.sentenceBuilder(id: $id, type: $type, prompt: $prompt, tokens: $tokens, correctTokenIds: $correctTokenIds, correctAnswer: $correctAnswer, explanation: $explanation, extras: $extras)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$SentenceBuilderBlockImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.type, type) || other.type == type) &&
+            (identical(other.prompt, prompt) || other.prompt == prompt) &&
+            const DeepCollectionEquality().equals(other._tokens, _tokens) &&
+            const DeepCollectionEquality()
+                .equals(other._correctTokenIds, _correctTokenIds) &&
+            (identical(other.correctAnswer, correctAnswer) ||
+                other.correctAnswer == correctAnswer) &&
+            (identical(other.explanation, explanation) ||
+                other.explanation == explanation) &&
+            const DeepCollectionEquality().equals(other._extras, _extras));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      type,
+      prompt,
+      const DeepCollectionEquality().hash(_tokens),
+      const DeepCollectionEquality().hash(_correctTokenIds),
+      correctAnswer,
+      explanation,
+      const DeepCollectionEquality().hash(_extras));
+
+  /// Create a copy of LessonBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$SentenceBuilderBlockImplCopyWith<_$SentenceBuilderBlockImpl>
+      get copyWith => __$$SentenceBuilderBlockImplCopyWithImpl<
+          _$SentenceBuilderBlockImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(String id, String type, String title, String content,
+            bool skippable, List<String> bullets, Map<String, Object?> extras)
+        text,
+    required TResult Function(String id, String type, String question, List<String> options,
+            @JsonKey(name: 'correct_answer') String correctAnswer, String? explanation, Map<String, Object?> extras)
+        quiz,
+    required TResult Function(String id, String type, String title,
+            @JsonKey(name: 'video_url') String videoUrl, String? caption, int durationSeconds, Map<String, Object?> extras)
+        video,
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            @JsonKey(name: 'code_snippet') String codeSnippet,
+            String? language,
+            @JsonKey(name: 'expected_answer') String? expectedAnswer,
+            List<String> hints,
+            Map<String, Object?> extras)
+        code,
+    required TResult Function(String id, String type, String prompt,
+            List<ChoiceOption> options, @JsonKey(name: 'correct_option_id') String correctOptionId, bool? multiple, Map<String, Object?> extras)
+        choice,
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)
+        sentenceBuilder,
+    required TResult Function(
+            String id, String type, String title, String? rawType, Map<String, Object?> raw)
+        unknown,
+  }) {
+    return sentenceBuilder(id, type, prompt, tokens, correctTokenIds,
+        correctAnswer, explanation, extras);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(String id, String type, String title, String content,
+            bool skippable, List<String> bullets, Map<String, Object?> extras)?
+        text,
+    TResult? Function(String id, String type, String question, List<String> options,
+            @JsonKey(name: 'correct_answer') String correctAnswer, String? explanation, Map<String, Object?> extras)?
+        quiz,
+    TResult? Function(String id, String type, String title,
+            @JsonKey(name: 'video_url') String videoUrl, String? caption, int durationSeconds, Map<String, Object?> extras)?
+        video,
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            @JsonKey(name: 'code_snippet') String codeSnippet,
+            String? language,
+            @JsonKey(name: 'expected_answer') String? expectedAnswer,
+            List<String> hints,
+            Map<String, Object?> extras)?
+        code,
+    TResult? Function(String id, String type, String prompt,
+            List<ChoiceOption> options, @JsonKey(name: 'correct_option_id') String correctOptionId, bool? multiple, Map<String, Object?> extras)?
+        choice,
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
+    TResult? Function(String id, String type, String title, String? rawType,
+            Map<String, Object?> raw)?
+        unknown,
+  }) {
+    return sentenceBuilder?.call(id, type, prompt, tokens, correctTokenIds,
+        correctAnswer, explanation, extras);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(String id, String type, String title, String content,
+            bool skippable, List<String> bullets, Map<String, Object?> extras)?
+        text,
+    TResult Function(String id, String type, String question, List<String> options,
+            @JsonKey(name: 'correct_answer') String correctAnswer, String? explanation, Map<String, Object?> extras)?
+        quiz,
+    TResult Function(String id, String type, String title,
+            @JsonKey(name: 'video_url') String videoUrl, String? caption, int durationSeconds, Map<String, Object?> extras)?
+        video,
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            @JsonKey(name: 'code_snippet') String codeSnippet,
+            String? language,
+            @JsonKey(name: 'expected_answer') String? expectedAnswer,
+            List<String> hints,
+            Map<String, Object?> extras)?
+        code,
+    TResult Function(String id, String type, String prompt,
+            List<ChoiceOption> options, @JsonKey(name: 'correct_option_id') String correctOptionId, bool? multiple, Map<String, Object?> extras)?
+        choice,
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
+    TResult Function(String id, String type, String title, String? rawType,
+            Map<String, Object?> raw)?
+        unknown,
+    required TResult orElse(),
+  }) {
+    if (sentenceBuilder != null) {
+      return sentenceBuilder(id, type, prompt, tokens, correctTokenIds,
+          correctAnswer, explanation, extras);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_TextBlock value) text,
+    required TResult Function(_QuizBlock value) quiz,
+    required TResult Function(_VideoBlock value) video,
+    required TResult Function(_CodeBlock value) code,
+    required TResult Function(_ChoiceBlock value) choice,
+    required TResult Function(_SentenceBuilderBlock value) sentenceBuilder,
+    required TResult Function(_UnknownLessonBlock value) unknown,
+  }) {
+    return sentenceBuilder(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_TextBlock value)? text,
+    TResult? Function(_QuizBlock value)? quiz,
+    TResult? Function(_VideoBlock value)? video,
+    TResult? Function(_CodeBlock value)? code,
+    TResult? Function(_ChoiceBlock value)? choice,
+    TResult? Function(_SentenceBuilderBlock value)? sentenceBuilder,
+    TResult? Function(_UnknownLessonBlock value)? unknown,
+  }) {
+    return sentenceBuilder?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_TextBlock value)? text,
+    TResult Function(_QuizBlock value)? quiz,
+    TResult Function(_VideoBlock value)? video,
+    TResult Function(_CodeBlock value)? code,
+    TResult Function(_ChoiceBlock value)? choice,
+    TResult Function(_SentenceBuilderBlock value)? sentenceBuilder,
+    TResult Function(_UnknownLessonBlock value)? unknown,
+    required TResult orElse(),
+  }) {
+    if (sentenceBuilder != null) {
+      return sentenceBuilder(this);
+    }
+    return orElse();
+  }
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$SentenceBuilderBlockImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _SentenceBuilderBlock extends LessonBlock {
+  const factory _SentenceBuilderBlock(
+      {required final String id,
+      final String type,
+      required final String prompt,
+      final List<SentenceToken> tokens,
+      @JsonKey(name: 'correct_token_ids') final List<String> correctTokenIds,
+      @JsonKey(name: 'correct_answer') final String? correctAnswer,
+      final String? explanation,
+      final Map<String, Object?> extras}) = _$SentenceBuilderBlockImpl;
+  const _SentenceBuilderBlock._() : super._();
+
+  factory _SentenceBuilderBlock.fromJson(Map<String, dynamic> json) =
+      _$SentenceBuilderBlockImpl.fromJson;
+
+  @override
+  String get id;
+  @override
+  String get type;
+  String get prompt;
+  List<SentenceToken> get tokens;
+  @JsonKey(name: 'correct_token_ids')
+  List<String> get correctTokenIds;
+  @JsonKey(name: 'correct_answer')
+  String? get correctAnswer;
+  String? get explanation;
+  Map<String, Object?> get extras;
+
+  /// Create a copy of LessonBlock
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SentenceBuilderBlockImplCopyWith<_$SentenceBuilderBlockImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -3097,6 +3703,16 @@ class _$UnknownLessonBlockImpl extends _UnknownLessonBlock {
             bool? multiple,
             Map<String, Object?> extras)
         choice,
+    required TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)
+        sentenceBuilder,
     required TResult Function(String id, String type, String title,
             String? rawType, Map<String, Object?> raw)
         unknown,
@@ -3147,6 +3763,16 @@ class _$UnknownLessonBlockImpl extends _UnknownLessonBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult? Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult? Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -3197,6 +3823,16 @@ class _$UnknownLessonBlockImpl extends _UnknownLessonBlock {
             bool? multiple,
             Map<String, Object?> extras)?
         choice,
+    TResult Function(
+            String id,
+            String type,
+            String prompt,
+            List<SentenceToken> tokens,
+            List<String> correctTokenIds,
+            String? correctAnswer,
+            String? explanation,
+            Map<String, Object?> extras)?
+        sentenceBuilder,
     TResult Function(String id, String type, String title, String? rawType,
             Map<String, Object?> raw)?
         unknown,
@@ -3216,6 +3852,7 @@ class _$UnknownLessonBlockImpl extends _UnknownLessonBlock {
     required TResult Function(_VideoBlock value) video,
     required TResult Function(_CodeBlock value) code,
     required TResult Function(_ChoiceBlock value) choice,
+    required TResult Function(_SentenceBuilderBlock value) sentenceBuilder,
     required TResult Function(_UnknownLessonBlock value) unknown,
   }) {
     return unknown(this);
@@ -3229,6 +3866,7 @@ class _$UnknownLessonBlockImpl extends _UnknownLessonBlock {
     TResult? Function(_VideoBlock value)? video,
     TResult? Function(_CodeBlock value)? code,
     TResult? Function(_ChoiceBlock value)? choice,
+    TResult? Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult? Function(_UnknownLessonBlock value)? unknown,
   }) {
     return unknown?.call(this);
@@ -3242,6 +3880,7 @@ class _$UnknownLessonBlockImpl extends _UnknownLessonBlock {
     TResult Function(_VideoBlock value)? video,
     TResult Function(_CodeBlock value)? code,
     TResult Function(_ChoiceBlock value)? choice,
+    TResult Function(_SentenceBuilderBlock value)? sentenceBuilder,
     TResult Function(_UnknownLessonBlock value)? unknown,
     required TResult orElse(),
   }) {

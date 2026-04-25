@@ -26,13 +26,12 @@ class RoadmapLocalFileService {
     final fileName = normalized.split('/').last;
     final localFile = File('${roadmapsDirectory.path}/$fileName');
 
-    if (await localFile.exists()) {
-      return localFile;
-    }
-
     try {
       final assetData = await rootBundle.load(normalized);
-      await localFile.writeAsBytes(assetData.buffer.asUint8List(), flush: true);
+      await localFile.writeAsBytes(
+        assetData.buffer.asUint8List(assetData.offsetInBytes, assetData.lengthInBytes),
+        flush: true,
+      );
       return localFile;
     } catch (error) {
       throw Exception('Roadmap asset missing: $normalized');

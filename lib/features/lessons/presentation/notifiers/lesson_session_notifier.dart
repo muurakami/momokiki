@@ -2,10 +2,11 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/di/injection.dart';
-import '../../domain/models/lesson.dart';
 import '../../domain/models/lesson_progress.dart';
 import '../../domain/repositories/lesson_repository.dart';
 import '../../domain/services/block_answer_evaluator.dart';
+import '../../domain/services/lesson_feedback_builder.dart';
+import '../../domain/services/lesson_progress_updater.dart';
 import '../../domain/services/xp_calculator.dart';
 import 'lesson_session_state.dart';
 
@@ -15,13 +16,26 @@ part 'lesson_session_notifier.g.dart';
 class LessonSessionNotifier extends _$LessonSessionNotifier {
   LessonRepository get _repository => getIt<LessonRepository>();
   BlockAnswerEvaluator get _evaluator => const BlockAnswerEvaluator();
+  LessonFeedbackBuilder get _feedbackBuilder => const LessonFeedbackBuilder();
+  LessonProgressUpdater get _progressUpdater => const LessonProgressUpdater();
   XpCalculator get _xpCalculator => const XpCalculator();
 
   @override
   LessonSessionState build() => const LessonSessionState(isLoading: false);
 
   Future<void> loadLesson(String lessonId) async {
-    state = state.copyWith(isLoading: true, errorMessage: null, summary: null);
+    state = state.copyWith(
+      isLoading: true,
+      errorMessage: null,
+      summary: null,
+      lastResult: null,
+      feedbackMessage: null,
+      correctAnswerLabel: null,
+      showRetryPrompt: false,
+      currentBlockEarnedXp: 0,
+      currentAttemptCount: 0,
+      submitting: false,
+    );
 
     try {
       final lesson = await _repository.getLesson(lessonId);
@@ -34,6 +48,11 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
       );
       final stats = await _repository.getUserStats(userId);
       final attempts = await _repository.getAttempts(userId: userId, lessonId: lessonId);
+      final completedBlockIds = attempts
+          .where((attempt) => attempt.isCorrect)
+          .map((attempt) => attempt.blockId)
+          .toSet()
+          .toList();
 
       state = state.copyWith(
         isLoading: false,
@@ -42,11 +61,7 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
         progress: (savedProgress ?? LessonProgress(lessonId: lessonId, userId: userId)).copyWith(
           attemptCount: attempts.length,
           incorrectAnswers: attempts.where((attempt) => !attempt.isCorrect).length,
-          completedBlockIds: attempts
-              .where((attempt) => attempt.isCorrect)
-              .map((attempt) => attempt.blockId)
-              .toSet()
-              .toList(),
+          completedBlockIds: completedBlockIds,
           lastAttemptAt: attempts.isEmpty ? null : attempts.last.createdAt,
         ),
         totalXpPreview: stats.totalXp,
@@ -87,27 +102,8 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
         stats: stats,
         isCorrect: isCorrect,
       );
-
-      final correctAnswerLabel = switch (block) {
-        QuizBlock(:final correctAnswer) => correctAnswer,
-        ChoiceBlock(:final options, :final correctOptionId) => options
-                .firstWhere(
-                  (option) => option.id == correctOptionId,
-                  orElse: () => const ChoiceOption(id: 'unknown', label: 'Unknown'),
-                )
-                .label,
-        CodeBlock(:final expectedAnswer) => expectedAnswer,
-        _ => null,
-      };
-
-      final feedbackMessage = isCorrect
-          ? 'Correct. Nice work.'
-          : switch (block) {
-              QuizBlock(:final explanation) => explanation ?? 'That answer is not correct.',
-              ChoiceBlock() => 'Review the prompt and choose the correct option.',
-              CodeBlock() => 'Check the expected phrasing and try again.',
-              _ => 'Try again.',
-            };
+      final feedback = _feedbackBuilder.build(block: block, isCorrect: isCorrect);
+      final attemptedAt = DateTime.now();
 
       final attempt = LessonAttempt(
         userId: progress.userId,
@@ -117,60 +113,41 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
         submittedAnswer: submittedAnswer,
         selectedOptionIds: selectedOptionIds,
         isCorrect: isCorrect,
-        feedbackMessage: feedbackMessage,
+        feedbackMessage: feedback.message,
         earnedXp: earnedXp,
-        createdAt: DateTime.now(),
+        createdAt: attemptedAt,
       );
       await _repository.saveAttempt(attempt);
 
-      if (!isCorrect) {
-        final failedProgress = progress.copyWith(
-          attemptCount: progress.attemptCount + 1,
-          incorrectAnswers: progress.incorrectAnswers + 1,
-          lastAttemptAt: DateTime.now(),
-          updatedAt: DateTime.now(),
-        );
+      final progressUpdate = _progressUpdater.applyBlockResult(
+        lesson: lesson,
+        progress: progress,
+        block: block,
+        isCorrect: isCorrect,
+        earnedXp: earnedXp,
+        attemptNumber: attemptNumber,
+        attemptedAt: attemptedAt,
+        feedbackMessage: feedback.message,
+        correctAnswerLabel: feedback.correctAnswerLabel,
+        submittedAnswer: submittedAnswer,
+        selectedOptionIds: selectedOptionIds,
+      );
 
+      if (!isCorrect) {
         state = state.copyWith(
-          progress: failedProgress,
+          progress: progressUpdate.progress,
           submitting: false,
           currentAttemptCount: attemptNumber,
-          feedbackMessage: feedbackMessage,
-          correctAnswerLabel: correctAnswerLabel,
+          feedbackMessage: feedback.message,
+          correctAnswerLabel: feedback.correctAnswerLabel,
           showRetryPrompt: true,
           currentBlockEarnedXp: 0,
-          lastResult: LessonBlockResult(
-            lessonId: lesson.id,
-            blockId: block.id,
-            blockType: block.blockType,
-            isCorrect: false,
-            earnedXp: 0,
-            attemptNumber: attemptNumber,
-            submittedAnswer: submittedAnswer,
-            correctAnswerLabel: correctAnswerLabel,
-            feedbackMessage: feedbackMessage,
-            shouldRetry: true,
-            selectedOptionIds: selectedOptionIds,
-          ),
+          lastResult: progressUpdate.result,
         );
         return;
       }
 
-      final updatedProgress = progress.copyWith(
-        currentBlockIndex: progress.currentBlockIndex + 1,
-        answeredBlocks: progress.answeredBlocks + 1,
-        attemptCount: progress.attemptCount + 1,
-        correctAnswers: progress.correctAnswers + (isCorrect ? 1 : 0),
-        earnedXp: progress.earnedXp + earnedXp,
-        lastBlockId: block.id,
-        completedBlockIds: [...progress.completedBlockIds, block.id],
-        isCompleted: progress.currentBlockIndex + 1 >= lesson.blocks.length,
-        lastAttemptAt: DateTime.now(),
-        updatedAt: DateTime.now(),
-        completedAt: progress.currentBlockIndex + 1 >= lesson.blocks.length
-            ? DateTime.now()
-            : progress.completedAt,
-      );
+      final updatedProgress = progressUpdate.progress;
 
       final updatedStats = _xpCalculator.applyEarnedXp(
         stats: stats,
@@ -179,23 +156,10 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
         isCorrect: isCorrect,
       );
 
-      final result = LessonBlockResult(
-        lessonId: lesson.id,
-        blockId: block.id,
-        blockType: block.blockType,
-        isCorrect: isCorrect,
-        earnedXp: earnedXp,
-        attemptNumber: attemptNumber,
-        submittedAnswer: submittedAnswer,
-        correctAnswerLabel: correctAnswerLabel,
-        feedbackMessage: feedbackMessage,
-        selectedOptionIds: selectedOptionIds,
-      );
-
       await _repository.saveProgress(
         progress: updatedProgress,
         stats: updatedStats,
-        result: result,
+        result: progressUpdate.result,
       );
 
       LessonSummary? summary;
@@ -217,10 +181,10 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
         progress: updatedProgress,
         stats: updatedStats,
         summary: summary,
-        lastResult: result,
+        lastResult: progressUpdate.result,
         currentAttemptCount: attemptNumber,
-        feedbackMessage: feedbackMessage,
-        correctAnswerLabel: correctAnswerLabel,
+        feedbackMessage: feedback.message,
+        correctAnswerLabel: feedback.correctAnswerLabel,
         showRetryPrompt: false,
         currentBlockEarnedXp: earnedXp,
         totalXpPreview: updatedStats.totalXp,
