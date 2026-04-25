@@ -126,36 +126,40 @@ class _ScaffoldWithNav extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final location = GoRouterState.of(context).uri.path;
+    final isKeyboardOpen = MediaQuery.viewInsetsOf(context).bottom > 0;
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: child,
-      bottomNavigationBar: NavigationBar(
-        backgroundColor: const Color(0xFFF2E8CF),
-        indicatorColor: const Color(0xFF386641).withValues(alpha: 0.15),
-        selectedIndex: _locationToIndex(location),
-        onDestinationSelected: (i) => _indexToLocation(i, context),
-        destinations: const [
-          NavigationDestination(
-              icon: Icon(Icons.school_outlined),
-              selectedIcon: Icon(Icons.school),
-              label: 'Learn'),
-          NavigationDestination(
-              icon: Icon(Icons.style_outlined),
-              selectedIcon: Icon(Icons.style),
-              label: 'Practice'),
-          NavigationDestination(
-              icon: Icon(Icons.map_outlined),
-              selectedIcon: Icon(Icons.map),
-              label: 'Roadmaps'),
-          NavigationDestination(
-              icon: Icon(Icons.bar_chart_outlined),
-              selectedIcon: Icon(Icons.bar_chart),
-              label: 'Stats'),
-          NavigationDestination(
-              icon: Icon(Icons.person_outline),
-              selectedIcon: Icon(Icons.person),
-              label: 'Profile'),
-        ],
-      ),
+      bottomNavigationBar: isKeyboardOpen
+          ? null
+          : NavigationBar(
+              backgroundColor: const Color(0xFFF2E8CF),
+              indicatorColor: const Color(0xFF386641).withValues(alpha: 0.15),
+              selectedIndex: _locationToIndex(location),
+              onDestinationSelected: (i) => _indexToLocation(i, context),
+              destinations: const [
+                NavigationDestination(
+                    icon: Icon(Icons.school_outlined),
+                    selectedIcon: Icon(Icons.school),
+                    label: 'Learn'),
+                NavigationDestination(
+                    icon: Icon(Icons.style_outlined),
+                    selectedIcon: Icon(Icons.style),
+                    label: 'Practice'),
+                NavigationDestination(
+                    icon: Icon(Icons.map_outlined),
+                    selectedIcon: Icon(Icons.map),
+                    label: 'Roadmaps'),
+                NavigationDestination(
+                    icon: Icon(Icons.bar_chart_outlined),
+                    selectedIcon: Icon(Icons.bar_chart),
+                    label: 'Stats'),
+                NavigationDestination(
+                    icon: Icon(Icons.person_outline),
+                    selectedIcon: Icon(Icons.person),
+                    label: 'Profile'),
+              ],
+            ),
     );
   }
 

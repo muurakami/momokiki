@@ -1,35 +1,85 @@
 {
   "id": "ja_hiragana_1",
-  "version": 1,
-  "title": "Hiragana Starter",
+  "version": 3,
+  "title": "Hiragana First Sounds",
   "language": "japanese",
   "nextLessonId": "ja_katakana_1",
   "meta": {
-    "title": "Hiragana Starter",
-    "description": "Learn the first hiragana symbols.",
-    "estimated_xp": 40,
+    "title": "Hiragana First Sounds",
+    "description": "A guided first lesson on あ, い, and う with recognition, choices, and a quick recap.",
+    "estimated_xp": 60,
     "difficulty": 1,
-    "rating": 4.7,
+    "rating": 4.9,
     "language": "ja",
-    "tags": ["hiragana", "starter"]
+    "tags": ["hiragana", "starter", "onboarding"]
   },
   "blocks": [
     {
-      "id": "b1",
+      "id": "ja1_intro",
       "type": "text",
-      "title": "あ い う",
-      "content": "These are the first hiragana sounds: a, i, u.",
-      "bullets": ["あ = a", "い = i", "う = u"]
+      "title": "Meet your first 3 hiragana",
+      "content": "In this lesson, you only need three sounds: あ = a, い = i, う = u. Read them out loud once. The goal is not speed yet, just clean recognition.",
+      "bullets": [
+        "あ sounds like a in father",
+        "い sounds like ee in see",
+        "う sounds like u in flute"
+      ]
     },
     {
-      "id": "b2",
+      "id": "ja1_recognize_a",
+      "type": "quiz",
+      "question": "Which sound matches あ?",
+      "options": ["a", "i", "u", "e"],
+      "correct_answer": "a",
+      "explanation": "あ is the hiragana for the sound a."
+    },
+    {
+      "id": "ja1_recognize_i",
       "type": "choice",
-      "prompt": "Which symbol makes the sound a?",
-      "correct_option_id": "o1",
+      "prompt": "Tap the symbol for the sound i.",
+      "correct_option_id": "o2",
       "options": [
         {"id": "o1", "label": "あ"},
-        {"id": "o2", "label": "い"}
+        {"id": "o2", "label": "い"},
+        {"id": "o3", "label": "う"}
       ]
+    },
+    {
+      "id": "ja1_pick_u",
+      "type": "choice",
+      "prompt": "You hear u. Which hiragana should you pick?",
+      "correct_option_id": "o3",
+      "options": [
+        {"id": "o1", "label": "あ"},
+        {"id": "o2", "label": "い"},
+        {"id": "o3", "label": "う"}
+      ]
+    },
+    {
+      "id": "ja1_build_sequence",
+      "type": "sentence_builder",
+      "prompt": "Build the sequence a i u.",
+      "tokens": [
+        {"id": "t1", "label": "あ"},
+        {"id": "t2", "label": "う"},
+        {"id": "t3", "label": "い"},
+        {"id": "t4", "label": "え"}
+      ],
+      "correct_token_ids": ["t1", "t3", "t2"],
+      "correct_answer": "あ い う",
+      "explanation": "The lesson order is あ, then い, then う."
+    },
+    {
+      "id": "ja1_recap",
+      "type": "quiz",
+      "question": "Quick recap: which line is correct?",
+      "options": [
+        "あ = a, い = i, う = u",
+        "あ = i, い = u, う = a",
+        "あ = u, い = a, う = i"
+      ],
+      "correct_answer": "あ = a, い = i, う = u",
+      "explanation": "Keep this clean mapping in your head: あ = a, い = i, う = u."
     }
   ]
 }

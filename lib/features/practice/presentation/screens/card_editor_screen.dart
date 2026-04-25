@@ -22,29 +22,35 @@ class CardEditorScreen extends ConsumerStatefulWidget {
 class _CardEditorScreenState extends ConsumerState<CardEditorScreen> {
   final TextEditingController _frontController = TextEditingController();
   final TextEditingController _backController = TextEditingController();
-  bool _loadedExistingCard = false;
+  final FocusNode _frontFocusNode = FocusNode();
+  final FocusNode _backFocusNode = FocusNode();
+  bool _didHydrate = false;
+  bool _isDirty = false;
+  bool _isSaving = false;
 
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    if (_loadedExistingCard || widget.cardId == null) {
-      return;
+  void initState() {
+    super.initState();
+    _frontController.addListener(_markDirty);
+    _backController.addListener(_markDirty);
+    if (widget.cardId != null) {
+      _loadExistingCard(widget.cardId!);
     }
-    _loadedExistingCard = true;
-    _loadExistingCard(widget.cardId!);
   }
 
   @override
   void dispose() {
+    _frontController.removeListener(_markDirty);
+    _backController.removeListener(_markDirty);
     _frontController.dispose();
     _backController.dispose();
+    _frontFocusNode.dispose();
+    _backFocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    final saveState = ref.watch(cardEditorNotifierProvider);
-
     return Scaffold(
       appBar: AppBar(title: Text(widget.cardId == null ? 'New Card' : 'Edit Card')),
       body: Padding(
@@ -55,10 +61,13 @@ class _CardEditorScreenState extends ConsumerState<CardEditorScreen> {
               child: CardForm(
                 frontController: _frontController,
                 backController: _backController,
-                onSave: saveState.isLoading ? null : _save,
+                frontFocusNode: _frontFocusNode,
+                backFocusNode: _backFocusNode,
+                isSaving: _isSaving,
+                onSave: _isSaving ? null : _save,
               ),
             ),
-            if (saveState.isLoading) const LinearProgressIndicator(),
+            if (_isSaving) const LinearProgressIndicator(),
           ],
         ),
       ),
@@ -67,23 +76,69 @@ class _CardEditorScreenState extends ConsumerState<CardEditorScreen> {
 
   Future<void> _loadExistingCard(String cardId) async {
     final card = await ref.read(cardEditorNotifierProvider.notifier).loadCard(cardId);
-    if (!mounted || card == null) {
+    if (!mounted || card == null || _didHydrate || _isDirty) {
       return;
     }
-    _frontController.text = card.frontPlain;
-    _backController.text = card.backPlain;
+    _frontController.removeListener(_markDirty);
+    _backController.removeListener(_markDirty);
+    _frontController.value = TextEditingValue(
+      text: card.frontPlain,
+      selection: TextSelection.collapsed(offset: card.frontPlain.length),
+    );
+    _backController.value = TextEditingValue(
+      text: card.backPlain,
+      selection: TextSelection.collapsed(offset: card.backPlain.length),
+    );
+    _frontController.addListener(_markDirty);
+    _backController.addListener(_markDirty);
+    setState(() {
+      _didHydrate = true;
+      _isDirty = false;
+    });
   }
 
   Future<void> _save() async {
-    final savedCard = await ref.read(cardEditorNotifierProvider.notifier).saveCard(
-          id: widget.cardId,
-          deckId: widget.deckId,
-          front: _frontController.text,
-          back: _backController.text,
-        );
-    if (!mounted) {
+    if (_isSaving) {
       return;
     }
-    context.go('/app/practice/decks/${savedCard.deckId}');
+
+    await _commitPendingInput();
+
+    setState(() {
+      _isSaving = true;
+    });
+
+    try {
+      final savedCard = await ref.read(cardEditorNotifierProvider.notifier).saveCard(
+            id: widget.cardId,
+            deckId: widget.deckId,
+            front: _frontController.text,
+            back: _backController.text,
+          );
+      if (!mounted) {
+        return;
+      }
+      context.go('/app/practice/decks/${savedCard.deckId}');
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isSaving = false;
+        });
+      }
+    }
+  }
+
+  void _markDirty() {
+    if (_didHydrate || _isDirty) {
+      return;
+    }
+    setState(() {
+      _isDirty = true;
+    });
+  }
+
+  Future<void> _commitPendingInput() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    await WidgetsBinding.instance.endOfFrame;
   }
 }

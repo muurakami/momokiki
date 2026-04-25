@@ -104,20 +104,39 @@ class _LessonScreenState extends ConsumerState<LessonScreen> {
                 ),
                 const SizedBox(height: 24),
                 Expanded(
-                  child: SingleChildScrollView(
-                    child: LessonBlockRouter(
-                      block: currentBlock,
-                      result: state.lastResult,
-                      feedbackMessage: state.feedbackMessage,
-                      correctAnswerLabel: state.correctAnswerLabel,
-                      showRetryPrompt: state.showRetryPrompt,
-                      currentAttemptCount: state.currentAttemptCount,
-                      onSubmitted: ({submittedAnswer, selectedOptionIds = const <String>[]}) {
-                        return ref.read(lessonSessionNotifierProvider.notifier).submitBlock(
-                              submittedAnswer: submittedAnswer,
-                              selectedOptionIds: selectedOptionIds,
-                            );
-                      },
+                  child: AnimatedSwitcher(
+                    duration: const Duration(milliseconds: 320),
+                    switchInCurve: Curves.easeOutCubic,
+                    switchOutCurve: Curves.easeInCubic,
+                    transitionBuilder: (child, animation) {
+                      final offsetAnimation = Tween<Offset>(
+                        begin: const Offset(0.06, 0),
+                        end: Offset.zero,
+                      ).animate(animation);
+
+                      return FadeTransition(
+                        opacity: animation,
+                        child: SlideTransition(position: offsetAnimation, child: child),
+                      );
+                    },
+                    child: SingleChildScrollView(
+                      key: ValueKey<String>(
+                        '${currentBlock.id}-${progress.currentBlockIndex}',
+                      ),
+                      child: LessonBlockRouter(
+                        block: currentBlock,
+                        result: state.lastResult,
+                        feedbackMessage: state.feedbackMessage,
+                        correctAnswerLabel: state.correctAnswerLabel,
+                        showRetryPrompt: state.showRetryPrompt,
+                        currentAttemptCount: state.currentAttemptCount,
+                        onSubmitted: ({submittedAnswer, selectedOptionIds = const <String>[]}) {
+                          return ref.read(lessonSessionNotifierProvider.notifier).submitBlock(
+                                submittedAnswer: submittedAnswer,
+                                selectedOptionIds: selectedOptionIds,
+                              );
+                        },
+                      ),
                     ),
                   ),
                 ),

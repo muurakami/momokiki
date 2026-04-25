@@ -25,20 +25,38 @@ class LessonRepositoryImpl implements LessonRepository {
 
   @override
   Future<Lesson> getLesson(String lessonId) async {
-    final cached = await _cache.getLesson(lessonId);
-    if (cached != null) {
-      return cached;
+    final cachedResult = await _readLessonSafely(
+      source: _LessonSource.cache,
+      loader: () => _cache.getLesson(lessonId),
+    );
+    final remoteResult = await _readLessonSafely(
+      source: _LessonSource.remote,
+      loader: () => _remote.getLesson(lessonId),
+    );
+    final assetResult = await _readLessonSafely(
+      source: _LessonSource.asset,
+      loader: () => _asset.getLesson(lessonId),
+    );
+
+    final candidates = [
+      if (remoteResult.lesson != null) remoteResult,
+      if (assetResult.lesson != null) assetResult,
+      if (cachedResult.lesson != null) cachedResult,
+    ];
+
+    if (candidates.isEmpty) {
+      final failure = remoteResult.error ?? assetResult.error ?? cachedResult.error;
+      throw Exception('Lesson $lessonId is unavailable: ${failure ?? 'no source available'}');
     }
 
-    try {
-      final remote = await _remote.getLesson(lessonId);
-      await _cache.saveLesson(remote);
-      return remote;
-    } catch (_) {
-      final assetLesson = await _asset.getLesson(lessonId);
-      await _cache.saveLesson(assetLesson);
-      return assetLesson;
+    final selected = candidates.reduce(_pickPreferredLesson).lesson!;
+    final cachedLesson = cachedResult.lesson;
+
+    if (_shouldRefreshCache(cachedLesson: cachedLesson, selectedLesson: selected)) {
+      await _cache.saveLesson(selected);
     }
+
+    return selected;
   }
 
   @override
@@ -149,4 +167,71 @@ class LessonRepositoryImpl implements LessonRepository {
     debugPrint('LessonRepositoryImpl active: remote+local cache enabled');
     return super.toString();
   }
+
+  Future<_ResolvedLesson> _readLessonSafely({
+    required _LessonSource source,
+    required Future<Lesson?> Function() loader,
+  }) async {
+    try {
+      return _ResolvedLesson(source: source, lesson: await loader());
+    } catch (error, stackTrace) {
+      debugPrint('Failed to load lesson from ${source.name}: $error');
+      debugPrintStack(stackTrace: stackTrace);
+      return _ResolvedLesson(source: source, error: error);
+    }
+  }
+
+  _ResolvedLesson _pickPreferredLesson(_ResolvedLesson left, _ResolvedLesson right) {
+    final leftLesson = left.lesson;
+    final rightLesson = right.lesson;
+    if (leftLesson == null) {
+      return right;
+    }
+    if (rightLesson == null) {
+      return left;
+    }
+
+    if (leftLesson.version != rightLesson.version) {
+      return leftLesson.version > rightLesson.version ? left : right;
+    }
+
+    return left.source.priority >= right.source.priority ? left : right;
+  }
+
+  bool _shouldRefreshCache({
+    required Lesson? cachedLesson,
+    required Lesson selectedLesson,
+  }) {
+    if (cachedLesson == null) {
+      return true;
+    }
+
+    if (selectedLesson.version > cachedLesson.version) {
+      return true;
+    }
+
+    return selectedLesson != cachedLesson;
+  }
+}
+
+class _ResolvedLesson {
+  const _ResolvedLesson({
+    required this.source,
+    this.lesson,
+    this.error,
+  });
+
+  final _LessonSource source;
+  final Lesson? lesson;
+  final Object? error;
+}
+
+enum _LessonSource {
+  remote(3),
+  asset(2),
+  cache(1);
+
+  const _LessonSource(this.priority);
+
+  final int priority;
 }

@@ -1,37 +1,68 @@
 {
   "id": "en_present_simple_1",
-  "version": 1,
-  "title": "Present Simple Basics",
+  "version": 3,
+  "title": "Present Simple: Daily Routines",
   "language": "english",
   "nextLessonId": "en_present_simple_2",
   "meta": {
-    "title": "Present Simple Basics",
-    "description": "Talk about facts and habits in English.",
-    "estimated_xp": 50,
+    "title": "Present Simple: Daily Routines",
+    "description": "A modern first lesson on habits, routines, and the basic present simple pattern.",
+    "estimated_xp": 60,
     "difficulty": 1,
-    "rating": 4.9,
+    "rating": 5.0,
     "language": "en",
-    "tags": ["grammar", "present-simple"]
+    "tags": ["grammar", "present-simple", "onboarding"]
   },
   "blocks": [
     {
-      "id": "b1",
+      "id": "en1_intro",
       "type": "text",
-      "title": "Use Present Simple",
-      "content": "We use the present simple for habits, routines, and facts.",
-      "bullets": ["I work every day.", "She lives in London."]
+      "title": "Talk about real life, not right now",
+      "content": "Use the present simple for routines, habits, and everyday facts. Think about things that are generally true: what you do every day, where someone works, when school starts.",
+      "bullets": [
+        "I drink coffee every morning.",
+        "We study after work.",
+        "She walks to school."
+      ]
     },
     {
-      "id": "b2",
+      "id": "en1_recognize_routine",
       "type": "quiz",
-      "question": "Which sentence is present simple?",
-      "options": ["I am working now.", "I work every day."],
-      "correct_answer": "I work every day."
+      "question": "Which sentence talks about a routine?",
+      "options": [
+        "I am eating lunch now.",
+        "I eat lunch at 12 every day.",
+        "I was eating lunch yesterday."
+      ],
+      "correct_answer": "I eat lunch at 12 every day.",
+      "explanation": "Present simple is the routine form here: I eat lunch at 12 every day."
     },
     {
-      "id": "b3",
+      "id": "en1_he_she_it",
+      "type": "choice",
+      "prompt": "Choose the best sentence.",
+      "correct_option_id": "o2",
+      "options": [
+        {"id": "o1", "label": "She walk to work every day."},
+        {"id": "o2", "label": "She walks to work every day."},
+        {"id": "o3", "label": "She walking to work every day."}
+      ]
+    },
+    {
+      "id": "en1_routine_choice",
+      "type": "choice",
+      "prompt": "You want to describe a daily habit. What should you use?",
+      "correct_option_id": "o1",
+      "options": [
+        {"id": "o1", "label": "Present simple"},
+        {"id": "o2", "label": "Present continuous"},
+        {"id": "o3", "label": "Past simple"}
+      ]
+    },
+    {
+      "id": "en1_build_sentence",
       "type": "sentence_builder",
-      "prompt": "Build a present simple sentence about your routine.",
+      "prompt": "Build a natural routine sentence.",
       "tokens": [
         {"id": "t1", "label": "I"},
         {"id": "t2", "label": "study"},
@@ -44,6 +75,18 @@
       "correct_token_ids": ["t1", "t2", "t3", "t4", "t5"],
       "correct_answer": "I study English every day",
       "explanation": "Present simple uses the base verb for habits and routines."
+    },
+    {
+      "id": "en1_recap",
+      "type": "quiz",
+      "question": "Quick recap: which sentence is correct?",
+      "options": [
+        "He go to the gym on Mondays.",
+        "He goes to the gym on Mondays.",
+        "He is go to the gym on Mondays."
+      ],
+      "correct_answer": "He goes to the gym on Mondays.",
+      "explanation": "With he, she, and it, add -s: he goes, she works, it starts."
     }
   ]
 }

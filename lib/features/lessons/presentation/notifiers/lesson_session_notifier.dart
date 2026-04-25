@@ -2,6 +2,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/di/injection.dart';
+import '../../domain/models/lesson.dart';
 import '../../domain/models/lesson_progress.dart';
 import '../../domain/repositories/lesson_repository.dart';
 import '../../domain/services/block_answer_evaluator.dart';
@@ -11,6 +12,42 @@ import '../../domain/services/xp_calculator.dart';
 import 'lesson_session_state.dart';
 
 part 'lesson_session_notifier.g.dart';
+
+bool _hasCompatibleProgress({
+  required Lesson lesson,
+  required LessonProgress savedProgress,
+  required Set<String> currentBlockIds,
+  required bool hasIncompatibleAttempts,
+}) {
+  if (savedProgress.currentBlockIndex >= lesson.blocks.length) {
+    return false;
+  }
+
+  final lastBlockId = savedProgress.lastBlockId;
+  if (lastBlockId != null && !currentBlockIds.contains(lastBlockId)) {
+    return false;
+  }
+
+  final hasUnknownCompletedBlock = savedProgress.completedBlockIds.any(
+    (blockId) => !currentBlockIds.contains(blockId),
+  );
+  if (hasUnknownCompletedBlock) {
+    return false;
+  }
+
+  if (hasIncompatibleAttempts) {
+    return false;
+  }
+
+  return true;
+}
+
+LessonProgress _freshProgress({
+  required String lessonId,
+  required String userId,
+}) {
+  return LessonProgress(lessonId: lessonId, userId: userId);
+}
 
 @Riverpod(keepAlive: true)
 class LessonSessionNotifier extends _$LessonSessionNotifier {
@@ -48,7 +85,21 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
       );
       final stats = await _repository.getUserStats(userId);
       final attempts = await _repository.getAttempts(userId: userId, lessonId: lessonId);
-      final completedBlockIds = attempts
+      final currentBlockIds = lesson.blocks.map((block) => block.id).toSet();
+      final filteredAttempts = attempts
+          .where((attempt) => currentBlockIds.contains(attempt.blockId))
+          .toList();
+      final hasIncompatibleAttempts = filteredAttempts.length != attempts.length;
+      final freshProgress = _freshProgress(lessonId: lessonId, userId: userId);
+      final shouldResetProgress = savedProgress != null &&
+          !_hasCompatibleProgress(
+            lesson: lesson,
+            savedProgress: savedProgress,
+            currentBlockIds: currentBlockIds,
+            hasIncompatibleAttempts: hasIncompatibleAttempts,
+          );
+      final baseProgress = shouldResetProgress ? freshProgress : (savedProgress ?? freshProgress);
+      final completedBlockIds = filteredAttempts
           .where((attempt) => attempt.isCorrect)
           .map((attempt) => attempt.blockId)
           .toSet()
@@ -58,11 +109,11 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
         isLoading: false,
         lesson: lesson,
         stats: stats,
-        progress: (savedProgress ?? LessonProgress(lessonId: lessonId, userId: userId)).copyWith(
-          attemptCount: attempts.length,
-          incorrectAnswers: attempts.where((attempt) => !attempt.isCorrect).length,
+        progress: baseProgress.copyWith(
+          attemptCount: filteredAttempts.length,
+          incorrectAnswers: filteredAttempts.where((attempt) => !attempt.isCorrect).length,
           completedBlockIds: completedBlockIds,
-          lastAttemptAt: attempts.isEmpty ? null : attempts.last.createdAt,
+          lastAttemptAt: filteredAttempts.isEmpty ? null : filteredAttempts.last.createdAt,
         ),
         totalXpPreview: stats.totalXp,
       );

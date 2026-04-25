@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
 import 'package:momokiki/features/lessons/domain/models/lesson.dart';
@@ -51,5 +52,35 @@ void main() {
     );
 
     expect(lesson.blocks.single.blockType, 'alien');
+  });
+
+  test('lesson 1 assets use the new onboarding format', () {
+    final japaneseLesson = Lesson.fromJson(
+      jsonDecode(
+        File('assets/lessons/ja_hiragana_1.json').readAsStringSync(),
+      ) as Map<String, Object?>,
+    );
+    final englishLesson = Lesson.fromJson(
+      jsonDecode(
+        File('assets/lessons/en_present_simple_1.json').readAsStringSync(),
+      ) as Map<String, Object?>,
+    );
+
+    expect(japaneseLesson.version, greaterThan(1));
+    expect(englishLesson.version, greaterThan(1));
+    expect(japaneseLesson.blocks.length, inInclusiveRange(5, 6));
+    expect(englishLesson.blocks.length, inInclusiveRange(5, 6));
+    expect(
+      japaneseLesson.blocks.every(
+        (block) => {'text', 'quiz', 'choice', 'sentence_builder'}.contains(block.blockType),
+      ),
+      isTrue,
+    );
+    expect(
+      englishLesson.blocks.every(
+        (block) => {'text', 'quiz', 'choice', 'sentence_builder'}.contains(block.blockType),
+      ),
+      isTrue,
+    );
   });
 }
