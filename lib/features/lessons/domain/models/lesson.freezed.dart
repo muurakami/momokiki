@@ -648,7 +648,7 @@ LessonBlock _$LessonBlockFromJson(Map<String, dynamic> json) {
       return _CodeBlock.fromJson(json);
     case 'choice':
       return _ChoiceBlock.fromJson(json);
-    case 'sentenceBuilder':
+    case 'sentence_builder':
       return _SentenceBuilderBlock.fromJson(json);
 
     default:

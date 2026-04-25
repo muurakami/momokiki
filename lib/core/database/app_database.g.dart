@@ -5610,6 +5610,1180 @@ class DictionaryCacheTableCompanion
   }
 }
 
+class $DictionaryJapaneseEntryTableTable extends DictionaryJapaneseEntryTable
+    with
+        TableInfo<$DictionaryJapaneseEntryTableTable,
+            DictionaryJapaneseEntryTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DictionaryJapaneseEntryTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _entryIdMeta =
+      const VerificationMeta('entryId');
+  @override
+  late final GeneratedColumn<String> entryId = GeneratedColumn<String>(
+      'entry_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _primaryKanjiMeta =
+      const VerificationMeta('primaryKanji');
+  @override
+  late final GeneratedColumn<String> primaryKanji = GeneratedColumn<String>(
+      'primary_kanji', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _primaryKanaMeta =
+      const VerificationMeta('primaryKana');
+  @override
+  late final GeneratedColumn<String> primaryKana = GeneratedColumn<String>(
+      'primary_kana', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _primaryRomajiMeta =
+      const VerificationMeta('primaryRomaji');
+  @override
+  late final GeneratedColumn<String> primaryRomaji = GeneratedColumn<String>(
+      'primary_romaji', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _meaningPreviewMeta =
+      const VerificationMeta('meaningPreview');
+  @override
+  late final GeneratedColumn<String> meaningPreview = GeneratedColumn<String>(
+      'meaning_preview', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _entryJsonMeta =
+      const VerificationMeta('entryJson');
+  @override
+  late final GeneratedColumn<String> entryJson = GeneratedColumn<String>(
+      'entry_json', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _isCommonMeta =
+      const VerificationMeta('isCommon');
+  @override
+  late final GeneratedColumn<bool> isCommon = GeneratedColumn<bool>(
+      'is_common', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_common" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _importedAtMeta =
+      const VerificationMeta('importedAt');
+  @override
+  late final GeneratedColumn<DateTime> importedAt = GeneratedColumn<DateTime>(
+      'imported_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  @override
+  List<GeneratedColumn> get $columns => [
+        entryId,
+        primaryKanji,
+        primaryKana,
+        primaryRomaji,
+        meaningPreview,
+        entryJson,
+        isCommon,
+        importedAt
+      ];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'dictionary_japanese_entry_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<DictionaryJapaneseEntryTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('entry_id')) {
+      context.handle(_entryIdMeta,
+          entryId.isAcceptableOrUnknown(data['entry_id']!, _entryIdMeta));
+    } else if (isInserting) {
+      context.missing(_entryIdMeta);
+    }
+    if (data.containsKey('primary_kanji')) {
+      context.handle(
+          _primaryKanjiMeta,
+          primaryKanji.isAcceptableOrUnknown(
+              data['primary_kanji']!, _primaryKanjiMeta));
+    }
+    if (data.containsKey('primary_kana')) {
+      context.handle(
+          _primaryKanaMeta,
+          primaryKana.isAcceptableOrUnknown(
+              data['primary_kana']!, _primaryKanaMeta));
+    } else if (isInserting) {
+      context.missing(_primaryKanaMeta);
+    }
+    if (data.containsKey('primary_romaji')) {
+      context.handle(
+          _primaryRomajiMeta,
+          primaryRomaji.isAcceptableOrUnknown(
+              data['primary_romaji']!, _primaryRomajiMeta));
+    } else if (isInserting) {
+      context.missing(_primaryRomajiMeta);
+    }
+    if (data.containsKey('meaning_preview')) {
+      context.handle(
+          _meaningPreviewMeta,
+          meaningPreview.isAcceptableOrUnknown(
+              data['meaning_preview']!, _meaningPreviewMeta));
+    } else if (isInserting) {
+      context.missing(_meaningPreviewMeta);
+    }
+    if (data.containsKey('entry_json')) {
+      context.handle(_entryJsonMeta,
+          entryJson.isAcceptableOrUnknown(data['entry_json']!, _entryJsonMeta));
+    } else if (isInserting) {
+      context.missing(_entryJsonMeta);
+    }
+    if (data.containsKey('is_common')) {
+      context.handle(_isCommonMeta,
+          isCommon.isAcceptableOrUnknown(data['is_common']!, _isCommonMeta));
+    }
+    if (data.containsKey('imported_at')) {
+      context.handle(
+          _importedAtMeta,
+          importedAt.isAcceptableOrUnknown(
+              data['imported_at']!, _importedAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {entryId};
+  @override
+  DictionaryJapaneseEntryTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DictionaryJapaneseEntryTableData(
+      entryId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}entry_id'])!,
+      primaryKanji: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}primary_kanji']),
+      primaryKana: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}primary_kana'])!,
+      primaryRomaji: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}primary_romaji'])!,
+      meaningPreview: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}meaning_preview'])!,
+      entryJson: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}entry_json'])!,
+      isCommon: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_common'])!,
+      importedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}imported_at'])!,
+    );
+  }
+
+  @override
+  $DictionaryJapaneseEntryTableTable createAlias(String alias) {
+    return $DictionaryJapaneseEntryTableTable(attachedDatabase, alias);
+  }
+}
+
+class DictionaryJapaneseEntryTableData extends DataClass
+    implements Insertable<DictionaryJapaneseEntryTableData> {
+  final String entryId;
+  final String? primaryKanji;
+  final String primaryKana;
+  final String primaryRomaji;
+  final String meaningPreview;
+  final String entryJson;
+  final bool isCommon;
+  final DateTime importedAt;
+  const DictionaryJapaneseEntryTableData(
+      {required this.entryId,
+      this.primaryKanji,
+      required this.primaryKana,
+      required this.primaryRomaji,
+      required this.meaningPreview,
+      required this.entryJson,
+      required this.isCommon,
+      required this.importedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['entry_id'] = Variable<String>(entryId);
+    if (!nullToAbsent || primaryKanji != null) {
+      map['primary_kanji'] = Variable<String>(primaryKanji);
+    }
+    map['primary_kana'] = Variable<String>(primaryKana);
+    map['primary_romaji'] = Variable<String>(primaryRomaji);
+    map['meaning_preview'] = Variable<String>(meaningPreview);
+    map['entry_json'] = Variable<String>(entryJson);
+    map['is_common'] = Variable<bool>(isCommon);
+    map['imported_at'] = Variable<DateTime>(importedAt);
+    return map;
+  }
+
+  DictionaryJapaneseEntryTableCompanion toCompanion(bool nullToAbsent) {
+    return DictionaryJapaneseEntryTableCompanion(
+      entryId: Value(entryId),
+      primaryKanji: primaryKanji == null && nullToAbsent
+          ? const Value.absent()
+          : Value(primaryKanji),
+      primaryKana: Value(primaryKana),
+      primaryRomaji: Value(primaryRomaji),
+      meaningPreview: Value(meaningPreview),
+      entryJson: Value(entryJson),
+      isCommon: Value(isCommon),
+      importedAt: Value(importedAt),
+    );
+  }
+
+  factory DictionaryJapaneseEntryTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DictionaryJapaneseEntryTableData(
+      entryId: serializer.fromJson<String>(json['entryId']),
+      primaryKanji: serializer.fromJson<String?>(json['primaryKanji']),
+      primaryKana: serializer.fromJson<String>(json['primaryKana']),
+      primaryRomaji: serializer.fromJson<String>(json['primaryRomaji']),
+      meaningPreview: serializer.fromJson<String>(json['meaningPreview']),
+      entryJson: serializer.fromJson<String>(json['entryJson']),
+      isCommon: serializer.fromJson<bool>(json['isCommon']),
+      importedAt: serializer.fromJson<DateTime>(json['importedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'entryId': serializer.toJson<String>(entryId),
+      'primaryKanji': serializer.toJson<String?>(primaryKanji),
+      'primaryKana': serializer.toJson<String>(primaryKana),
+      'primaryRomaji': serializer.toJson<String>(primaryRomaji),
+      'meaningPreview': serializer.toJson<String>(meaningPreview),
+      'entryJson': serializer.toJson<String>(entryJson),
+      'isCommon': serializer.toJson<bool>(isCommon),
+      'importedAt': serializer.toJson<DateTime>(importedAt),
+    };
+  }
+
+  DictionaryJapaneseEntryTableData copyWith(
+          {String? entryId,
+          Value<String?> primaryKanji = const Value.absent(),
+          String? primaryKana,
+          String? primaryRomaji,
+          String? meaningPreview,
+          String? entryJson,
+          bool? isCommon,
+          DateTime? importedAt}) =>
+      DictionaryJapaneseEntryTableData(
+        entryId: entryId ?? this.entryId,
+        primaryKanji:
+            primaryKanji.present ? primaryKanji.value : this.primaryKanji,
+        primaryKana: primaryKana ?? this.primaryKana,
+        primaryRomaji: primaryRomaji ?? this.primaryRomaji,
+        meaningPreview: meaningPreview ?? this.meaningPreview,
+        entryJson: entryJson ?? this.entryJson,
+        isCommon: isCommon ?? this.isCommon,
+        importedAt: importedAt ?? this.importedAt,
+      );
+  DictionaryJapaneseEntryTableData copyWithCompanion(
+      DictionaryJapaneseEntryTableCompanion data) {
+    return DictionaryJapaneseEntryTableData(
+      entryId: data.entryId.present ? data.entryId.value : this.entryId,
+      primaryKanji: data.primaryKanji.present
+          ? data.primaryKanji.value
+          : this.primaryKanji,
+      primaryKana:
+          data.primaryKana.present ? data.primaryKana.value : this.primaryKana,
+      primaryRomaji: data.primaryRomaji.present
+          ? data.primaryRomaji.value
+          : this.primaryRomaji,
+      meaningPreview: data.meaningPreview.present
+          ? data.meaningPreview.value
+          : this.meaningPreview,
+      entryJson: data.entryJson.present ? data.entryJson.value : this.entryJson,
+      isCommon: data.isCommon.present ? data.isCommon.value : this.isCommon,
+      importedAt:
+          data.importedAt.present ? data.importedAt.value : this.importedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DictionaryJapaneseEntryTableData(')
+          ..write('entryId: $entryId, ')
+          ..write('primaryKanji: $primaryKanji, ')
+          ..write('primaryKana: $primaryKana, ')
+          ..write('primaryRomaji: $primaryRomaji, ')
+          ..write('meaningPreview: $meaningPreview, ')
+          ..write('entryJson: $entryJson, ')
+          ..write('isCommon: $isCommon, ')
+          ..write('importedAt: $importedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(entryId, primaryKanji, primaryKana,
+      primaryRomaji, meaningPreview, entryJson, isCommon, importedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DictionaryJapaneseEntryTableData &&
+          other.entryId == this.entryId &&
+          other.primaryKanji == this.primaryKanji &&
+          other.primaryKana == this.primaryKana &&
+          other.primaryRomaji == this.primaryRomaji &&
+          other.meaningPreview == this.meaningPreview &&
+          other.entryJson == this.entryJson &&
+          other.isCommon == this.isCommon &&
+          other.importedAt == this.importedAt);
+}
+
+class DictionaryJapaneseEntryTableCompanion
+    extends UpdateCompanion<DictionaryJapaneseEntryTableData> {
+  final Value<String> entryId;
+  final Value<String?> primaryKanji;
+  final Value<String> primaryKana;
+  final Value<String> primaryRomaji;
+  final Value<String> meaningPreview;
+  final Value<String> entryJson;
+  final Value<bool> isCommon;
+  final Value<DateTime> importedAt;
+  final Value<int> rowid;
+  const DictionaryJapaneseEntryTableCompanion({
+    this.entryId = const Value.absent(),
+    this.primaryKanji = const Value.absent(),
+    this.primaryKana = const Value.absent(),
+    this.primaryRomaji = const Value.absent(),
+    this.meaningPreview = const Value.absent(),
+    this.entryJson = const Value.absent(),
+    this.isCommon = const Value.absent(),
+    this.importedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DictionaryJapaneseEntryTableCompanion.insert({
+    required String entryId,
+    this.primaryKanji = const Value.absent(),
+    required String primaryKana,
+    required String primaryRomaji,
+    required String meaningPreview,
+    required String entryJson,
+    this.isCommon = const Value.absent(),
+    this.importedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : entryId = Value(entryId),
+        primaryKana = Value(primaryKana),
+        primaryRomaji = Value(primaryRomaji),
+        meaningPreview = Value(meaningPreview),
+        entryJson = Value(entryJson);
+  static Insertable<DictionaryJapaneseEntryTableData> custom({
+    Expression<String>? entryId,
+    Expression<String>? primaryKanji,
+    Expression<String>? primaryKana,
+    Expression<String>? primaryRomaji,
+    Expression<String>? meaningPreview,
+    Expression<String>? entryJson,
+    Expression<bool>? isCommon,
+    Expression<DateTime>? importedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (entryId != null) 'entry_id': entryId,
+      if (primaryKanji != null) 'primary_kanji': primaryKanji,
+      if (primaryKana != null) 'primary_kana': primaryKana,
+      if (primaryRomaji != null) 'primary_romaji': primaryRomaji,
+      if (meaningPreview != null) 'meaning_preview': meaningPreview,
+      if (entryJson != null) 'entry_json': entryJson,
+      if (isCommon != null) 'is_common': isCommon,
+      if (importedAt != null) 'imported_at': importedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DictionaryJapaneseEntryTableCompanion copyWith(
+      {Value<String>? entryId,
+      Value<String?>? primaryKanji,
+      Value<String>? primaryKana,
+      Value<String>? primaryRomaji,
+      Value<String>? meaningPreview,
+      Value<String>? entryJson,
+      Value<bool>? isCommon,
+      Value<DateTime>? importedAt,
+      Value<int>? rowid}) {
+    return DictionaryJapaneseEntryTableCompanion(
+      entryId: entryId ?? this.entryId,
+      primaryKanji: primaryKanji ?? this.primaryKanji,
+      primaryKana: primaryKana ?? this.primaryKana,
+      primaryRomaji: primaryRomaji ?? this.primaryRomaji,
+      meaningPreview: meaningPreview ?? this.meaningPreview,
+      entryJson: entryJson ?? this.entryJson,
+      isCommon: isCommon ?? this.isCommon,
+      importedAt: importedAt ?? this.importedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (entryId.present) {
+      map['entry_id'] = Variable<String>(entryId.value);
+    }
+    if (primaryKanji.present) {
+      map['primary_kanji'] = Variable<String>(primaryKanji.value);
+    }
+    if (primaryKana.present) {
+      map['primary_kana'] = Variable<String>(primaryKana.value);
+    }
+    if (primaryRomaji.present) {
+      map['primary_romaji'] = Variable<String>(primaryRomaji.value);
+    }
+    if (meaningPreview.present) {
+      map['meaning_preview'] = Variable<String>(meaningPreview.value);
+    }
+    if (entryJson.present) {
+      map['entry_json'] = Variable<String>(entryJson.value);
+    }
+    if (isCommon.present) {
+      map['is_common'] = Variable<bool>(isCommon.value);
+    }
+    if (importedAt.present) {
+      map['imported_at'] = Variable<DateTime>(importedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DictionaryJapaneseEntryTableCompanion(')
+          ..write('entryId: $entryId, ')
+          ..write('primaryKanji: $primaryKanji, ')
+          ..write('primaryKana: $primaryKana, ')
+          ..write('primaryRomaji: $primaryRomaji, ')
+          ..write('meaningPreview: $meaningPreview, ')
+          ..write('entryJson: $entryJson, ')
+          ..write('isCommon: $isCommon, ')
+          ..write('importedAt: $importedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DictionaryFavoriteTableTable extends DictionaryFavoriteTable
+    with TableInfo<$DictionaryFavoriteTableTable, DictionaryFavoriteTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DictionaryFavoriteTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _entryKeyMeta =
+      const VerificationMeta('entryKey');
+  @override
+  late final GeneratedColumn<String> entryKey = GeneratedColumn<String>(
+      'entry_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _languageMeta =
+      const VerificationMeta('language');
+  @override
+  late final GeneratedColumn<String> language = GeneratedColumn<String>(
+      'language', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _titleMeta = const VerificationMeta('title');
+  @override
+  late final GeneratedColumn<String> title = GeneratedColumn<String>(
+      'title', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _subtitleMeta =
+      const VerificationMeta('subtitle');
+  @override
+  late final GeneratedColumn<String> subtitle = GeneratedColumn<String>(
+      'subtitle', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  static const VerificationMeta _entryJsonMeta =
+      const VerificationMeta('entryJson');
+  @override
+  late final GeneratedColumn<String> entryJson = GeneratedColumn<String>(
+      'entry_json', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _createdAtMeta =
+      const VerificationMeta('createdAt');
+  @override
+  late final GeneratedColumn<DateTime> createdAt = GeneratedColumn<DateTime>(
+      'created_at', aliasedName, false,
+      type: DriftSqlType.dateTime,
+      requiredDuringInsert: false,
+      defaultValue: currentDateAndTime);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [id, entryKey, language, title, subtitle, entryJson, createdAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'dictionary_favorite_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<DictionaryFavoriteTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('entry_key')) {
+      context.handle(_entryKeyMeta,
+          entryKey.isAcceptableOrUnknown(data['entry_key']!, _entryKeyMeta));
+    } else if (isInserting) {
+      context.missing(_entryKeyMeta);
+    }
+    if (data.containsKey('language')) {
+      context.handle(_languageMeta,
+          language.isAcceptableOrUnknown(data['language']!, _languageMeta));
+    } else if (isInserting) {
+      context.missing(_languageMeta);
+    }
+    if (data.containsKey('title')) {
+      context.handle(
+          _titleMeta, title.isAcceptableOrUnknown(data['title']!, _titleMeta));
+    } else if (isInserting) {
+      context.missing(_titleMeta);
+    }
+    if (data.containsKey('subtitle')) {
+      context.handle(_subtitleMeta,
+          subtitle.isAcceptableOrUnknown(data['subtitle']!, _subtitleMeta));
+    }
+    if (data.containsKey('entry_json')) {
+      context.handle(_entryJsonMeta,
+          entryJson.isAcceptableOrUnknown(data['entry_json']!, _entryJsonMeta));
+    } else if (isInserting) {
+      context.missing(_entryJsonMeta);
+    }
+    if (data.containsKey('created_at')) {
+      context.handle(_createdAtMeta,
+          createdAt.isAcceptableOrUnknown(data['created_at']!, _createdAtMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  DictionaryFavoriteTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DictionaryFavoriteTableData(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      entryKey: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}entry_key'])!,
+      language: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}language'])!,
+      title: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}title'])!,
+      subtitle: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}subtitle']),
+      entryJson: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}entry_json'])!,
+      createdAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}created_at'])!,
+    );
+  }
+
+  @override
+  $DictionaryFavoriteTableTable createAlias(String alias) {
+    return $DictionaryFavoriteTableTable(attachedDatabase, alias);
+  }
+}
+
+class DictionaryFavoriteTableData extends DataClass
+    implements Insertable<DictionaryFavoriteTableData> {
+  final String id;
+  final String entryKey;
+  final String language;
+  final String title;
+  final String? subtitle;
+  final String entryJson;
+  final DateTime createdAt;
+  const DictionaryFavoriteTableData(
+      {required this.id,
+      required this.entryKey,
+      required this.language,
+      required this.title,
+      this.subtitle,
+      required this.entryJson,
+      required this.createdAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['entry_key'] = Variable<String>(entryKey);
+    map['language'] = Variable<String>(language);
+    map['title'] = Variable<String>(title);
+    if (!nullToAbsent || subtitle != null) {
+      map['subtitle'] = Variable<String>(subtitle);
+    }
+    map['entry_json'] = Variable<String>(entryJson);
+    map['created_at'] = Variable<DateTime>(createdAt);
+    return map;
+  }
+
+  DictionaryFavoriteTableCompanion toCompanion(bool nullToAbsent) {
+    return DictionaryFavoriteTableCompanion(
+      id: Value(id),
+      entryKey: Value(entryKey),
+      language: Value(language),
+      title: Value(title),
+      subtitle: subtitle == null && nullToAbsent
+          ? const Value.absent()
+          : Value(subtitle),
+      entryJson: Value(entryJson),
+      createdAt: Value(createdAt),
+    );
+  }
+
+  factory DictionaryFavoriteTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DictionaryFavoriteTableData(
+      id: serializer.fromJson<String>(json['id']),
+      entryKey: serializer.fromJson<String>(json['entryKey']),
+      language: serializer.fromJson<String>(json['language']),
+      title: serializer.fromJson<String>(json['title']),
+      subtitle: serializer.fromJson<String?>(json['subtitle']),
+      entryJson: serializer.fromJson<String>(json['entryJson']),
+      createdAt: serializer.fromJson<DateTime>(json['createdAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'entryKey': serializer.toJson<String>(entryKey),
+      'language': serializer.toJson<String>(language),
+      'title': serializer.toJson<String>(title),
+      'subtitle': serializer.toJson<String?>(subtitle),
+      'entryJson': serializer.toJson<String>(entryJson),
+      'createdAt': serializer.toJson<DateTime>(createdAt),
+    };
+  }
+
+  DictionaryFavoriteTableData copyWith(
+          {String? id,
+          String? entryKey,
+          String? language,
+          String? title,
+          Value<String?> subtitle = const Value.absent(),
+          String? entryJson,
+          DateTime? createdAt}) =>
+      DictionaryFavoriteTableData(
+        id: id ?? this.id,
+        entryKey: entryKey ?? this.entryKey,
+        language: language ?? this.language,
+        title: title ?? this.title,
+        subtitle: subtitle.present ? subtitle.value : this.subtitle,
+        entryJson: entryJson ?? this.entryJson,
+        createdAt: createdAt ?? this.createdAt,
+      );
+  DictionaryFavoriteTableData copyWithCompanion(
+      DictionaryFavoriteTableCompanion data) {
+    return DictionaryFavoriteTableData(
+      id: data.id.present ? data.id.value : this.id,
+      entryKey: data.entryKey.present ? data.entryKey.value : this.entryKey,
+      language: data.language.present ? data.language.value : this.language,
+      title: data.title.present ? data.title.value : this.title,
+      subtitle: data.subtitle.present ? data.subtitle.value : this.subtitle,
+      entryJson: data.entryJson.present ? data.entryJson.value : this.entryJson,
+      createdAt: data.createdAt.present ? data.createdAt.value : this.createdAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DictionaryFavoriteTableData(')
+          ..write('id: $id, ')
+          ..write('entryKey: $entryKey, ')
+          ..write('language: $language, ')
+          ..write('title: $title, ')
+          ..write('subtitle: $subtitle, ')
+          ..write('entryJson: $entryJson, ')
+          ..write('createdAt: $createdAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      id, entryKey, language, title, subtitle, entryJson, createdAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DictionaryFavoriteTableData &&
+          other.id == this.id &&
+          other.entryKey == this.entryKey &&
+          other.language == this.language &&
+          other.title == this.title &&
+          other.subtitle == this.subtitle &&
+          other.entryJson == this.entryJson &&
+          other.createdAt == this.createdAt);
+}
+
+class DictionaryFavoriteTableCompanion
+    extends UpdateCompanion<DictionaryFavoriteTableData> {
+  final Value<String> id;
+  final Value<String> entryKey;
+  final Value<String> language;
+  final Value<String> title;
+  final Value<String?> subtitle;
+  final Value<String> entryJson;
+  final Value<DateTime> createdAt;
+  final Value<int> rowid;
+  const DictionaryFavoriteTableCompanion({
+    this.id = const Value.absent(),
+    this.entryKey = const Value.absent(),
+    this.language = const Value.absent(),
+    this.title = const Value.absent(),
+    this.subtitle = const Value.absent(),
+    this.entryJson = const Value.absent(),
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DictionaryFavoriteTableCompanion.insert({
+    required String id,
+    required String entryKey,
+    required String language,
+    required String title,
+    this.subtitle = const Value.absent(),
+    required String entryJson,
+    this.createdAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        entryKey = Value(entryKey),
+        language = Value(language),
+        title = Value(title),
+        entryJson = Value(entryJson);
+  static Insertable<DictionaryFavoriteTableData> custom({
+    Expression<String>? id,
+    Expression<String>? entryKey,
+    Expression<String>? language,
+    Expression<String>? title,
+    Expression<String>? subtitle,
+    Expression<String>? entryJson,
+    Expression<DateTime>? createdAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (entryKey != null) 'entry_key': entryKey,
+      if (language != null) 'language': language,
+      if (title != null) 'title': title,
+      if (subtitle != null) 'subtitle': subtitle,
+      if (entryJson != null) 'entry_json': entryJson,
+      if (createdAt != null) 'created_at': createdAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DictionaryFavoriteTableCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? entryKey,
+      Value<String>? language,
+      Value<String>? title,
+      Value<String?>? subtitle,
+      Value<String>? entryJson,
+      Value<DateTime>? createdAt,
+      Value<int>? rowid}) {
+    return DictionaryFavoriteTableCompanion(
+      id: id ?? this.id,
+      entryKey: entryKey ?? this.entryKey,
+      language: language ?? this.language,
+      title: title ?? this.title,
+      subtitle: subtitle ?? this.subtitle,
+      entryJson: entryJson ?? this.entryJson,
+      createdAt: createdAt ?? this.createdAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (entryKey.present) {
+      map['entry_key'] = Variable<String>(entryKey.value);
+    }
+    if (language.present) {
+      map['language'] = Variable<String>(language.value);
+    }
+    if (title.present) {
+      map['title'] = Variable<String>(title.value);
+    }
+    if (subtitle.present) {
+      map['subtitle'] = Variable<String>(subtitle.value);
+    }
+    if (entryJson.present) {
+      map['entry_json'] = Variable<String>(entryJson.value);
+    }
+    if (createdAt.present) {
+      map['created_at'] = Variable<DateTime>(createdAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DictionaryFavoriteTableCompanion(')
+          ..write('id: $id, ')
+          ..write('entryKey: $entryKey, ')
+          ..write('language: $language, ')
+          ..write('title: $title, ')
+          ..write('subtitle: $subtitle, ')
+          ..write('entryJson: $entryJson, ')
+          ..write('createdAt: $createdAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $DictionarySourceStateTableTable extends DictionarySourceStateTable
+    with
+        TableInfo<$DictionarySourceStateTableTable,
+            DictionarySourceStateTableData> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $DictionarySourceStateTableTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _sourceKeyMeta =
+      const VerificationMeta('sourceKey');
+  @override
+  late final GeneratedColumn<String> sourceKey = GeneratedColumn<String>(
+      'source_key', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _isReadyMeta =
+      const VerificationMeta('isReady');
+  @override
+  late final GeneratedColumn<bool> isReady = GeneratedColumn<bool>(
+      'is_ready', aliasedName, false,
+      type: DriftSqlType.bool,
+      requiredDuringInsert: false,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('CHECK ("is_ready" IN (0, 1))'),
+      defaultValue: const Constant(false));
+  static const VerificationMeta _entryCountMeta =
+      const VerificationMeta('entryCount');
+  @override
+  late final GeneratedColumn<int> entryCount = GeneratedColumn<int>(
+      'entry_count', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  static const VerificationMeta _updatedAtMeta =
+      const VerificationMeta('updatedAt');
+  @override
+  late final GeneratedColumn<DateTime> updatedAt = GeneratedColumn<DateTime>(
+      'updated_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  static const VerificationMeta _errorMessageMeta =
+      const VerificationMeta('errorMessage');
+  @override
+  late final GeneratedColumn<String> errorMessage = GeneratedColumn<String>(
+      'error_message', aliasedName, true,
+      type: DriftSqlType.string, requiredDuringInsert: false);
+  @override
+  List<GeneratedColumn> get $columns =>
+      [sourceKey, isReady, entryCount, updatedAt, errorMessage];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'dictionary_source_state_table';
+  @override
+  VerificationContext validateIntegrity(
+      Insertable<DictionarySourceStateTableData> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('source_key')) {
+      context.handle(_sourceKeyMeta,
+          sourceKey.isAcceptableOrUnknown(data['source_key']!, _sourceKeyMeta));
+    } else if (isInserting) {
+      context.missing(_sourceKeyMeta);
+    }
+    if (data.containsKey('is_ready')) {
+      context.handle(_isReadyMeta,
+          isReady.isAcceptableOrUnknown(data['is_ready']!, _isReadyMeta));
+    }
+    if (data.containsKey('entry_count')) {
+      context.handle(
+          _entryCountMeta,
+          entryCount.isAcceptableOrUnknown(
+              data['entry_count']!, _entryCountMeta));
+    }
+    if (data.containsKey('updated_at')) {
+      context.handle(_updatedAtMeta,
+          updatedAt.isAcceptableOrUnknown(data['updated_at']!, _updatedAtMeta));
+    } else if (isInserting) {
+      context.missing(_updatedAtMeta);
+    }
+    if (data.containsKey('error_message')) {
+      context.handle(
+          _errorMessageMeta,
+          errorMessage.isAcceptableOrUnknown(
+              data['error_message']!, _errorMessageMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {sourceKey};
+  @override
+  DictionarySourceStateTableData map(Map<String, dynamic> data,
+      {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return DictionarySourceStateTableData(
+      sourceKey: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}source_key'])!,
+      isReady: attachedDatabase.typeMapping
+          .read(DriftSqlType.bool, data['${effectivePrefix}is_ready'])!,
+      entryCount: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}entry_count'])!,
+      updatedAt: attachedDatabase.typeMapping
+          .read(DriftSqlType.dateTime, data['${effectivePrefix}updated_at'])!,
+      errorMessage: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}error_message']),
+    );
+  }
+
+  @override
+  $DictionarySourceStateTableTable createAlias(String alias) {
+    return $DictionarySourceStateTableTable(attachedDatabase, alias);
+  }
+}
+
+class DictionarySourceStateTableData extends DataClass
+    implements Insertable<DictionarySourceStateTableData> {
+  final String sourceKey;
+  final bool isReady;
+  final int entryCount;
+  final DateTime updatedAt;
+  final String? errorMessage;
+  const DictionarySourceStateTableData(
+      {required this.sourceKey,
+      required this.isReady,
+      required this.entryCount,
+      required this.updatedAt,
+      this.errorMessage});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['source_key'] = Variable<String>(sourceKey);
+    map['is_ready'] = Variable<bool>(isReady);
+    map['entry_count'] = Variable<int>(entryCount);
+    map['updated_at'] = Variable<DateTime>(updatedAt);
+    if (!nullToAbsent || errorMessage != null) {
+      map['error_message'] = Variable<String>(errorMessage);
+    }
+    return map;
+  }
+
+  DictionarySourceStateTableCompanion toCompanion(bool nullToAbsent) {
+    return DictionarySourceStateTableCompanion(
+      sourceKey: Value(sourceKey),
+      isReady: Value(isReady),
+      entryCount: Value(entryCount),
+      updatedAt: Value(updatedAt),
+      errorMessage: errorMessage == null && nullToAbsent
+          ? const Value.absent()
+          : Value(errorMessage),
+    );
+  }
+
+  factory DictionarySourceStateTableData.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return DictionarySourceStateTableData(
+      sourceKey: serializer.fromJson<String>(json['sourceKey']),
+      isReady: serializer.fromJson<bool>(json['isReady']),
+      entryCount: serializer.fromJson<int>(json['entryCount']),
+      updatedAt: serializer.fromJson<DateTime>(json['updatedAt']),
+      errorMessage: serializer.fromJson<String?>(json['errorMessage']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'sourceKey': serializer.toJson<String>(sourceKey),
+      'isReady': serializer.toJson<bool>(isReady),
+      'entryCount': serializer.toJson<int>(entryCount),
+      'updatedAt': serializer.toJson<DateTime>(updatedAt),
+      'errorMessage': serializer.toJson<String?>(errorMessage),
+    };
+  }
+
+  DictionarySourceStateTableData copyWith(
+          {String? sourceKey,
+          bool? isReady,
+          int? entryCount,
+          DateTime? updatedAt,
+          Value<String?> errorMessage = const Value.absent()}) =>
+      DictionarySourceStateTableData(
+        sourceKey: sourceKey ?? this.sourceKey,
+        isReady: isReady ?? this.isReady,
+        entryCount: entryCount ?? this.entryCount,
+        updatedAt: updatedAt ?? this.updatedAt,
+        errorMessage:
+            errorMessage.present ? errorMessage.value : this.errorMessage,
+      );
+  DictionarySourceStateTableData copyWithCompanion(
+      DictionarySourceStateTableCompanion data) {
+    return DictionarySourceStateTableData(
+      sourceKey: data.sourceKey.present ? data.sourceKey.value : this.sourceKey,
+      isReady: data.isReady.present ? data.isReady.value : this.isReady,
+      entryCount:
+          data.entryCount.present ? data.entryCount.value : this.entryCount,
+      updatedAt: data.updatedAt.present ? data.updatedAt.value : this.updatedAt,
+      errorMessage: data.errorMessage.present
+          ? data.errorMessage.value
+          : this.errorMessage,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DictionarySourceStateTableData(')
+          ..write('sourceKey: $sourceKey, ')
+          ..write('isReady: $isReady, ')
+          ..write('entryCount: $entryCount, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('errorMessage: $errorMessage')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(sourceKey, isReady, entryCount, updatedAt, errorMessage);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is DictionarySourceStateTableData &&
+          other.sourceKey == this.sourceKey &&
+          other.isReady == this.isReady &&
+          other.entryCount == this.entryCount &&
+          other.updatedAt == this.updatedAt &&
+          other.errorMessage == this.errorMessage);
+}
+
+class DictionarySourceStateTableCompanion
+    extends UpdateCompanion<DictionarySourceStateTableData> {
+  final Value<String> sourceKey;
+  final Value<bool> isReady;
+  final Value<int> entryCount;
+  final Value<DateTime> updatedAt;
+  final Value<String?> errorMessage;
+  final Value<int> rowid;
+  const DictionarySourceStateTableCompanion({
+    this.sourceKey = const Value.absent(),
+    this.isReady = const Value.absent(),
+    this.entryCount = const Value.absent(),
+    this.updatedAt = const Value.absent(),
+    this.errorMessage = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  DictionarySourceStateTableCompanion.insert({
+    required String sourceKey,
+    this.isReady = const Value.absent(),
+    this.entryCount = const Value.absent(),
+    required DateTime updatedAt,
+    this.errorMessage = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : sourceKey = Value(sourceKey),
+        updatedAt = Value(updatedAt);
+  static Insertable<DictionarySourceStateTableData> custom({
+    Expression<String>? sourceKey,
+    Expression<bool>? isReady,
+    Expression<int>? entryCount,
+    Expression<DateTime>? updatedAt,
+    Expression<String>? errorMessage,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (sourceKey != null) 'source_key': sourceKey,
+      if (isReady != null) 'is_ready': isReady,
+      if (entryCount != null) 'entry_count': entryCount,
+      if (updatedAt != null) 'updated_at': updatedAt,
+      if (errorMessage != null) 'error_message': errorMessage,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  DictionarySourceStateTableCompanion copyWith(
+      {Value<String>? sourceKey,
+      Value<bool>? isReady,
+      Value<int>? entryCount,
+      Value<DateTime>? updatedAt,
+      Value<String?>? errorMessage,
+      Value<int>? rowid}) {
+    return DictionarySourceStateTableCompanion(
+      sourceKey: sourceKey ?? this.sourceKey,
+      isReady: isReady ?? this.isReady,
+      entryCount: entryCount ?? this.entryCount,
+      updatedAt: updatedAt ?? this.updatedAt,
+      errorMessage: errorMessage ?? this.errorMessage,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (sourceKey.present) {
+      map['source_key'] = Variable<String>(sourceKey.value);
+    }
+    if (isReady.present) {
+      map['is_ready'] = Variable<bool>(isReady.value);
+    }
+    if (entryCount.present) {
+      map['entry_count'] = Variable<int>(entryCount.value);
+    }
+    if (updatedAt.present) {
+      map['updated_at'] = Variable<DateTime>(updatedAt.value);
+    }
+    if (errorMessage.present) {
+      map['error_message'] = Variable<String>(errorMessage.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('DictionarySourceStateTableCompanion(')
+          ..write('sourceKey: $sourceKey, ')
+          ..write('isReady: $isReady, ')
+          ..write('entryCount: $entryCount, ')
+          ..write('updatedAt: $updatedAt, ')
+          ..write('errorMessage: $errorMessage, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 class $AnswerHistoryLocalTableTable extends AnswerHistoryLocalTable
     with TableInfo<$AnswerHistoryLocalTableTable, AnswerHistoryLocalTableData> {
   @override
@@ -5987,6 +7161,12 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       $PracticeCardMediaTableTable(this);
   late final $DictionaryCacheTableTable dictionaryCacheTable =
       $DictionaryCacheTableTable(this);
+  late final $DictionaryJapaneseEntryTableTable dictionaryJapaneseEntryTable =
+      $DictionaryJapaneseEntryTableTable(this);
+  late final $DictionaryFavoriteTableTable dictionaryFavoriteTable =
+      $DictionaryFavoriteTableTable(this);
+  late final $DictionarySourceStateTableTable dictionarySourceStateTable =
+      $DictionarySourceStateTableTable(this);
   late final $AnswerHistoryLocalTableTable answerHistoryLocalTable =
       $AnswerHistoryLocalTableTable(this);
   @override
@@ -6006,6 +7186,9 @@ abstract class _$AppDatabase extends GeneratedDatabase {
         practiceMediaTable,
         practiceCardMediaTable,
         dictionaryCacheTable,
+        dictionaryJapaneseEntryTable,
+        dictionaryFavoriteTable,
+        dictionarySourceStateTable,
         answerHistoryLocalTable
       ];
 }
@@ -8808,6 +9991,626 @@ typedef $$DictionaryCacheTableTableProcessedTableManager
         ),
         DictionaryCacheTableData,
         PrefetchHooks Function()>;
+typedef $$DictionaryJapaneseEntryTableTableCreateCompanionBuilder
+    = DictionaryJapaneseEntryTableCompanion Function({
+  required String entryId,
+  Value<String?> primaryKanji,
+  required String primaryKana,
+  required String primaryRomaji,
+  required String meaningPreview,
+  required String entryJson,
+  Value<bool> isCommon,
+  Value<DateTime> importedAt,
+  Value<int> rowid,
+});
+typedef $$DictionaryJapaneseEntryTableTableUpdateCompanionBuilder
+    = DictionaryJapaneseEntryTableCompanion Function({
+  Value<String> entryId,
+  Value<String?> primaryKanji,
+  Value<String> primaryKana,
+  Value<String> primaryRomaji,
+  Value<String> meaningPreview,
+  Value<String> entryJson,
+  Value<bool> isCommon,
+  Value<DateTime> importedAt,
+  Value<int> rowid,
+});
+
+class $$DictionaryJapaneseEntryTableTableFilterComposer
+    extends Composer<_$AppDatabase, $DictionaryJapaneseEntryTableTable> {
+  $$DictionaryJapaneseEntryTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get entryId => $composableBuilder(
+      column: $table.entryId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get primaryKanji => $composableBuilder(
+      column: $table.primaryKanji, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get primaryKana => $composableBuilder(
+      column: $table.primaryKana, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get primaryRomaji => $composableBuilder(
+      column: $table.primaryRomaji, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get meaningPreview => $composableBuilder(
+      column: $table.meaningPreview,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get entryJson => $composableBuilder(
+      column: $table.entryJson, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isCommon => $composableBuilder(
+      column: $table.isCommon, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get importedAt => $composableBuilder(
+      column: $table.importedAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$DictionaryJapaneseEntryTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $DictionaryJapaneseEntryTableTable> {
+  $$DictionaryJapaneseEntryTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get entryId => $composableBuilder(
+      column: $table.entryId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get primaryKanji => $composableBuilder(
+      column: $table.primaryKanji,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get primaryKana => $composableBuilder(
+      column: $table.primaryKana, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get primaryRomaji => $composableBuilder(
+      column: $table.primaryRomaji,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get meaningPreview => $composableBuilder(
+      column: $table.meaningPreview,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get entryJson => $composableBuilder(
+      column: $table.entryJson, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isCommon => $composableBuilder(
+      column: $table.isCommon, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get importedAt => $composableBuilder(
+      column: $table.importedAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$DictionaryJapaneseEntryTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DictionaryJapaneseEntryTableTable> {
+  $$DictionaryJapaneseEntryTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get entryId =>
+      $composableBuilder(column: $table.entryId, builder: (column) => column);
+
+  GeneratedColumn<String> get primaryKanji => $composableBuilder(
+      column: $table.primaryKanji, builder: (column) => column);
+
+  GeneratedColumn<String> get primaryKana => $composableBuilder(
+      column: $table.primaryKana, builder: (column) => column);
+
+  GeneratedColumn<String> get primaryRomaji => $composableBuilder(
+      column: $table.primaryRomaji, builder: (column) => column);
+
+  GeneratedColumn<String> get meaningPreview => $composableBuilder(
+      column: $table.meaningPreview, builder: (column) => column);
+
+  GeneratedColumn<String> get entryJson =>
+      $composableBuilder(column: $table.entryJson, builder: (column) => column);
+
+  GeneratedColumn<bool> get isCommon =>
+      $composableBuilder(column: $table.isCommon, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get importedAt => $composableBuilder(
+      column: $table.importedAt, builder: (column) => column);
+}
+
+class $$DictionaryJapaneseEntryTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $DictionaryJapaneseEntryTableTable,
+    DictionaryJapaneseEntryTableData,
+    $$DictionaryJapaneseEntryTableTableFilterComposer,
+    $$DictionaryJapaneseEntryTableTableOrderingComposer,
+    $$DictionaryJapaneseEntryTableTableAnnotationComposer,
+    $$DictionaryJapaneseEntryTableTableCreateCompanionBuilder,
+    $$DictionaryJapaneseEntryTableTableUpdateCompanionBuilder,
+    (
+      DictionaryJapaneseEntryTableData,
+      BaseReferences<_$AppDatabase, $DictionaryJapaneseEntryTableTable,
+          DictionaryJapaneseEntryTableData>
+    ),
+    DictionaryJapaneseEntryTableData,
+    PrefetchHooks Function()> {
+  $$DictionaryJapaneseEntryTableTableTableManager(
+      _$AppDatabase db, $DictionaryJapaneseEntryTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DictionaryJapaneseEntryTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DictionaryJapaneseEntryTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DictionaryJapaneseEntryTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> entryId = const Value.absent(),
+            Value<String?> primaryKanji = const Value.absent(),
+            Value<String> primaryKana = const Value.absent(),
+            Value<String> primaryRomaji = const Value.absent(),
+            Value<String> meaningPreview = const Value.absent(),
+            Value<String> entryJson = const Value.absent(),
+            Value<bool> isCommon = const Value.absent(),
+            Value<DateTime> importedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              DictionaryJapaneseEntryTableCompanion(
+            entryId: entryId,
+            primaryKanji: primaryKanji,
+            primaryKana: primaryKana,
+            primaryRomaji: primaryRomaji,
+            meaningPreview: meaningPreview,
+            entryJson: entryJson,
+            isCommon: isCommon,
+            importedAt: importedAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String entryId,
+            Value<String?> primaryKanji = const Value.absent(),
+            required String primaryKana,
+            required String primaryRomaji,
+            required String meaningPreview,
+            required String entryJson,
+            Value<bool> isCommon = const Value.absent(),
+            Value<DateTime> importedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              DictionaryJapaneseEntryTableCompanion.insert(
+            entryId: entryId,
+            primaryKanji: primaryKanji,
+            primaryKana: primaryKana,
+            primaryRomaji: primaryRomaji,
+            meaningPreview: meaningPreview,
+            entryJson: entryJson,
+            isCommon: isCommon,
+            importedAt: importedAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$DictionaryJapaneseEntryTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$AppDatabase,
+        $DictionaryJapaneseEntryTableTable,
+        DictionaryJapaneseEntryTableData,
+        $$DictionaryJapaneseEntryTableTableFilterComposer,
+        $$DictionaryJapaneseEntryTableTableOrderingComposer,
+        $$DictionaryJapaneseEntryTableTableAnnotationComposer,
+        $$DictionaryJapaneseEntryTableTableCreateCompanionBuilder,
+        $$DictionaryJapaneseEntryTableTableUpdateCompanionBuilder,
+        (
+          DictionaryJapaneseEntryTableData,
+          BaseReferences<_$AppDatabase, $DictionaryJapaneseEntryTableTable,
+              DictionaryJapaneseEntryTableData>
+        ),
+        DictionaryJapaneseEntryTableData,
+        PrefetchHooks Function()>;
+typedef $$DictionaryFavoriteTableTableCreateCompanionBuilder
+    = DictionaryFavoriteTableCompanion Function({
+  required String id,
+  required String entryKey,
+  required String language,
+  required String title,
+  Value<String?> subtitle,
+  required String entryJson,
+  Value<DateTime> createdAt,
+  Value<int> rowid,
+});
+typedef $$DictionaryFavoriteTableTableUpdateCompanionBuilder
+    = DictionaryFavoriteTableCompanion Function({
+  Value<String> id,
+  Value<String> entryKey,
+  Value<String> language,
+  Value<String> title,
+  Value<String?> subtitle,
+  Value<String> entryJson,
+  Value<DateTime> createdAt,
+  Value<int> rowid,
+});
+
+class $$DictionaryFavoriteTableTableFilterComposer
+    extends Composer<_$AppDatabase, $DictionaryFavoriteTableTable> {
+  $$DictionaryFavoriteTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get entryKey => $composableBuilder(
+      column: $table.entryKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get language => $composableBuilder(
+      column: $table.language, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get subtitle => $composableBuilder(
+      column: $table.subtitle, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get entryJson => $composableBuilder(
+      column: $table.entryJson, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$DictionaryFavoriteTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $DictionaryFavoriteTableTable> {
+  $$DictionaryFavoriteTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get entryKey => $composableBuilder(
+      column: $table.entryKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get language => $composableBuilder(
+      column: $table.language, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get title => $composableBuilder(
+      column: $table.title, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get subtitle => $composableBuilder(
+      column: $table.subtitle, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get entryJson => $composableBuilder(
+      column: $table.entryJson, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get createdAt => $composableBuilder(
+      column: $table.createdAt, builder: (column) => ColumnOrderings(column));
+}
+
+class $$DictionaryFavoriteTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DictionaryFavoriteTableTable> {
+  $$DictionaryFavoriteTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get entryKey =>
+      $composableBuilder(column: $table.entryKey, builder: (column) => column);
+
+  GeneratedColumn<String> get language =>
+      $composableBuilder(column: $table.language, builder: (column) => column);
+
+  GeneratedColumn<String> get title =>
+      $composableBuilder(column: $table.title, builder: (column) => column);
+
+  GeneratedColumn<String> get subtitle =>
+      $composableBuilder(column: $table.subtitle, builder: (column) => column);
+
+  GeneratedColumn<String> get entryJson =>
+      $composableBuilder(column: $table.entryJson, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get createdAt =>
+      $composableBuilder(column: $table.createdAt, builder: (column) => column);
+}
+
+class $$DictionaryFavoriteTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $DictionaryFavoriteTableTable,
+    DictionaryFavoriteTableData,
+    $$DictionaryFavoriteTableTableFilterComposer,
+    $$DictionaryFavoriteTableTableOrderingComposer,
+    $$DictionaryFavoriteTableTableAnnotationComposer,
+    $$DictionaryFavoriteTableTableCreateCompanionBuilder,
+    $$DictionaryFavoriteTableTableUpdateCompanionBuilder,
+    (
+      DictionaryFavoriteTableData,
+      BaseReferences<_$AppDatabase, $DictionaryFavoriteTableTable,
+          DictionaryFavoriteTableData>
+    ),
+    DictionaryFavoriteTableData,
+    PrefetchHooks Function()> {
+  $$DictionaryFavoriteTableTableTableManager(
+      _$AppDatabase db, $DictionaryFavoriteTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DictionaryFavoriteTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DictionaryFavoriteTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DictionaryFavoriteTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> entryKey = const Value.absent(),
+            Value<String> language = const Value.absent(),
+            Value<String> title = const Value.absent(),
+            Value<String?> subtitle = const Value.absent(),
+            Value<String> entryJson = const Value.absent(),
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              DictionaryFavoriteTableCompanion(
+            id: id,
+            entryKey: entryKey,
+            language: language,
+            title: title,
+            subtitle: subtitle,
+            entryJson: entryJson,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String entryKey,
+            required String language,
+            required String title,
+            Value<String?> subtitle = const Value.absent(),
+            required String entryJson,
+            Value<DateTime> createdAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              DictionaryFavoriteTableCompanion.insert(
+            id: id,
+            entryKey: entryKey,
+            language: language,
+            title: title,
+            subtitle: subtitle,
+            entryJson: entryJson,
+            createdAt: createdAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$DictionaryFavoriteTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$AppDatabase,
+        $DictionaryFavoriteTableTable,
+        DictionaryFavoriteTableData,
+        $$DictionaryFavoriteTableTableFilterComposer,
+        $$DictionaryFavoriteTableTableOrderingComposer,
+        $$DictionaryFavoriteTableTableAnnotationComposer,
+        $$DictionaryFavoriteTableTableCreateCompanionBuilder,
+        $$DictionaryFavoriteTableTableUpdateCompanionBuilder,
+        (
+          DictionaryFavoriteTableData,
+          BaseReferences<_$AppDatabase, $DictionaryFavoriteTableTable,
+              DictionaryFavoriteTableData>
+        ),
+        DictionaryFavoriteTableData,
+        PrefetchHooks Function()>;
+typedef $$DictionarySourceStateTableTableCreateCompanionBuilder
+    = DictionarySourceStateTableCompanion Function({
+  required String sourceKey,
+  Value<bool> isReady,
+  Value<int> entryCount,
+  required DateTime updatedAt,
+  Value<String?> errorMessage,
+  Value<int> rowid,
+});
+typedef $$DictionarySourceStateTableTableUpdateCompanionBuilder
+    = DictionarySourceStateTableCompanion Function({
+  Value<String> sourceKey,
+  Value<bool> isReady,
+  Value<int> entryCount,
+  Value<DateTime> updatedAt,
+  Value<String?> errorMessage,
+  Value<int> rowid,
+});
+
+class $$DictionarySourceStateTableTableFilterComposer
+    extends Composer<_$AppDatabase, $DictionarySourceStateTableTable> {
+  $$DictionarySourceStateTableTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get sourceKey => $composableBuilder(
+      column: $table.sourceKey, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<bool> get isReady => $composableBuilder(
+      column: $table.isReady, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<int> get entryCount => $composableBuilder(
+      column: $table.entryCount, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get errorMessage => $composableBuilder(
+      column: $table.errorMessage, builder: (column) => ColumnFilters(column));
+}
+
+class $$DictionarySourceStateTableTableOrderingComposer
+    extends Composer<_$AppDatabase, $DictionarySourceStateTableTable> {
+  $$DictionarySourceStateTableTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get sourceKey => $composableBuilder(
+      column: $table.sourceKey, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<bool> get isReady => $composableBuilder(
+      column: $table.isReady, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get entryCount => $composableBuilder(
+      column: $table.entryCount, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get updatedAt => $composableBuilder(
+      column: $table.updatedAt, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get errorMessage => $composableBuilder(
+      column: $table.errorMessage,
+      builder: (column) => ColumnOrderings(column));
+}
+
+class $$DictionarySourceStateTableTableAnnotationComposer
+    extends Composer<_$AppDatabase, $DictionarySourceStateTableTable> {
+  $$DictionarySourceStateTableTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get sourceKey =>
+      $composableBuilder(column: $table.sourceKey, builder: (column) => column);
+
+  GeneratedColumn<bool> get isReady =>
+      $composableBuilder(column: $table.isReady, builder: (column) => column);
+
+  GeneratedColumn<int> get entryCount => $composableBuilder(
+      column: $table.entryCount, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get updatedAt =>
+      $composableBuilder(column: $table.updatedAt, builder: (column) => column);
+
+  GeneratedColumn<String> get errorMessage => $composableBuilder(
+      column: $table.errorMessage, builder: (column) => column);
+}
+
+class $$DictionarySourceStateTableTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $DictionarySourceStateTableTable,
+    DictionarySourceStateTableData,
+    $$DictionarySourceStateTableTableFilterComposer,
+    $$DictionarySourceStateTableTableOrderingComposer,
+    $$DictionarySourceStateTableTableAnnotationComposer,
+    $$DictionarySourceStateTableTableCreateCompanionBuilder,
+    $$DictionarySourceStateTableTableUpdateCompanionBuilder,
+    (
+      DictionarySourceStateTableData,
+      BaseReferences<_$AppDatabase, $DictionarySourceStateTableTable,
+          DictionarySourceStateTableData>
+    ),
+    DictionarySourceStateTableData,
+    PrefetchHooks Function()> {
+  $$DictionarySourceStateTableTableTableManager(
+      _$AppDatabase db, $DictionarySourceStateTableTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$DictionarySourceStateTableTableFilterComposer(
+                  $db: db, $table: table),
+          createOrderingComposer: () =>
+              $$DictionarySourceStateTableTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$DictionarySourceStateTableTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> sourceKey = const Value.absent(),
+            Value<bool> isReady = const Value.absent(),
+            Value<int> entryCount = const Value.absent(),
+            Value<DateTime> updatedAt = const Value.absent(),
+            Value<String?> errorMessage = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              DictionarySourceStateTableCompanion(
+            sourceKey: sourceKey,
+            isReady: isReady,
+            entryCount: entryCount,
+            updatedAt: updatedAt,
+            errorMessage: errorMessage,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String sourceKey,
+            Value<bool> isReady = const Value.absent(),
+            Value<int> entryCount = const Value.absent(),
+            required DateTime updatedAt,
+            Value<String?> errorMessage = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              DictionarySourceStateTableCompanion.insert(
+            sourceKey: sourceKey,
+            isReady: isReady,
+            entryCount: entryCount,
+            updatedAt: updatedAt,
+            errorMessage: errorMessage,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$DictionarySourceStateTableTableProcessedTableManager
+    = ProcessedTableManager<
+        _$AppDatabase,
+        $DictionarySourceStateTableTable,
+        DictionarySourceStateTableData,
+        $$DictionarySourceStateTableTableFilterComposer,
+        $$DictionarySourceStateTableTableOrderingComposer,
+        $$DictionarySourceStateTableTableAnnotationComposer,
+        $$DictionarySourceStateTableTableCreateCompanionBuilder,
+        $$DictionarySourceStateTableTableUpdateCompanionBuilder,
+        (
+          DictionarySourceStateTableData,
+          BaseReferences<_$AppDatabase, $DictionarySourceStateTableTable,
+              DictionarySourceStateTableData>
+        ),
+        DictionarySourceStateTableData,
+        PrefetchHooks Function()>;
 typedef $$AnswerHistoryLocalTableTableCreateCompanionBuilder
     = AnswerHistoryLocalTableCompanion Function({
   Value<int> id,
@@ -9028,6 +10831,17 @@ class $AppDatabaseManager {
           _db, _db.practiceCardMediaTable);
   $$DictionaryCacheTableTableTableManager get dictionaryCacheTable =>
       $$DictionaryCacheTableTableTableManager(_db, _db.dictionaryCacheTable);
+  $$DictionaryJapaneseEntryTableTableTableManager
+      get dictionaryJapaneseEntryTable =>
+          $$DictionaryJapaneseEntryTableTableTableManager(
+              _db, _db.dictionaryJapaneseEntryTable);
+  $$DictionaryFavoriteTableTableTableManager get dictionaryFavoriteTable =>
+      $$DictionaryFavoriteTableTableTableManager(
+          _db, _db.dictionaryFavoriteTable);
+  $$DictionarySourceStateTableTableTableManager
+      get dictionarySourceStateTable =>
+          $$DictionarySourceStateTableTableTableManager(
+              _db, _db.dictionarySourceStateTable);
   $$AnswerHistoryLocalTableTableTableManager get answerHistoryLocalTable =>
       $$AnswerHistoryLocalTableTableTableManager(
           _db, _db.answerHistoryLocalTable);

@@ -5,6 +5,7 @@ import '../../features/auth/presentation/screens/splash_screen.dart';
 import '../../features/auth/presentation/screens/auth_screen.dart';
 import '../../features/auth/presentation/screens/onboarding/language_selection_screen.dart';
 import '../../features/auth/presentation/screens/onboarding/level_selection_screen.dart';
+import '../../features/dictionary/presentation/screens/dictionary_screen.dart';
 import '../../features/auth/presentation/screens/onboarding/goals_screen.dart';
 import '../../features/lessons/presentation/screens/lesson_result_screen.dart';
 import '../../features/lessons/presentation/screens/lesson_screen.dart';
@@ -45,6 +46,7 @@ class AppRouter {
           GoRoute(
               path: '/app/practice',
               builder: (_, __) => const PracticeHomeScreen()),
+          GoRoute(path: '/dictionary', builder: (_, __) => const DictionaryScreen()),
           GoRoute(
             path: '/app/practice/decks/new',
             builder: (_, __) => const DeckEditorScreen(),
@@ -138,6 +140,10 @@ class _ScaffoldWithNav extends StatelessWidget {
                     selectedIcon: Icon(Icons.style),
                     label: 'Practice'),
                 NavigationDestination(
+                    icon: Icon(Icons.menu_book_outlined),
+                    selectedIcon: Icon(Icons.menu_book),
+                    label: 'Dictionary'),
+                NavigationDestination(
                     icon: Icon(Icons.map_outlined),
                     selectedIcon: Icon(Icons.map),
                     label: 'Roadmaps'),
@@ -156,9 +162,10 @@ class _ScaffoldWithNav extends StatelessWidget {
 
   int _locationToIndex(String loc) {
     if (loc.startsWith('/app/practice')) return 1;
-    if (loc.startsWith('/app/roadmaps')) return 2;
-    if (loc.startsWith('/app/stats')) return 3;
-    if (loc.startsWith('/app/profile')) return 4;
+    if (loc.startsWith('/dictionary')) return 2;
+    if (loc.startsWith('/app/roadmaps')) return 3;
+    if (loc.startsWith('/app/stats')) return 4;
+    if (loc.startsWith('/app/profile')) return 5;
     return 0;
   }
 
@@ -169,10 +176,12 @@ class _ScaffoldWithNav extends StatelessWidget {
       case 1:
         context.go('/app/practice');
       case 2:
-        context.go('/app/roadmaps');
+        context.go('/dictionary');
       case 3:
-        context.go('/app/stats');
+        context.go('/app/roadmaps');
       case 4:
+        context.go('/app/stats');
+      case 5:
         context.go('/app/profile');
     }
   }

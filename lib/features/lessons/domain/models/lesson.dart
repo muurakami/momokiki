@@ -96,7 +96,13 @@ Map<String, Object?> _normalizeMetaJson(Map<String, Object?> json) {
   return normalized;
 }
 
-@Freezed(fromJson: true, toJson: true, unionKey: 'type', fallbackUnion: 'unknown')
+@Freezed(
+  fromJson: true,
+  toJson: true,
+  unionKey: 'type',
+  unionValueCase: FreezedUnionCase.snake,
+  fallbackUnion: 'unknown',
+)
 sealed class LessonBlock with _$LessonBlock {
   const LessonBlock._();
 

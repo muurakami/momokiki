@@ -171,6 +171,44 @@ class DictionaryCacheTable extends Table {
   Set<Column> get primaryKey => {word, language};
 }
 
+class DictionaryJapaneseEntryTable extends Table {
+  TextColumn get entryId => text()();
+  TextColumn get primaryKanji => text().nullable()();
+  TextColumn get primaryKana => text()();
+  TextColumn get primaryRomaji => text()();
+  TextColumn get meaningPreview => text()();
+  TextColumn get entryJson => text()();
+  BoolColumn get isCommon => boolean().withDefault(const Constant(false))();
+  DateTimeColumn get importedAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {entryId};
+}
+
+class DictionaryFavoriteTable extends Table {
+  TextColumn get id => text()();
+  TextColumn get entryKey => text()();
+  TextColumn get language => text()();
+  TextColumn get title => text()();
+  TextColumn get subtitle => text().nullable()();
+  TextColumn get entryJson => text()();
+  DateTimeColumn get createdAt => dateTime().withDefault(currentDateAndTime)();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class DictionarySourceStateTable extends Table {
+  TextColumn get sourceKey => text()();
+  BoolColumn get isReady => boolean().withDefault(const Constant(false))();
+  IntColumn get entryCount => integer().withDefault(const Constant(0))();
+  DateTimeColumn get updatedAt => dateTime()();
+  TextColumn get errorMessage => text().nullable()();
+
+  @override
+  Set<Column> get primaryKey => {sourceKey};
+}
+
 class AnswerHistoryLocalTable extends Table {
   IntColumn get id => integer().autoIncrement()();
   TextColumn get lessonId => text().nullable()();
@@ -194,19 +232,26 @@ class AnswerHistoryLocalTable extends Table {
   PracticeMediaTable,
   PracticeCardMediaTable,
   DictionaryCacheTable,
+  DictionaryJapaneseEntryTable,
+  DictionaryFavoriteTable,
+  DictionarySourceStateTable,
   AnswerHistoryLocalTable,
 ])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(driftDatabase(name: 'momokiki.db'));
 
+  AppDatabase.test(QueryExecutor executor) : super(executor);
+
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
         beforeOpen: (details) async {
           await customStatement('PRAGMA foreign_keys = ON');
           await _ensureLessonAttemptTableExists();
+          await _ensureDictionaryTablesExist();
+          await _ensureDictionarySearchSchemaExists();
           await _logSchemaState();
         },
         onUpgrade: (migrator, from, to) async {
@@ -227,6 +272,13 @@ class AppDatabase extends _$AppDatabase {
             await migrator.createTable(practiceReviewTable);
             await migrator.createTable(practiceMediaTable);
             await migrator.createTable(practiceCardMediaTable);
+          }
+
+          if (from < 5) {
+            await _ensureDictionaryCacheTableExists();
+            await migrator.createTable(dictionaryJapaneseEntryTable);
+            await migrator.createTable(dictionaryFavoriteTable);
+            await migrator.createTable(dictionarySourceStateTable);
           }
         },
       );
@@ -253,18 +305,106 @@ class AppDatabase extends _$AppDatabase {
     );
   }
 
+  Future<void> _ensureDictionaryCacheTableExists() async {
+    await customStatement('''
+      CREATE TABLE IF NOT EXISTS dictionary_cache_table (
+        word TEXT NOT NULL,
+        language TEXT NOT NULL,
+        entry_json TEXT NOT NULL,
+        cached_at INTEGER NOT NULL,
+        PRIMARY KEY (word, language)
+      )
+    ''');
+  }
+
+  Future<void> _ensureDictionaryTablesExist() async {
+    await _ensureDictionaryCacheTableExists();
+    await customStatement('''
+      CREATE TABLE IF NOT EXISTS dictionary_japanese_entry_table (
+        entry_id TEXT NOT NULL PRIMARY KEY,
+        primary_kanji TEXT,
+        primary_kana TEXT NOT NULL,
+        primary_romaji TEXT NOT NULL,
+        meaning_preview TEXT NOT NULL,
+        entry_json TEXT NOT NULL,
+        is_common INTEGER NOT NULL DEFAULT 0,
+        imported_at INTEGER NOT NULL DEFAULT (strftime('%s','now') * 1000)
+      )
+    ''');
+    await customStatement('''
+      CREATE TABLE IF NOT EXISTS dictionary_favorite_table (
+        id TEXT NOT NULL PRIMARY KEY,
+        entry_key TEXT NOT NULL,
+        language TEXT NOT NULL,
+        title TEXT NOT NULL,
+        subtitle TEXT,
+        entry_json TEXT NOT NULL,
+        created_at INTEGER NOT NULL DEFAULT (strftime('%s','now') * 1000)
+      )
+    ''');
+    await customStatement('''
+      CREATE TABLE IF NOT EXISTS dictionary_source_state_table (
+        source_key TEXT NOT NULL PRIMARY KEY,
+        is_ready INTEGER NOT NULL DEFAULT 0,
+        entry_count INTEGER NOT NULL DEFAULT 0,
+        updated_at INTEGER NOT NULL,
+        error_message TEXT
+      )
+    ''');
+  }
+
+  Future<void> _ensureDictionarySearchSchemaExists() async {
+    await customStatement('''
+      CREATE VIRTUAL TABLE IF NOT EXISTS dictionary_japanese_fts USING fts5(
+        entry_id UNINDEXED,
+        kanji_terms,
+        kana_terms,
+        romaji_terms,
+        tokenize = 'unicode61 remove_diacritics 2'
+      )
+    ''');
+    await customStatement(
+      'CREATE INDEX IF NOT EXISTS idx_dictionary_japanese_primary_kanji ON dictionary_japanese_entry_table(primary_kanji)',
+    );
+    await customStatement(
+      'CREATE INDEX IF NOT EXISTS idx_dictionary_japanese_primary_kana ON dictionary_japanese_entry_table(primary_kana)',
+    );
+    await customStatement(
+      'CREATE INDEX IF NOT EXISTS idx_dictionary_japanese_primary_romaji ON dictionary_japanese_entry_table(primary_romaji)',
+    );
+    await customStatement(
+      'CREATE INDEX IF NOT EXISTS idx_dictionary_favorite_created_at ON dictionary_favorite_table(created_at)',
+    );
+  }
+
   Future<void> _logSchemaState() async {
     if (!kDebugMode) {
       return;
     }
 
-    final tableRows = await customSelect(
-      "SELECT name FROM sqlite_master WHERE type='table' AND name='lesson_attempt_table'",
+    final rows = await customSelect(
+      '''
+      SELECT name
+      FROM sqlite_master
+      WHERE name IN (
+        'lesson_attempt_table',
+        'dictionary_cache_table',
+        'dictionary_japanese_entry_table',
+        'dictionary_favorite_table',
+        'dictionary_source_state_table',
+        'dictionary_japanese_fts'
+      )
+      ORDER BY name
+      ''',
     ).get();
     final versionRows = await customSelect('PRAGMA user_version').get();
+    final names = rows
+        .map((row) => row.data['name'])
+        .whereType<String>()
+        .toSet();
 
     debugPrint(
-      'AppDatabase schema check: lesson_attempt_table=${tableRows.isNotEmpty}, user_version=${versionRows.isNotEmpty ? versionRows.first.data.values.first : 'unknown'}',
+      'AppDatabase schema check: user_version=${versionRows.isNotEmpty ? versionRows.first.data.values.first : 'unknown'}, lesson_attempt_table=${names.contains('lesson_attempt_table')}, dictionary_cache_table=${names.contains('dictionary_cache_table')}, dictionary_japanese_entry_table=${names.contains('dictionary_japanese_entry_table')}, dictionary_favorite_table=${names.contains('dictionary_favorite_table')}, dictionary_source_state_table=${names.contains('dictionary_source_state_table')}, dictionary_japanese_fts=${names.contains('dictionary_japanese_fts')}',
     );
   }
 }
