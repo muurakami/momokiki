@@ -1,7 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import '../../../../core/di/injection.dart';
+import '../../../auth/presentation/notifiers/auth_notifier.dart';
+import '../../../stats/presentation/providers/stats_providers.dart';
 import '../../domain/models/lesson.dart';
 import '../../domain/models/lesson_progress.dart';
 import '../../domain/repositories/lesson_repository.dart';
@@ -76,7 +77,8 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
 
     try {
       final lesson = await _repository.getLesson(lessonId);
-      final userId = Supabase.instance.client.auth.currentUser?.id ?? 'guest-user';
+      final profile = await ref.read(authNotifierProvider.future);
+      final userId = profile?.id ?? 'guest-user';
       await _repository.syncPendingProgress(userId);
 
       final savedProgress = await _repository.getProgress(
@@ -84,12 +86,14 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
         lessonId: lessonId,
       );
       final stats = await _repository.getUserStats(userId);
-      final attempts = await _repository.getAttempts(userId: userId, lessonId: lessonId);
+      final attempts =
+          await _repository.getAttempts(userId: userId, lessonId: lessonId);
       final currentBlockIds = lesson.blocks.map((block) => block.id).toSet();
       final filteredAttempts = attempts
           .where((attempt) => currentBlockIds.contains(attempt.blockId))
           .toList();
-      final hasIncompatibleAttempts = filteredAttempts.length != attempts.length;
+      final hasIncompatibleAttempts =
+          filteredAttempts.length != attempts.length;
       final freshProgress = _freshProgress(lessonId: lessonId, userId: userId);
       final shouldResetProgress = savedProgress != null &&
           !_hasCompatibleProgress(
@@ -98,7 +102,9 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
             currentBlockIds: currentBlockIds,
             hasIncompatibleAttempts: hasIncompatibleAttempts,
           );
-      final baseProgress = shouldResetProgress ? freshProgress : (savedProgress ?? freshProgress);
+      final baseProgress = shouldResetProgress
+          ? freshProgress
+          : (savedProgress ?? freshProgress);
       final completedBlockIds = filteredAttempts
           .where((attempt) => attempt.isCorrect)
           .map((attempt) => attempt.blockId)
@@ -111,9 +117,11 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
         stats: stats,
         progress: baseProgress.copyWith(
           attemptCount: filteredAttempts.length,
-          incorrectAnswers: filteredAttempts.where((attempt) => !attempt.isCorrect).length,
+          incorrectAnswers:
+              filteredAttempts.where((attempt) => !attempt.isCorrect).length,
           completedBlockIds: completedBlockIds,
-          lastAttemptAt: filteredAttempts.isEmpty ? null : filteredAttempts.last.createdAt,
+          lastAttemptAt:
+              filteredAttempts.isEmpty ? null : filteredAttempts.last.createdAt,
         ),
         totalXpPreview: stats.totalXp,
       );
@@ -153,7 +161,8 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
         stats: stats,
         isCorrect: isCorrect,
       );
-      final feedback = _feedbackBuilder.build(block: block, isCorrect: isCorrect);
+      final feedback =
+          _feedbackBuilder.build(block: block, isCorrect: isCorrect);
       final attemptedAt = DateTime.now();
 
       final attempt = LessonAttempt(
@@ -203,7 +212,7 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
       final updatedStats = _xpCalculator.applyEarnedXp(
         stats: stats,
         earnedXp: earnedXp,
-        lessonCompleted: updatedProgress.isCompleted,
+        lessonCompleted: updatedProgress.isCompleted && !progress.isCompleted,
         isCorrect: isCorrect,
       );
 
@@ -226,6 +235,7 @@ class LessonSessionNotifier extends _$LessonSessionNotifier {
           progress: updatedProgress,
           stats: updatedStats,
         );
+        ref.invalidate(statsDashboardProvider);
       }
 
       state = state.copyWith(

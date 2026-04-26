@@ -1,6 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/di/injection.dart';
+import '../../../auth/presentation/notifiers/auth_notifier.dart';
 import '../../data/datasources/roadmap_asset_datasource.dart';
 import '../../domain/models/lesson_progress.dart';
 import '../../domain/models/learning_content.dart';
@@ -27,13 +28,15 @@ class LearningCatalogNotifier extends _$LearningCatalogNotifier {
     try {
       final lessons = _defaultLessonIslands();
       final roadmaps = await _roadmapSource.loadDefaultRoadmaps();
-      final userId = 'guest-user';
+      final profile = await ref.read(authNotifierProvider.future);
+      final userId = profile?.id ?? 'guest-user';
       final repository = getIt<LessonRepository>();
       final stats = await repository.getUserStats(userId);
       final enrichedLessons = <LessonIsland>[];
 
       for (final lesson in lessons) {
-        final progress = await repository.getProgress(userId: userId, lessonId: lesson.lessonId);
+        final progress = await repository.getProgress(
+            userId: userId, lessonId: lesson.lessonId);
         final status = switch (progress) {
           LessonProgress(isCompleted: true) => LessonStatus.completed,
           LessonProgress(answeredBlocks: > 0) => LessonStatus.inProgress,
@@ -108,7 +111,8 @@ class LearningCatalogNotifier extends _$LearningCatalogNotifier {
         lessonId: 'ja_hiragana_1',
         title: 'Hiragana Harbor',
         subtitle: 'Start with the first kana sounds',
-        description: 'Read the first hiragana symbols and match them to sounds.',
+        description:
+            'Read the first hiragana symbols and match them to sounds.',
         language: SupportedLanguage.japanese,
         order: 1,
         progress: 0.3,
@@ -120,7 +124,8 @@ class LearningCatalogNotifier extends _$LearningCatalogNotifier {
         lessonId: 'ja_katakana_1',
         title: 'Katakana Cliffs',
         subtitle: 'Master foreign sounds and names',
-        description: 'Learn the first katakana symbols used in names and loanwords.',
+        description:
+            'Learn the first katakana symbols used in names and loanwords.',
         language: SupportedLanguage.japanese,
         order: 2,
         isStarter: true,
@@ -131,7 +136,8 @@ class LearningCatalogNotifier extends _$LearningCatalogNotifier {
         lessonId: 'ja_intro_3',
         title: 'Morning Grove',
         subtitle: 'Warm up daily phrases',
-        description: 'Practice core morning expressions and simple daily conversation.',
+        description:
+            'Practice core morning expressions and simple daily conversation.',
         language: SupportedLanguage.japanese,
         order: 3,
         xpReward: 60,

@@ -20,35 +20,50 @@ class ExportDictionaryEntryToPracticeDeck {
   final PracticeRepository _practiceRepository;
   final DictionaryFlashcardBuilder _flashcardBuilder;
 
-  Future<FlashcardDeck> call(DictionaryEntry entry) async {
+  Future<FlashcardDeck> call(
+    DictionaryEntry entry, {
+    String? deckName,
+    String? description,
+    String? sourceType,
+  }) async {
     final now = DateTime.now();
     final draft = _flashcardBuilder.build(entry);
-    final deckName = switch (entry.language) {
+    final defaultDeckName = switch (entry.language) {
       DictionaryLanguage.japanese => 'Dictionary Japanese Export',
       DictionaryLanguage.english => 'Dictionary English Export',
     };
+    final resolvedDeckName = deckName ?? defaultDeckName;
+    final resolvedDescription = description ?? 'Exported dictionary cards';
+    final resolvedSourceType = sourceType ?? 'dictionary';
 
     final decks = await _practiceRepository.getDecks();
     FlashcardDeck? existingDeck;
     for (final deck in decks) {
-      if (deck.name == deckName) {
+      if (deck.name == resolvedDeckName) {
         existingDeck = deck;
         break;
       }
     }
     final deck = existingDeck ??
         FlashcardDeck(
-          id: _sha1('deck:$deckName'),
-          name: deckName,
-          description: 'Exported dictionary cards',
-          sourceType: 'dictionary',
+          id: _sha1('deck:$resolvedDeckName'),
+          name: resolvedDeckName,
+          description: resolvedDescription,
+          sourceType: resolvedSourceType,
           createdAt: now,
           updatedAt: now,
         );
 
-    await _practiceRepository.saveDeck(deck);
+    if (existingDeck == null) {
+      await _practiceRepository.saveDeck(deck);
+    }
 
     final cardId = _sha1('card:${deck.id}:${entry.favoriteId}');
+    final existingCard = await _practiceRepository.getCard(cardId);
+    if (existingCard != null) {
+      return deck;
+    }
+
     final frontHtml = draft.front.replaceAll('\n', '<br/>');
     final backHtml = draft.back.replaceAll('\n', '<br/>');
     await _practiceRepository.saveCard(

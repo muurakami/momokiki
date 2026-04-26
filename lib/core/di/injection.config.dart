@@ -165,7 +165,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i337.EnsureJapaneseDictionaryReady>(() =>
         _i337.EnsureJapaneseDictionaryReady(gh<_i574.DictionaryRepository>()));
     gh.lazySingleton<_i883.ToggleDictionaryFavorite>(
-        () => _i883.ToggleDictionaryFavorite(gh<_i574.DictionaryRepository>()));
+        () => _i883.ToggleDictionaryFavorite(
+              gh<_i574.DictionaryRepository>(),
+              gh<_i978.ExportDictionaryEntryToPracticeDeck>(),
+            ));
     return this;
   }
 }

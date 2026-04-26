@@ -6,6 +6,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
 import '../../domain/models/lesson_progress.dart';
+import '../../../stats/presentation/providers/stats_providers.dart';
 import '../notifiers/learning_catalog_notifier.dart';
 
 class LessonResultScreen extends ConsumerWidget {
@@ -24,7 +25,8 @@ class LessonResultScreen extends ConsumerWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 22, vertical: 12),
                 decoration: BoxDecoration(
                   color: AppColors.accent.withValues(alpha: 0.25),
                   borderRadius: BorderRadius.circular(999),
@@ -37,7 +39,8 @@ class LessonResultScreen extends ConsumerWidget {
               const SizedBox(height: 12),
               Text('Accuracy: ${(summary.accuracy * 100).round()}%'),
               const SizedBox(height: 8),
-              Text('Correct answers: ${summary.correctAnswers}/${summary.totalBlocks}'),
+              Text(
+                  'Correct answers: ${summary.correctAnswers}/${summary.totalBlocks}'),
               const SizedBox(height: 8),
               Text('Attempts: ${summary.totalAttempts}'),
               const SizedBox(height: 8),
@@ -48,6 +51,7 @@ class LessonResultScreen extends ConsumerWidget {
               FilledButton(
                 onPressed: () {
                   ref.invalidate(learningCatalogNotifierProvider);
+                  ref.invalidate(statsDashboardProvider);
                   if (summary.nextLessonId != null) {
                     context.go('/app/lesson/${summary.nextLessonId}');
                     return;

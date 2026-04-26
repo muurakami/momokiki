@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../domain/models/dictionary_entry.dart';
+import '../../../practice/presentation/notifiers/practice_home_notifier.dart';
 import '../notifiers/dictionary_notifier.dart';
 import '../notifiers/dictionary_state.dart';
 import '../widgets/dictionary_empty_state.dart';
@@ -60,7 +61,8 @@ class _DictionaryScreenState extends ConsumerState<DictionaryScreen> {
         error: (error, _) => DictionaryEmptyState(
           message: 'Failed to open dictionary: $error',
           actionLabel: 'Retry',
-          onAction: () => ref.read(dictionaryNotifierProvider.notifier).retryBootstrap(),
+          onAction: () =>
+              ref.read(dictionaryNotifierProvider.notifier).retryBootstrap(),
         ),
       ),
     );
@@ -71,7 +73,8 @@ class _DictionaryScreenState extends ConsumerState<DictionaryScreen> {
       return DictionaryEmptyState(
         message: state.errorMessage!,
         actionLabel: 'Retry dictionary setup',
-        onAction: () => ref.read(dictionaryNotifierProvider.notifier).retryBootstrap(),
+        onAction: () =>
+            ref.read(dictionaryNotifierProvider.notifier).retryBootstrap(),
       );
     }
 
@@ -137,29 +140,51 @@ class _DictionaryScreenState extends ConsumerState<DictionaryScreen> {
   void _scheduleSearch() {
     _debounceTimer?.cancel();
     _debounceTimer = Timer(const Duration(milliseconds: 400), () {
-      ref.read(dictionaryNotifierProvider.notifier).search(_searchController.text);
+      ref
+          .read(dictionaryNotifierProvider.notifier)
+          .search(_searchController.text);
     });
     setState(() {});
   }
 
   Future<void> _toggleFavorite(DictionaryEntry entry) async {
-    await ref.read(dictionaryNotifierProvider.notifier).toggleFavorite(entry);
-    if (!mounted) {
-      return;
-    }
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(
-          ref.read(dictionaryNotifierProvider).valueOrNull?.isFavorite(entry) == true
-              ? 'Added to favorites'
-              : 'Removed from favorites',
+    try {
+      final added = await ref
+          .read(dictionaryNotifierProvider.notifier)
+          .toggleFavorite(entry);
+      if (added) {
+        ref.invalidate(practiceHomeNotifierProvider);
+      }
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            ref
+                        .read(dictionaryNotifierProvider)
+                        .valueOrNull
+                        ?.isFavorite(entry) ==
+                    true
+                ? 'Added to favorites'
+                : 'Removed from favorites',
+          ),
         ),
-      ),
-    );
+      );
+    } catch (error) {
+      if (!mounted) {
+        return;
+      }
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to update favorite: $error')),
+      );
+    }
   }
 
   Future<void> _exportEntry(DictionaryEntry entry) async {
-    final deck = await ref.read(dictionaryNotifierProvider.notifier).exportToPracticeDeck(entry);
+    final deck = await ref
+        .read(dictionaryNotifierProvider.notifier)
+        .exportToPracticeDeck(entry);
     if (!mounted) {
       return;
     }
