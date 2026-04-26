@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../../features/settings/presentation/notifiers/app_preferences_notifier.dart';
+import '../../notifiers/auth_notifier.dart';
 import '../../notifiers/onboarding_notifier.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/theme/app_typography.dart';
@@ -43,9 +45,18 @@ class LanguageSelectionScreen extends ConsumerWidget {
                       label: lang['label']!,
                       native: lang['native']!,
                       selected: selected == lang['code'],
-                      onTap: () => ref
-                          .read(onboardingNotifierProvider.notifier)
-                          .setLanguage(lang['code']!),
+                      onTap: () async {
+                        final languageCode = lang['code']!;
+                        ref
+                            .read(onboardingNotifierProvider.notifier)
+                            .setLanguage(languageCode);
+                        await ref
+                            .read(appPreferencesNotifierProvider.notifier)
+                            .setPreferredLanguage(languageCode);
+                        await ref
+                            .read(authNotifierProvider.notifier)
+                            .updatePreferredLanguage(languageCode);
+                      },
                     ),
                   )),
               const Spacer(),

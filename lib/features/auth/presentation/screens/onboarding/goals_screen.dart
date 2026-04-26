@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import '../../../../settings/presentation/notifiers/app_preferences_notifier.dart';
 import '../../notifiers/auth_notifier.dart';
 import '../../notifiers/onboarding_notifier.dart';
 import '../../../../../core/theme/app_colors.dart';
@@ -95,6 +96,9 @@ class GoalsScreen extends ConsumerWidget {
                   onPressed: authAsync.isLoading
                       ? null
                       : () async {
+                          await ref
+                              .read(appPreferencesNotifierProvider.notifier)
+                              .setPreferredLanguage(state.targetLanguage);
                           await ref
                               .read(authNotifierProvider.notifier)
                               .saveOnboarding(

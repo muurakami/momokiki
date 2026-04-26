@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/di/injection.dart';
-import '../../../auth/presentation/notifiers/auth_notifier.dart';
 import '../../domain/models/dictionary_entry.dart';
 import '../../domain/models/dictionary_language.dart';
 import '../../domain/models/dictionary_search_result.dart';
@@ -121,19 +120,6 @@ class DictionaryNotifier extends _$DictionaryNotifier {
   }
 
   Future<Set<DictionaryLanguage>> _resolveActiveLanguages() async {
-    try {
-      final profile = await ref.read(authNotifierProvider.future);
-      if (profile != null) {
-        return _languagesFromCode(profile.targetLanguage);
-      }
-    } catch (_) {
-      return _resolvePreferredLanguages();
-    }
-
-    return _resolvePreferredLanguages();
-  }
-
-  Future<Set<DictionaryLanguage>> _resolvePreferredLanguages() async {
     try {
       final languageCode =
           await ref.read(appPreferencesNotifierProvider.future);

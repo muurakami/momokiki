@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+import '../../../settings/presentation/notifiers/app_preferences_notifier.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/theme/app_spacing.dart';
 import '../../../../core/theme/app_typography.dart';
@@ -127,16 +129,16 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                       _buildField(_emailCtrl, 'Email', Icons.email_outlined,
                           keyboardType: TextInputType.emailAddress,
                           validator: (v) {
-                            if (v == null || v.trim().isEmpty) {
-                              return 'Required';
-                            }
-                            final emailRegex = RegExp(
-                              r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
-                            );
-                            return emailRegex.hasMatch(v.trim())
-                                ? null
-                                : 'Invalid email';
-                          }),
+                        if (v == null || v.trim().isEmpty) {
+                          return 'Required';
+                        }
+                        final emailRegex = RegExp(
+                          r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$',
+                        );
+                        return emailRegex.hasMatch(v.trim())
+                            ? null
+                            : 'Invalid email';
+                      }),
                       _buildField(_passCtrl, 'Password', Icons.lock_outline,
                           obscure: _obscure,
                           suffix: IconButton(
@@ -193,15 +195,20 @@ class _AuthScreenState extends ConsumerState<AuthScreen>
                 TextButton(
                   onPressed: isLoading
                       ? null
-                      : () => ref
-                          .read(authNotifierProvider.notifier)
-                          .signInAsGuest(),
+                      : () async {
+                          await ref
+                              .read(appPreferencesNotifierProvider.notifier)
+                              .resetToSystemLanguage();
+                          await ref
+                              .read(authNotifierProvider.notifier)
+                              .signInAsGuest();
+                        },
                   child: Text('Continue as Guest',
                       style: AppTypography.bodyMedium.copyWith(
                           color: AppColors.primary,
                           decoration: TextDecoration.underline)),
                 ),
-if (auth.hasError)
+                if (auth.hasError)
                   Padding(
                     padding: const EdgeInsets.only(top: AppSpacing.md),
                     child: Text(

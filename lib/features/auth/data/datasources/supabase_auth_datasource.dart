@@ -97,9 +97,8 @@ class SupabaseAuthDatasource {
 
   Future<UserProfile> signInAsGuest() async {
     try {
-      final res = await _client.auth
-          .signInAnonymously()
-          .timeout(_remoteTimeout);
+      final res =
+          await _client.auth.signInAnonymously().timeout(_remoteTimeout);
       return _resolveSignedInProfile(
         res.user!,
         displayName: 'Guest',
@@ -129,8 +128,10 @@ class SupabaseAuthDatasource {
     required bool onboardingCompleted,
   }) async {
     final currentProfile = await _getLocalCurrentProfile();
+    final resolvedTargetLanguage =
+        currentProfile.isGuest ? currentProfile.targetLanguage : targetLanguage;
     final updatedProfile = currentProfile.copyWith(
-      targetLanguage: targetLanguage,
+      targetLanguage: resolvedTargetLanguage,
       cefrLevel: cefrLevel,
       dailyGoalMinutes: dailyGoalMinutes,
       onboardingCompleted: onboardingCompleted,
@@ -246,6 +247,10 @@ class SupabaseAuthDatasource {
     required String targetLanguage,
   }) async {
     final currentProfile = await _getLocalCurrentProfile();
+    if (currentProfile.isGuest) {
+      return currentProfile;
+    }
+
     final updatedProfile = currentProfile.copyWith(
       targetLanguage: targetLanguage,
     );
@@ -322,14 +327,15 @@ class SupabaseAuthDatasource {
 
   Future<UserProfile> _createOfflineGuestProfile() async {
     final cachedProfile = await _readCachedProfile();
-    final profile = (cachedProfile != null && _isOfflineGuestProfile(cachedProfile))
-        ? cachedProfile
-        : UserProfile(
-            id: _offlineGuestId,
-            displayName: 'Guest',
-            isGuest: true,
-            createdAt: DateTime.now(),
-          );
+    final profile =
+        (cachedProfile != null && _isOfflineGuestProfile(cachedProfile))
+            ? cachedProfile
+            : UserProfile(
+                id: _offlineGuestId,
+                displayName: 'Guest',
+                isGuest: true,
+                createdAt: DateTime.now(),
+              );
 
     await _writeCachedProfile(profile);
     return profile;
@@ -380,7 +386,8 @@ class SupabaseAuthDatasource {
     if (currentUser != null) {
       return _buildLocalFallbackProfile(
         currentUser,
-        cachedProfile: cachedProfile?.id == currentUser.id ? cachedProfile : null,
+        cachedProfile:
+            cachedProfile?.id == currentUser.id ? cachedProfile : null,
       );
     }
 

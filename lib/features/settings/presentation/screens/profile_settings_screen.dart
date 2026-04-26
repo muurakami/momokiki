@@ -12,7 +12,8 @@ class ProfileSettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final language = ref.watch(appPreferencesNotifierProvider).valueOrNull ?? 'en';
+    final language =
+        ref.watch(appPreferencesNotifierProvider).valueOrNull ?? 'en';
 
     return Scaffold(
       appBar: AppBar(title: const Text('Settings')),
@@ -33,13 +34,20 @@ class ProfileSettingsScreen extends ConsumerWidget {
                 return;
               }
 
-              await ref.read(appPreferencesNotifierProvider.notifier).setPreferredLanguage(value);
-              await ref.read(authNotifierProvider.notifier).updatePreferredLanguage(value);
+              await ref
+                  .read(appPreferencesNotifierProvider.notifier)
+                  .setPreferredLanguage(value);
+              await ref
+                  .read(authNotifierProvider.notifier)
+                  .updatePreferredLanguage(value);
             },
           ),
           const SizedBox(height: AppSpacing.lg),
           FilledButton.icon(
             onPressed: () async {
+              await ref
+                  .read(appPreferencesNotifierProvider.notifier)
+                  .resetToSystemLanguage();
               await ref.read(authNotifierProvider.notifier).signOut();
               if (!context.mounted) {
                 return;
