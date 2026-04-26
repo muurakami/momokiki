@@ -8,7 +8,7 @@ import 'export_dictionary_entry_to_practice_deck.dart';
 class ToggleDictionaryFavorite {
   const ToggleDictionaryFavorite(this._repository, this._exportEntry);
 
-  static const String _favoritesDeckName = 'Избранное';
+  static const String _favoritesDeckName = 'Favorites';
   static const String _favoritesSourceType = 'dictionary_favorites';
 
   final DictionaryRepository _repository;

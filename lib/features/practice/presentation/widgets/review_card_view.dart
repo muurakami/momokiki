@@ -21,20 +21,26 @@ class ReviewCardView extends StatelessWidget {
     return Card(
       child: Padding(
         padding: const EdgeInsets.all(20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(card.frontPlain, style: Theme.of(context).textTheme.headlineSmall),
-            const SizedBox(height: 16),
-            if (showAnswer) ...[
-              const Divider(),
+        child: SingleChildScrollView(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(card.frontPlain,
+                  style: Theme.of(context).textTheme.headlineSmall),
               const SizedBox(height: 16),
-              Text(card.backPlain, style: Theme.of(context).textTheme.bodyLarge),
-              const SizedBox(height: 20),
-              onRate(),
-            ] else
-              FilledButton(onPressed: onReveal, child: const Text('Show answer')),
-          ],
+              if (showAnswer) ...[
+                const Divider(),
+                const SizedBox(height: 16),
+                Text(card.backPlain,
+                    style: Theme.of(context).textTheme.bodyLarge),
+                const SizedBox(height: 20),
+                onRate(),
+              ] else
+                FilledButton(
+                    onPressed: onReveal, child: const Text('Show answer')),
+            ],
+          ),
         ),
       ),
     );

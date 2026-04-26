@@ -44,12 +44,12 @@ void main() {
     test('can target a custom deck name', () async {
       final deck = await exportEntry(
         entry,
-        deckName: 'Избранное',
+        deckName: 'Favorites',
         description: 'Favorite dictionary cards',
         sourceType: 'dictionary_favorites',
       );
 
-      expect(deck.name, 'Избранное');
+      expect(deck.name, 'Favorites');
       expect(deck.description, 'Favorite dictionary cards');
       expect(deck.sourceType, 'dictionary_favorites');
       expect(practiceRepository.decks, hasLength(1));
@@ -62,12 +62,12 @@ void main() {
     test('reuses an existing deck by exact name', () async {
       const existingDeck = FlashcardDeck(
         id: 'existing-favorites-deck',
-        name: 'Избранное',
+        name: 'Favorites',
         sourceType: 'manual',
       );
       practiceRepository.seedDeck(existingDeck);
 
-      final deck = await exportEntry(entry, deckName: 'Избранное');
+      final deck = await exportEntry(entry, deckName: 'Favorites');
 
       expect(deck.id, existingDeck.id);
       expect(practiceRepository.decks, hasLength(1));
@@ -75,7 +75,7 @@ void main() {
     });
 
     test('skips an existing card without overwriting review state', () async {
-      await exportEntry(entry, deckName: 'Избранное');
+      await exportEntry(entry, deckName: 'Favorites');
       final card = practiceRepository.cards.single;
       practiceRepository.seedCard(
         card.copyWith(
@@ -87,7 +87,7 @@ void main() {
       );
       final saveCardCount = practiceRepository.saveCardCount;
 
-      await exportEntry(entry, deckName: 'Избранное');
+      await exportEntry(entry, deckName: 'Favorites');
 
       expect(practiceRepository.cards, hasLength(1));
       expect(practiceRepository.saveCardCount, saveCardCount);
@@ -122,7 +122,7 @@ void main() {
 
       expect(added, isTrue);
       expect(dictionaryRepository.favoriteIds, contains(entry.favoriteId));
-      expect(practiceRepository.decks.single.name, 'Избранное');
+      expect(practiceRepository.decks.single.name, 'Favorites');
       expect(
           practiceRepository.decks.single.sourceType, 'dictionary_favorites');
       expect(practiceRepository.cards, hasLength(1));

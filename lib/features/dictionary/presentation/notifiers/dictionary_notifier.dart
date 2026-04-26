@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../../../core/di/injection.dart';
+import '../../../auth/presentation/notifiers/auth_notifier.dart';
 import '../../domain/models/dictionary_entry.dart';
+import '../../domain/models/dictionary_language.dart';
 import '../../domain/models/dictionary_search_result.dart';
 import '../../domain/repositories/dictionary_repository.dart';
 import '../../domain/usecases/ensure_japanese_dictionary_ready.dart';
@@ -10,16 +12,24 @@ import '../../domain/usecases/export_dictionary_entry_to_practice_deck.dart';
 import '../../domain/usecases/search_dictionary.dart';
 import '../../domain/usecases/toggle_dictionary_favorite.dart';
 import '../../../practice/domain/models/flashcard_deck.dart';
+import '../../../settings/presentation/notifiers/app_preferences_notifier.dart';
 import 'dictionary_state.dart';
 
 part 'dictionary_notifier.g.dart';
 
 @riverpod
 class DictionaryNotifier extends _$DictionaryNotifier {
+  static const Set<DictionaryLanguage> _allLanguages = {
+    DictionaryLanguage.japanese,
+    DictionaryLanguage.english,
+  };
+
   DictionaryRepository get _repository => getIt<DictionaryRepository>();
-  EnsureJapaneseDictionaryReady get _ensureReady => getIt<EnsureJapaneseDictionaryReady>();
+  EnsureJapaneseDictionaryReady get _ensureReady =>
+      getIt<EnsureJapaneseDictionaryReady>();
   SearchDictionary get _searchDictionary => getIt<SearchDictionary>();
-  ToggleDictionaryFavorite get _toggleFavorite => getIt<ToggleDictionaryFavorite>();
+  ToggleDictionaryFavorite get _toggleFavorite =>
+      getIt<ToggleDictionaryFavorite>();
   ExportDictionaryEntryToPracticeDeck get _exportEntry =>
       getIt<ExportDictionaryEntryToPracticeDeck>();
 
@@ -32,7 +42,8 @@ class DictionaryNotifier extends _$DictionaryNotifier {
     try {
       await _ensureReady();
       if (kDebugMode) {
-        debugPrint('DictionaryNotifier build: ready, favoriteIds=${favoriteIds.length}');
+        debugPrint(
+            'DictionaryNotifier build: ready, favoriteIds=${favoriteIds.length}');
       }
       return DictionaryState(favoriteIds: favoriteIds);
     } catch (error) {
@@ -83,7 +94,11 @@ class DictionaryNotifier extends _$DictionaryNotifier {
     );
 
     try {
-      final result = await _searchDictionary(trimmedQuery);
+      final activeLanguages = await _resolveActiveLanguages();
+      final result = await _searchDictionary(
+        trimmedQuery,
+        activeLanguages: activeLanguages,
+      );
       final latest = state.valueOrNull ?? current;
       state = AsyncData(
         latest.copyWith(
@@ -103,6 +118,63 @@ class DictionaryNotifier extends _$DictionaryNotifier {
         ),
       );
     }
+  }
+
+  Future<Set<DictionaryLanguage>> _resolveActiveLanguages() async {
+    try {
+      final profile = await ref.read(authNotifierProvider.future);
+      if (profile != null) {
+        return _languagesFromCode(profile.targetLanguage);
+      }
+    } catch (_) {
+      return _resolvePreferredLanguages();
+    }
+
+    return _resolvePreferredLanguages();
+  }
+
+  Future<Set<DictionaryLanguage>> _resolvePreferredLanguages() async {
+    try {
+      final languageCode =
+          await ref.read(appPreferencesNotifierProvider.future);
+      return _languagesFromCode(languageCode);
+    } catch (_) {
+      return _allLanguages;
+    }
+  }
+
+  Set<DictionaryLanguage> _languagesFromCode(String? languageCode) {
+    final normalized = languageCode?.toLowerCase().trim();
+    if (normalized == null || normalized.isEmpty) {
+      return _allLanguages;
+    }
+
+    final tokens = normalized
+        .split(RegExp(r'[\s,]+'))
+        .where((token) => token.isNotEmpty)
+        .toSet();
+    if (tokens.contains('both') || tokens.contains('all')) {
+      return _allLanguages;
+    }
+
+    final languages = <DictionaryLanguage>{};
+    for (final token in tokens) {
+      if (token == 'ja' || token == 'japanese') {
+        languages.add(DictionaryLanguage.japanese);
+        continue;
+      }
+      if (token == 'en' || token == 'english') {
+        languages.add(DictionaryLanguage.english);
+      }
+    }
+
+    if (languages.length == _allLanguages.length) {
+      return _allLanguages;
+    }
+    if (languages.isNotEmpty) {
+      return languages;
+    }
+    return _allLanguages;
   }
 
   Future<bool> toggleFavorite(DictionaryEntry entry) async {
